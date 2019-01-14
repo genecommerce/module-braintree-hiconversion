@@ -43,7 +43,7 @@ class Activation extends Field
             }
         }
 
-        $endpoint = $this->getUrl("braintree/configuration/activateHiconversion", ['storeId' => $storeId]);
+        $endpoint = $this->getUrl("braintree_hiconversion/configuration/activateHiconversion", ['storeId' => $storeId]);
         $html = '<button type="button" title="' . $title . '" class="button" onclick="' .
             "activateHicAccount.call(this, '$endpoint', '$urlId', '$emailId', '$pwId')" .
             '"><span>' . $title . '</span></button>';
