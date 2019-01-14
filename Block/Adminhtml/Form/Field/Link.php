@@ -40,7 +40,7 @@ class Link extends Field
                 $storeId = $website->getId();
             }
         }
-        $endpoint = $this->getUrl("braintree/configuration/LinkHiconversion", ['storeId' => $storeId]);
+        $endpoint = $this->getUrl("braintree_hiconversion/configuration/LinkHiconversion", ['storeId' => $storeId]);
         $html = '<button type="button" title="' . $title . '" class="button" onclick="' .
             "linkHicAccount.call(this, '$endpoint', '$urlId', '$emailId')" .
             '"><span>' . $title . '</span></button>';

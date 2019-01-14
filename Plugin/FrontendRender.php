@@ -6,7 +6,7 @@ use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\View\Page\Config\Renderer;
 
 /**
- * Class HicPlugin
+ * Class FrontendRender
  * Plugin for injecting head content at top of head
  * @package Magento\Braintree\Plugin
  * @author HiConversion <support@hiconversion.com>
