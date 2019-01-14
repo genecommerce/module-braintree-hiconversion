@@ -2,7 +2,7 @@
 
 namespace Gene\BraintreeHiConversion\Helper;
 
-use Magento\Braintree\Model\Data as ModelData;
+use Gene\BraintreeHiConversion\Model\Data as ModelData;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\ProductMetadata;
