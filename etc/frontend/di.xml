@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Override mini-cart & cart template -->
+    <type name="Magento\Braintree\Block\Paypal\Button">
+        <plugin name="hiconversion_paypalbtn_override" type="\Gene\BraintreeHiConversion\Plugin\PayPal\CartButton" />
+    </type>
+</config>

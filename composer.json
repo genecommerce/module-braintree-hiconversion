@@ -1,0 +1,28 @@
+{
+  "name": "gene/module-braintree-hiconversion",
+  "description": "Extends the Braintree module with an integration from HiConversion.",
+  "version": "1.0.0",
+  "require": {
+    "gene/module-braintree": "dev-master"
+  },
+  "type": "magento2-module",
+  "license": [
+    "proprietary"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Gene\\BraintreeHiConversion\\": ""
+    }
+  },
+  "authors": [
+    {
+      "name": "Aidan Threadgold",
+      "email": "aidan@gene.co.uk",
+      "homepage": "http://www.gene.co.uk",
+      "role": "Developer"
+    }
+  ]
+}
