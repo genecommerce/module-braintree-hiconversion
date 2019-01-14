@@ -29,20 +29,20 @@
                             <field id="site_url" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
                                 <label>Your Site URL</label>
                                 <frontend_class>validate-url</frontend_class>
-                                <backend_model>Magento\Braintree\Model\Adminhtml\System\Config\NonStorable</backend_model>
+                                <backend_model>Gene\BraintreeHiConversion\Model\Adminhtml\System\Config\NonStorable</backend_model>
                             </field>
                             <field id="email" translate="label" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
                                 <label>Your Email Address</label>
                                 <frontend_class>validate-email</frontend_class>
-                                <backend_model>Magento\Braintree\Model\Adminhtml\System\Config\NonStorable</backend_model>
+                                <backend_model>Gene\BraintreeHiConversion\Model\Adminhtml\System\Config\NonStorable</backend_model>
                             </field>
                             <field id="password" translate="label" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
                                 <label>Password</label>
-                                <backend_model>Magento\Braintree\Model\Adminhtml\System\Config\NonStorable</backend_model>
+                                <backend_model>Gene\BraintreeHiConversion\Model\Adminhtml\System\Config\NonStorable</backend_model>
                             </field>
                             <field id="activate" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
                                 <label></label>
-                                <frontend_model>Magento\Braintree\Block\Adminhtml\Form\Field\HicActivation</frontend_model>
+                                <frontend_model>Gene\BraintreeHiConversion\Block\Adminhtml\Form\Field\Activation</frontend_model>
                             </field>
                         </group>
                         <group id="link_existing" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
@@ -50,16 +50,16 @@
                             <field id="site_url" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
                                 <label>Existing Site URL</label>
                                 <frontend_class>validate-url</frontend_class>
-                                <backend_model>Magento\Braintree\Model\Adminhtml\System\Config\NonStorable</backend_model>
+                                <backend_model>Gene\BraintreeHiConversion\Model\Adminhtml\System\Config\NonStorable</backend_model>
                             </field>
                             <field id="email" translate="label" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
                                 <label>Your Email Address</label>
                                 <frontend_class>validate-email</frontend_class>
-                                <backend_model>Magento\Braintree\Model\Adminhtml\System\Config\NonStorable</backend_model>
+                                <backend_model>Gene\BraintreeHiConversion\Model\Adminhtml\System\Config\NonStorable</backend_model>
                             </field>
                             <field id="link" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
                                 <label></label>
-                                <frontend_model>Magento\Braintree\Block\Adminhtml\Form\Field\HicLink</frontend_model>
+                                <frontend_model>Gene\BraintreeHiConversion\Block\Adminhtml\Form\Field\Link</frontend_model>
                             </field>
                         </group>
                         <group id="tests" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
