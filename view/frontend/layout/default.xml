@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="header-wrapper">
+            <block class="Gene\BraintreeHiConversion\Block\Hic\MiniCartTestData" name="braintree.hic.minicarttestdata" before="minicart" template="Gene_BraintreeHiConversion::miniCartTestData.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="before.body.end">
+            <block class="Magento\Framework\View\Element\Template" name="hic.integration.dynamic" template="Gene_BraintreeHiConversion::dynamic.phtml"/>
+        </referenceContainer>
+    </body>
+</page>
