@@ -22,6 +22,7 @@ class CartButton
      */
     public function afterGetTemplate(\Magento\Braintree\Block\Paypal\Button $subject, $result)
     {
+        return $result;
         return self::TEMPLATE_PATH;
     }
 }

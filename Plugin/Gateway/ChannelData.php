@@ -31,7 +31,7 @@ class ChannelData
      * @return array
      */
     public function afterBuild(
-        Magento\Braintree\Gateway\Request\ChannelDataBuilder $subject,
+        \Magento\Braintree\Gateway\Request\ChannelDataBuilder $subject,
         $result
     ) {
         $newBnCode = $this->helper->getBNCode();
