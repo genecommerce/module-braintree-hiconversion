@@ -9,10 +9,10 @@ use Magento\Framework\App\Config\Storage\WriterInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
 /**
- * Class ActivateHiconversion
+ * Class LinkHiconversion
  * @package Gene\BraintreeHiConversion\Controller\Adminhtml\Configuration
  */
-class ActivateHiconversion extends \Magento\Backend\App\Action
+class LinkHiconversion extends \Magento\Backend\App\Action
 {
     /**
      * @var \Magento\Framework\App\Config\Storage\WriterInterface;
@@ -25,9 +25,8 @@ class ActivateHiconversion extends \Magento\Backend\App\Action
     private $hicApi;
 
     /**
-     * Validate constructor.
-     *
-     * @param Action\Context  $context
+     * LinkHiconversion constructor.
+     * @param Action\Context $context
      * @param WriterInterface $configWriter
      * @param Api $hicApi
      */
@@ -53,22 +52,18 @@ class ActivateHiconversion extends \Magento\Backend\App\Action
         $storeId = $request->getParam("storeId", 0);
         $response = $this->resultFactory->create(ResultFactory::TYPE_JSON);
         try {
-            $result = $this->hicApi->activateHicAccount($siteUrl, $email, $pw, $storeId);
-
-            if (isset($result) && isset($result['result']) == "success" && isset($result['external'])) {
-                $siteId = $result['external'];
-
+            $siteId = $this->hicApi->getHicSiteId($siteUrl, $email);
+            if (isset($siteId)) {
                 $this->configWriter->
                 save(
                     'hiconversion/configuration/site_id',
                     $siteId,
                     ScopeConfigInterface::SCOPE_TYPE_DEFAULT
                 );
-                $response->setData($result);
+                $response->setData($siteId);
                 $response->setHttpResponseCode(200);
             } else {
-                $response->setData($result);
-                $response->setHttpResponseCode(400);
+                $response->setHttpResponseCode(404);
             }
         } catch (\Exception $e) {
             $response->setHttpResponseCode(400);
