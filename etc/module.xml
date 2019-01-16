@@ -3,6 +3,7 @@
     <module name="Gene_BraintreeHiConversion" setup_version="1.0.0">
         <sequence>
             <module name="Magento_Braintree"/>
+            <module name="Hic_Integration"/>
         </sequence>
     </module>
 </config>

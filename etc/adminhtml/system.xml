@@ -25,7 +25,7 @@
                         </field>
 
                         <group id="create_account" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
-                            <label>Activate New HiConversion Account</label>
+                            <label>Activate New Account</label>
                             <field id="site_url" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
                                 <label>Your Site URL</label>
                                 <frontend_class>validate-url</frontend_class>

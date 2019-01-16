@@ -3,27 +3,4 @@
     <type name="Magento\Braintree\Block\Paypal\Button">
         <plugin name="hiconversion_paypalbtn_override" type="\Gene\BraintreeHiConversion\Plugin\PayPal\CartButton" />
     </type>
-    <type name="Magento\Framework\View\Page\Config\Renderer">
-        <plugin name="hic_frontend_render" type="Gene\BraintreeHiConversion\Plugin\FrontendRender" sortOrder="1" />
-    </type>
-    <type name="Magento\Customer\CustomerData\SectionPoolInterface">
-        <arguments>
-            <argument name="sectionSourceMap" xsi:type="array">
-                <item name="hic-cart-data" xsi:type="string">Gene\BraintreeHiConversion\CustomerData\CartData</item>
-            </argument>
-        </arguments>
-    </type>
-    <type name="Magento\Customer\CustomerData\SectionPoolInterface">
-        <arguments>
-            <argument name="sectionSourceMap" xsi:type="array">
-                <item name="hic-user-data" xsi:type="string">Gene\BraintreeHiConversion\CustomerData\UserData</item>
-            </argument>
-        </arguments>
-    </type>
-    <type name="Gene\BraintreeHiConversion\Model\Data">
-        <arguments>
-            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
-            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
-        </arguments>
-    </type>
 </config>
