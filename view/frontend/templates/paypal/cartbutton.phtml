@@ -1,46 +1,34 @@
 <?php
 /**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/**
  * @var \Magento\Braintree\Block\Paypal\Button $block
  */
 $id = $block->getContainerId() . mt_rand();
 $config = [
-    'containerId' => $block->getContainerId(),
-    'mageInit' => [
-        'id' => $id,
-        'environment' => $block->getEnvironment(),
-        'clientToken' => $block->getClientToken(),
-        'displayName' => $block->getMerchantName(),
-        'payeeEmail' => $block->getPayeeEmail(),
-        'actionSuccess' => $block->getActionSuccess(),
-        'offerCredit' => $block->isCreditActive(),
-        'shape' => $block->getButtonShape(),
-        'size' => $block->getButtonSize(),
-        'layout' => $block->getButtonLayout(),
-        'color' => $block->getButtonColor(),
-        'disabledFunding' => $block->getDisabledFunding()
-    ],
-    'placeholderData' => [
-        'currency' => $block->getCurrency(),
-        'locale' => $block->getLocale(),
-        'amount' => $block->getAmount(),
-        'id' => $id
+    'Gene_BraintreeHiConversion/js/paypal/button' => [
+            'config' => [
+                'id' => $id,
+                'environment' => $block->getEnvironment(),
+                'clientToken' => $block->getClientToken(),
+                'displayName' => $block->getMerchantName(),
+                'payeeEmail' => $block->getPayeeEmail(),
+                'actionSuccess' => $block->getActionSuccess(),
+                'offerCredit' => $block->isCreditActive(),
+                'shape' => $block->getButtonShape(),
+                'size' => $block->getButtonSize(),
+                'layout' => $block->getButtonLayout(),
+                'color' => $block->getButtonColor(),
+                'disabledFunding' => $block->getDisabledFunding()
+            ]
     ]
 ];
-
-// @todo JS: Register an event(?) that HIC can tap into; which allows them to modify $config and then trigger the button render by instantiating the PayPal JS button as normal
-/**
-<script type="text/x-magento-init" id="hiconversion_dynamic">
-{
-"*": {
-"Magento_Braintree/js/hic/dynamic": {}
-}
-}
-</script>
- */
 ?>
 
 <div data-mage-init='<?php /* @noEscape */ echo json_encode($config); ?>'
-     class="paypal checkout paypal-logo braintree-paypal-logo<?php
+     class="paypal checkout paypal-logo braintree-paypal-btn braintree-paypal-logo<?php
      /* @noEscape */ echo $block->getContainerId(); ?>-container">
     <div data-currency="<?php /* @noEscape */ echo $block->getCurrency(); ?>"
          data-locale="<?php /* @noEscape */ echo $block->getLocale(); ?>"

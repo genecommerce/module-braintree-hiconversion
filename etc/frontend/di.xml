@@ -3,4 +3,12 @@
     <type name="Magento\Braintree\Block\Paypal\Button">
         <plugin name="hiconversion_paypalbtn_override" type="\Gene\BraintreeHiConversion\Plugin\PayPal\CartButton" />
     </type>
+
+    <type name="Magento\Braintree\Block\Paypal\Button">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="template" xsi:type="string">Gene_BraintreeHiConversion::paypal/cartbutton.phtml</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
