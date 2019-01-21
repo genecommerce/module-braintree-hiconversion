@@ -11,191 +11,117 @@
             <group id="braintree_section">
                 <group id="braintree">
                     <group id="braintree_hic" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="25">
-                        <comment><![CDATA[<a href="https://h30.hiconversion.net" target="_blank">Click here to go to HiConversion</a>]]></comment>
-                        <label>HiConversion Experience Optimization through Braintree</label>
+                        <label>HiConversion</label>
                         <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
                         <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
-                            <label>Enable Experience Optimization through Braintree</label>
+                            <label>Enable HiConversion</label>
                             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                             <config_path>hiconversion/configuration/enabled</config_path>
                         </field>
-                        <field id="site_id" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <field id="site_url" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <depends>
+                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
+                            </depends>
+                            <label>Your Site URL</label>
+                            <frontend_class>validate-url</frontend_class>
+                            <backend_model>Hic\Integration\Model\Adminhtml\System\Config\NonStorable</backend_model>
+                        </field>
+                        <field id="email" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <depends>
+                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
+                            </depends>
+                            <label>Your Email Address</label>
+                            <frontend_class>validate-email</frontend_class>
+                            <backend_model>Hic\Integration\Model\Adminhtml\System\Config\NonStorable</backend_model>
+                        </field>
+                        <field id="password" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <depends>
+                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
+                            </depends>
+                            <label>Password</label>
+                            <backend_model>Hic\Integration\Model\Adminhtml\System\Config\NonStorable</backend_model>
+                        </field>
+                        <field id="site_id" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <depends>
+                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
+                            </depends>
                             <label>Site ID</label>
                             <config_path>hiconversion/configuration/site_id</config_path>
                         </field>
-
-                        <group id="create_account" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
-                            <label>Activate New Account</label>
-                            <field id="site_url" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
-                                <label>Your Site URL</label>
-                                <frontend_class>validate-url</frontend_class>
-                                <backend_model>Hic\Integration\Model\Adminhtml\System\Config\NonStorable</backend_model>
+                        <field id="activate" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <depends>
+                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
+                            </depends>
+                            <label></label>
+                            <frontend_model>Hic\Integration\Block\Adminhtml\Form\Field\Activation</frontend_model>
+                        </field>
+                        <field id="bt_enabled" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <depends>
+                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
+                            </depends>
+                            <label>Enable HiConversion Enhancements for Braintree</label>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                            <config_path>hiconversion/configuration/bt_enabled</config_path>
+                        </field>
+                        <group id="testing" translate="label" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <depends>
+                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                            </depends>
+                            <label>Testing and Optimization</label>
+                            <field id="wallets" translate="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                                <label>Payment Methods/Wallets Checklist</label>
+                                <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
                             </field>
-                            <field id="email" translate="label" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
-                                <label>Your Email Address</label>
-                                <frontend_class>validate-email</frontend_class>
-                                <backend_model>Hic\Integration\Model\Adminhtml\System\Config\NonStorable</backend_model>
+                            <field id="paypal_enabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                                <depends>
+                                    <field id="*/braintree_section/braintree/active_braintree_paypal">1</field>
+                                    <field id="*/braintree_section/braintree/braintree_paypal/display_on_shopping_cart">1</field>
+                                </depends>
+                                <label>PayPal</label>
                             </field>
-                            <field id="password" translate="label" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
-                                <label>Password</label>
-                                <backend_model>Hic\Integration\Model\Adminhtml\System\Config\NonStorable</backend_model>
+                            <field id="paypal_disabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                                <label>PayPal</label>
                             </field>
-                            <field id="activate" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
-                                <label></label>
-                                <frontend_model>Hic\Integration\Block\Adminhtml\Form\Field\Activation</frontend_model>
+                            <field id="paypal_credit_enabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                                <depends>
+                                    <field id="*/braintree_section/braintree/braintree_paypal_credit_active">1</field>
+                                    <field id="*/braintree_section/braintree/braintree_paypal/display_on_shopping_cart">1</field>
+                                </depends>
+                                <label>PayPal Credit</label>
+                            </field>
+                            <field id="paypal_credit_disabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                                <label>PayPal Credit</label>
+                            </field>
+                            <field id="applepay_enabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                                <depends>
+                                    <field id="*/braintree_section/braintree/braintree_applepay/active">1</field>
+                                </depends>
+                                <label>ApplePay</label>
+                            </field>
+                            <field id="applepay_disabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                                <label>ApplePay</label>
+                            </field>
+                            <field id="googlepay_enabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                                <depends>
+                                    <field id="*/braintree_section/braintree/braintree_googlepay/active">1</field>
+                                </depends>
+                                <label>Google Pay</label>
+                            </field>
+                            <field id="googlepay_disabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                               <label>Google Pay</label>
+                            </field>
+                            <field id="tests" translate="label" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                                <label>Tests</label>
+                                <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+                            </field>
+                            <field id="test_link" type="label" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                                <label><![CDATA[<a href="https://h30.hiconversion.net/cx/t/ab/dash?braintree=true" target="_blank">Create/Manage Tests in HiConversion</a>]]></label>
                             </field>
                         </group>
-                        <group id="link_existing" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
-                            <label>Link to an Existing Site In HiConversion</label>
-                            <field id="site_url" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
-                                <label>Existing Site URL</label>
-                                <frontend_class>validate-url</frontend_class>
-                                <backend_model>Hic\Integration\Model\Adminhtml\System\Config\NonStorable</backend_model>
-                            </field>
-                            <field id="email" translate="label" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
-                                <label>Your Email Address</label>
-                                <frontend_class>validate-email</frontend_class>
-                                <backend_model>Hic\Integration\Model\Adminhtml\System\Config\NonStorable</backend_model>
-                            </field>
-                            <field id="link" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
-                                <label></label>
-                                <frontend_model>Hic\Integration\Block\Adminhtml\Form\Field\Link</frontend_model>
-                            </field>
-                        </group>
-                        <group id="tests" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
-                            <comment><![CDATA[<a href="https://h30.hiconversion.net/cx/t/ab/dash" target="_blank">Create/Manage Tests in HiConversion</a>]]></comment>
-                            <label>Tests</label>
-                            <group id="cart" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
-                                <label>Cart</label>
-                                <group id="cart_paypal_express" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
-                                    <label>PayPal Express</label>
-                                    <field id="test_mode" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
-                                        <label>Enable Test Mode</label>
-                                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                                        <config_path>hiconversion/configuration/cart_paypal_test_enabled</config_path>
-                                    </field>
-                                    <field id="disable" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
-                                        <label>Disable in Cart</label>
-                                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                                        <config_path>hiconversion/configuration/cart_paypal_disabled</config_path>
-                                    </field>
-                                </group>
-                                <group id="cart_paypal_credit" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
-                                    <label>PayPal Credit</label>
-                                    <field id="test_mode" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
-                                        <label>Enable Test Mode</label>
-                                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                                        <config_path>hiconversion/configuration/cart_paypal_credit_test_enabled</config_path>
-                                    </field>
-                                    <field id="disable" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
-                                        <label>Disable in Cart</label>
-                                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                                        <config_path>hiconversion/configuration/cart_paypal_credit_disabled</config_path>
-                                    </field>
-                                </group>
-                                <group id="cart_apple_pay" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
-                                    <label>Apple Pay</label>
-                                    <field id="test_mode" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
-                                        <label>Enable Test Mode</label>
-                                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                                        <config_path>hiconversion/configuration/cart_apple_pay_test_enabled</config_path>
-                                    </field>
-                                    <field id="disable" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
-                                        <label>Disable in Cart</label>
-                                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                                        <config_path>hiconversion/configuration/cart_apple_pay_disabled</config_path>
-                                    </field>
-                                </group>
-                                <group id="cart_google_pay" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
-                                    <label>Google Pay</label>
-                                    <field id="test_mode" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
-                                        <label>Enable Test Mode</label>
-                                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                                        <config_path>hiconversion/configuration/cart_google_pay_test_enabled</config_path>
-                                    </field>
-                                    <field id="disable" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
-                                        <label>Disable in Cart</label>
-                                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                                        <config_path>hiconversion/configuration/cart_google_pay_disabled</config_path>
-                                    </field>
-                                </group>
-                            </group>
-                            <group id="minicart" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
-                                <label>Minicart</label>
-                                <group id="minicart_paypal_express" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
-                                    <label>PayPal Express</label>
-                                    <field id="test_mode" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
-                                        <label>Enable Test Mode</label>
-                                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                                        <config_path>hiconversion/configuration/minicart_paypal_test_enabled</config_path>
-                                    </field>
-                                    <field id="disable" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
-                                        <label>Disable in Cart</label>
-                                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                                        <config_path>hiconversion/configuration/minicart_paypal_disabled</config_path>
-                                    </field>
-                                </group>
-                                <group id="minicart_paypal_credit" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
-                                    <label>PayPal Credit</label>
-                                    <field id="minicart_paypal_credit" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
-                                        <label>Enable Test Mode</label>
-                                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                                        <config_path>hiconversion/configuration/minicart_paypal_credit_test_enabled</config_path>
-                                    </field>
-                                    <field id="disable" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
-                                        <label>Disable in Cart</label>
-                                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                                        <config_path>hiconversion/configuration/minicart_paypal_credit_disabled</config_path>
-                                    </field>
-                                </group>
-                                <group id="minicart_apple_pay" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
-                                    <label>Apple Pay</label>
-                                    <field id="minicart_apple_pay" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
-                                        <label>Enable Test Mode</label>
-                                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                                        <config_path>hiconversion/configuration/minicart_apple_pay_test_enabled</config_path>
-                                    </field>
-                                    <field id="disable" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
-                                        <label>Disable in Cart</label>
-                                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                                        <config_path>hiconversion/configuration/minicart_apple_pay_disabled</config_path>
-                                    </field>
-                                </group>
-                                <group id="minicart_google_pay" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
-                                    <label>Google Pay</label>
-                                    <field id="minicart_google_pay" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
-                                        <label>Enable Test Mode</label>
-                                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                                        <config_path>hiconversion/configuration/minicart_google_pay_test_enabled</config_path>
-                                    </field>
-                                    <field id="disable" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
-                                        <label>Disable in Cart</label>
-                                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                                        <config_path>hiconversion/configuration/minicart_google_pay_disabled</config_path>
-                                    </field>
-                                </group>
-                            </group>
-                            <group id="sitewide" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
-                                <label>Sitewide</label>
-                                <group id="paypal_button_shape" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
-                                    <label>PayPal Button Shape</label>
-                                    <field id="test_mode" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
-                                        <label>Enable Test Mode</label>
-                                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                                        <config_path>hiconversion/configuration/sitewide_paypal_button_shape_test_enabled</config_path>
-                                    </field>
-                                </group>
-                                <group id="paypal_button_color" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
-                                    <label>PayPal Button Color</label>
-                                    <field id="test_mode" translate="label" type="select" sortOrder="31" showInDefault="1" showInWebsite="1" showInStore="1">
-                                        <label>Enable Test Mode</label>
-                                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                                        <config_path>hiconversion/configuration/sitewide_paypal_button_color_test_enabled</config_path>
-                                    </field>
-                                </group>
-                            </group>
-                        </group>
-                        <group id="advanced" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="26">
+                        <group id="advanced" translate="label" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <depends>
+                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
+                            </depends>
                             <label>Advanced Settings</label>
                             <field id="bn_code" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
                                 <label>Build Notation Code</label>

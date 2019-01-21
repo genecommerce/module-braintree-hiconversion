@@ -1,0 +1,7 @@
+[id*=braintree_hic_testing][style*='display: none'] + tr{
+  display:table-row;
+}
+
+[id*=braintree_hic_testing][id*=_disabled] {
+    display:none;
+}
