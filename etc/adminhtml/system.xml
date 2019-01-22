@@ -12,48 +12,34 @@
                 <group id="braintree">
                     <group id="braintree_hic" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="25">
                         <label>HiConversion</label>
+                        <comment><![CDATA[Please enter your HiConversion account information and click validate. If you do not have a HiConversion account, <a href="#">click here to set one up.</a>]]></comment>
                         <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
-                        <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
-                            <label>Enable HiConversion</label>
-                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                            <config_path>hiconversion/configuration/enabled</config_path>
-                        </field>
-                        <field id="site_url" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
-                            <depends>
-                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
-                            </depends>
+                        <field id="site_url" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                             <label>Your Site URL</label>
                             <frontend_class>validate-url</frontend_class>
                             <backend_model>Hic\Integration\Model\Adminhtml\System\Config\NonStorable</backend_model>
                         </field>
-                        <field id="email" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                            <depends>
-                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
-                            </depends>
+                        <field id="email" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                             <label>Your Email Address</label>
                             <frontend_class>validate-email</frontend_class>
                             <backend_model>Hic\Integration\Model\Adminhtml\System\Config\NonStorable</backend_model>
                         </field>
-                        <field id="password" translate="label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
-                            <depends>
-                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
-                            </depends>
+                        <field id="password" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                             <label>Password</label>
                             <backend_model>Hic\Integration\Model\Adminhtml\System\Config\NonStorable</backend_model>
                         </field>
-                        <field id="site_id" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
-                            <depends>
-                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
-                            </depends>
+                        <field id="site_id" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                             <label>Site ID</label>
                             <config_path>hiconversion/configuration/site_id</config_path>
                         </field>
-                        <field id="activate" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
-                            <depends>
-                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
-                            </depends>
+                        <field id="link_validate" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                             <label></label>
-                            <frontend_model>Hic\Integration\Block\Adminhtml\Form\Field\Activation</frontend_model>
+                            <frontend_model>Hic\Integration\Block\Adminhtml\Form\Field\LinkValidation</frontend_model>
+                        </field>
+                        <field id="enabled" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Enable HiConversion</label>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                            <config_path>hiconversion/configuration/enabled</config_path>
                         </field>
                         <field id="bt_enabled" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
                             <depends>
@@ -108,7 +94,7 @@
                                 <label>Google Pay</label>
                             </field>
                             <field id="googlepay_disabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
-                               <label>Google Pay</label>
+                                <label>Google Pay</label>
                             </field>
                             <field id="tests" translate="label" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                                 <label>Tests</label>
