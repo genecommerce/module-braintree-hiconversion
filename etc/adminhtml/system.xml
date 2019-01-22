@@ -64,9 +64,11 @@
                                     <field id="*/braintree_section/braintree/braintree_paypal/display_on_shopping_cart">1</field>
                                 </depends>
                                 <label>PayPal</label>
+                                 <config_path>hiconversion/configuration/status_paypal_enabled</config_path>
                             </field>
                             <field id="paypal_disabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
                                 <label>PayPal</label>
+                                 <config_path>hiconversion/configuration/status_paypal_disabled</config_path>
                             </field>
                             <field id="paypal_credit_enabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
                                 <depends>
@@ -74,27 +76,33 @@
                                     <field id="*/braintree_section/braintree/braintree_paypal/display_on_shopping_cart">1</field>
                                 </depends>
                                 <label>PayPal Credit</label>
+                                 <config_path>hiconversion/configuration/status_paypal_credit_enabled</config_path>
                             </field>
                             <field id="paypal_credit_disabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
                                 <label>PayPal Credit</label>
+                                 <config_path>hiconversion/configuration/status_paypal_credit_disabled</config_path>
                             </field>
                             <field id="applepay_enabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
                                 <depends>
                                     <field id="*/braintree_section/braintree/braintree_applepay/active">1</field>
                                 </depends>
                                 <label>ApplePay</label>
+                                 <config_path>hiconversion/configuration/status_applepay_enabled</config_path>
                             </field>
                             <field id="applepay_disabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
                                 <label>ApplePay</label>
+                                 <config_path>hiconversion/configuration/status_applepay_disabled</config_path>
                             </field>
                             <field id="googlepay_enabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
                                 <depends>
                                     <field id="*/braintree_section/braintree/braintree_googlepay/active">1</field>
                                 </depends>
                                 <label>Google Pay</label>
+                                 <config_path>hiconversion/configuration/status_googlepay_enabled</config_path>
                             </field>
                             <field id="googlepay_disabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
                                 <label>Google Pay</label>
+                                 <config_path>hiconversion/configuration/status_googlepay_disabled</config_path>
                             </field>
                             <field id="tests" translate="label" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
                                 <label>Tests</label>
