@@ -12,8 +12,8 @@
                 <group id="braintree">
                     <group id="braintree_hic" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="25">
                         <label>HiConversion</label>
-                        <comment><![CDATA[Please enter your HiConversion account information and click validate. If you do not have a HiConversion account, <a href="#">click here to set one up.</a>]]></comment>
-                        <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+                        <comment><![CDATA[<div class="hic-account-info-label">Please enter your HiConversion account information and click validate. If you do not have a HiConversion account, <a href="#" onclick="showHicCreateAccountFields.call(this, event);">click here to set one up.</a></div><br/><div class="create-hic-account-label">Please enter the following information to set up your HiConversion account.</div>]]></comment>
+                       <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
                         <field id="site_url" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                             <label>Your Site URL</label>
                             <frontend_class>validate-url</frontend_class>
@@ -24,7 +24,7 @@
                             <frontend_class>validate-email</frontend_class>
                             <backend_model>Hic\Integration\Model\Adminhtml\System\Config\NonStorable</backend_model>
                         </field>
-                        <field id="password" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <field id="password" type="obscure" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                             <label>Password</label>
                             <backend_model>Hic\Integration\Model\Adminhtml\System\Config\NonStorable</backend_model>
                         </field>
@@ -35,6 +35,10 @@
                         <field id="link_validate" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
                             <label></label>
                             <frontend_model>Hic\Integration\Block\Adminhtml\Form\Field\LinkValidation</frontend_model>
+                        </field>
+                        <field id="create_account" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label></label>
+                            <frontend_model>Hic\Integration\Block\Adminhtml\Form\Field\Activation</frontend_model>
                         </field>
                         <field id="enabled" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
                             <label>Enable HiConversion</label>

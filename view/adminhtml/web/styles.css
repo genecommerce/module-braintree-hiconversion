@@ -5,3 +5,11 @@
 [id*=braintree_hic_testing][id*=_disabled] {
     display:none;
 }
+
+[id*=braintree_hic_create_account] {
+    display:none;
+}
+
+.create-hic-account-label {
+    display:none;
+}
