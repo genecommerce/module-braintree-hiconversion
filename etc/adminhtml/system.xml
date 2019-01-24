@@ -12,17 +12,17 @@
                 <group id="braintree">
                     <group id="braintree_hic" translate="label" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="25">
                         <label>HiConversion</label>
-                        <comment><![CDATA[<div class="hic-account-info-label">Please enter your HiConversion account information and click validate. If you do not have a HiConversion account, <a href="#" onclick="showHicCreateAccountFields.call(this, event);">click here to set one up.</a></div><br/><div class="create-hic-account-label">Please enter the following information to set up your HiConversion account.</div>]]></comment>
-                       <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+                        <comment><![CDATA[<div class="hic-account-info-label">Please enter your HiConversion account information and click validate. If you do not have a HiConversion account, <a href="#" onclick="showHicCreateAccountFields.call(this, event);">click here to set one up.</a></div><br/><div class="create-hic-account-label">Please enter the following information to set up your HiConversion account. <a href="#" onclick="showHicGetIdFields.call(this, event);">Click here to enter ID manually.</a></div>]]></comment>
+                        <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
                         <field id="site_url" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                             <label>Your Site URL</label>
                             <frontend_class>validate-url</frontend_class>
-                            <backend_model>Hic\Integration\Model\Adminhtml\System\Config\NonStorable</backend_model>
+                            <config_path>hiconversion/configuration/site_url</config_path>
                         </field>
                         <field id="email" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                             <label>Your Email Address</label>
                             <frontend_class>validate-email</frontend_class>
-                            <backend_model>Hic\Integration\Model\Adminhtml\System\Config\NonStorable</backend_model>
+                            <config_path>hiconversion/configuration/email</config_path>
                         </field>
                         <field id="password" type="obscure" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                             <label>Password</label>
@@ -53,70 +53,96 @@
                             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                             <config_path>hiconversion/configuration/bt_enabled</config_path>
                         </field>
-                        <group id="testing" translate="label" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <field id="testing" translate="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
                             <depends>
                                 <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
                             </depends>
                             <label>Testing and Optimization</label>
-                            <field id="wallets" translate="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
-                                <label>Payment Methods/Wallets Checklist</label>
-                                <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
-                            </field>
-                            <field id="paypal_enabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
-                                <depends>
-                                    <field id="*/braintree_section/braintree/active_braintree_paypal">1</field>
-                                    <field id="*/braintree_section/braintree/braintree_paypal/display_on_shopping_cart">1</field>
-                                </depends>
-                                <label>PayPal</label>
-                                 <config_path>hiconversion/configuration/status_paypal_enabled</config_path>
-                            </field>
-                            <field id="paypal_disabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
-                                <label>PayPal</label>
-                                 <config_path>hiconversion/configuration/status_paypal_disabled</config_path>
-                            </field>
-                            <field id="paypal_credit_enabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
-                                <depends>
-                                    <field id="*/braintree_section/braintree/braintree_paypal_credit_active">1</field>
-                                    <field id="*/braintree_section/braintree/braintree_paypal/display_on_shopping_cart">1</field>
-                                </depends>
-                                <label>PayPal Credit</label>
-                                 <config_path>hiconversion/configuration/status_paypal_credit_enabled</config_path>
-                            </field>
-                            <field id="paypal_credit_disabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
-                                <label>PayPal Credit</label>
-                                 <config_path>hiconversion/configuration/status_paypal_credit_disabled</config_path>
-                            </field>
-                            <field id="applepay_enabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
-                                <depends>
-                                    <field id="*/braintree_section/braintree/braintree_applepay/active">1</field>
-                                </depends>
-                                <label>ApplePay</label>
-                                 <config_path>hiconversion/configuration/status_applepay_enabled</config_path>
-                            </field>
-                            <field id="applepay_disabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
-                                <label>ApplePay</label>
-                                 <config_path>hiconversion/configuration/status_applepay_disabled</config_path>
-                            </field>
-                            <field id="googlepay_enabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
-                                <depends>
-                                    <field id="*/braintree_section/braintree/braintree_googlepay/active">1</field>
-                                </depends>
-                                <label>Google Pay</label>
-                                 <config_path>hiconversion/configuration/status_googlepay_enabled</config_path>
-                            </field>
-                            <field id="googlepay_disabled" type="label" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
-                                <label>Google Pay</label>
-                                 <config_path>hiconversion/configuration/status_googlepay_disabled</config_path>
-                            </field>
-                            <field id="tests" translate="label" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
-                                <label>Tests</label>
-                                <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
-                            </field>
-                            <field id="test_link" type="label" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
-                                <label><![CDATA[<a href="https://h30.hiconversion.net/cx/t/ab/dash?braintree=true" target="_blank">Create/Manage Tests in HiConversion</a>]]></label>
-                            </field>
-                        </group>
-                        <group id="advanced" translate="label" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+                        </field>
+                        <field id="wallets" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <depends>
+                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                            </depends>
+                            <label>Payment Methods/Wallets Checklist</label>
+                            <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+                        </field>
+                        <field id="paypal_enabled" type="label" translate="label" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <depends>
+                                <field id="*/braintree_section/braintree/active_braintree_paypal">1</field>
+                                <field id="*/braintree_section/braintree/braintree_paypal/display_on_shopping_cart">1</field>
+                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                            </depends>
+                            <label>PayPal</label>
+                            <config_path>hiconversion/configuration/status_paypal_enabled</config_path>
+                        </field>
+                        <field id="paypal_disabled" type="label" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <depends>
+                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                            </depends>
+                            <label>PayPal</label>
+                            <config_path>hiconversion/configuration/status_paypal_disabled</config_path>
+                        </field>
+                        <field id="paypal_credit_enabled" type="label" translate="label" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <depends>
+                                <field id="*/braintree_section/braintree/braintree_paypal_credit_active">1</field>
+                                <field id="*/braintree_section/braintree/braintree_paypal/display_on_shopping_cart">1</field>
+                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                            </depends>
+                            <label>PayPal Credit</label>
+                            <config_path>hiconversion/configuration/status_paypal_credit_enabled</config_path>
+                        </field>
+                        <field id="paypal_credit_disabled" type="label" translate="label" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <depends>
+                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                            </depends>
+                            <label>PayPal Credit</label>
+                            <config_path>hiconversion/configuration/status_paypal_credit_disabled</config_path>
+                        </field>
+                        <field id="applepay_enabled" type="label" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <depends>
+                                <field id="*/braintree_section/braintree/braintree_applepay/active">1</field>
+                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                            </depends>
+                            <label>ApplePay</label>
+                            <config_path>hiconversion/configuration/status_applepay_enabled</config_path>
+                        </field>
+                        <field id="applepay_disabled" type="label" translate="label" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <depends>
+                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                            </depends>
+                            <label>ApplePay</label>
+                            <config_path>hiconversion/configuration/status_applepay_disabled</config_path>
+                        </field>
+                        <field id="googlepay_enabled" type="label" translate="label" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <depends>
+                                <field id="*/braintree_section/braintree/braintree_googlepay/active">1</field>
+                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                            </depends>
+                            <label>Google Pay</label>
+                            <config_path>hiconversion/configuration/status_googlepay_enabled</config_path>
+                        </field>
+                        <field id="googlepay_disabled" type="label" translate="label" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <depends>
+                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                            </depends>
+                            <label>Google Pay</label>
+                            <config_path>hiconversion/configuration/status_googlepay_disabled</config_path>
+                        </field>
+                        <field id="tests" translate="label" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <depends>
+                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                            </depends>
+                            <label>Tests</label>
+                            <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+                        </field>
+                        <field id="test_link" type="label" translate="label" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <depends>
+                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                            </depends>
+                            <label><![CDATA[<a href="https://h30.hiconversion.net/cx/t/ab/dash?braintree=true" target="_blank">Create/Manage Tests in HiConversion</a>]]></label>
+                        </field>
+                        <group id="advanced" translate="label" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="1">
                             <depends>
                                 <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
                             </depends>

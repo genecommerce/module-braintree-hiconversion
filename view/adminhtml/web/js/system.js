@@ -11,4 +11,17 @@ require(['jquery'], function ($) {
         wrapper.find('.create-hic-account-label').show();
     
     }
+
+    window.showHicGetIdFields = function (ev) {
+        ev.preventDefault();
+        var wrapper = $(this).closest('fieldset');
+
+        wrapper.find('tr[id*=_link_validate]').show();
+        wrapper.find('tr[id*=_site_id]').show();
+        wrapper.find('.hic-account-info-label').show();
+
+        wrapper.find('tr[id*=_create_account]').hide();
+        wrapper.find('.create-hic-account-label').hide();
+    
+    }
 });
