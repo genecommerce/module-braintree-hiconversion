@@ -1,8 +1,8 @@
-[id*=braintree_hic_testing][style*='display: none'] + tr{
+[id*=braintree_hic][style*='display: none'] + tr{
   display:table-row;
 }
 
-[id*=braintree_hic_testing][id*=_disabled] {
+[id*=braintree_hic][id*=_disabled] {
     display:none;
 }
 
@@ -12,4 +12,46 @@
 
 .create-hic-account-label {
     display:none;
+}
+
+[id*=braintree_hic_paypal_enabled] .control-value:before,
+[id*=braintree_hic_paypal_credit_enabled] .control-value:before,
+[id*=braintree_hic_applepay_enabled] .control-value:before,
+[id*=braintree_hic_googlepay_enabled] .control-value:before {
+    color: #79a22e;
+    content: '\e62d';
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+    background: none;
+    border: 0;
+    font-family: 'Admin Icons';
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    line-height: inherit;
+    speak: none;
+    text-shadow: none;
+    width: auto;
+}
+
+[id*=braintree_hic_paypal_disabled] .control-value:before,
+[id*=braintree_hic_paypal_credit_disabled] .control-value:before,
+[id*=braintree_hic_applepay_disabled] .control-value:before,
+[id*=braintree_hic_googlepay_disabled] .control-value:before {
+    color: #e22626;
+    content: '\e632';
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+    background: none;
+    border: 0;
+    font-family: 'Admin Icons';
+    font-style: normal;
+    font-weight: 400;
+    height: auto;
+    line-height: inherit;
+    speak: none;
+    text-shadow: none;
+    width: auto;
 }
