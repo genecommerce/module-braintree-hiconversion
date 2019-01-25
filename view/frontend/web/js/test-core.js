@@ -135,6 +135,16 @@ define([
             return obj;
         },
 
+        interceptPaypalButton: function (config, cb) {
+            window.braintreeHicApi = window.braintreeHicApi || {};
+            window.braintreeHicApi.setupPaypalButton = function(newConfig) {
+                var configCopy = $.clone(config);
+                // modify configCopy relative to our changes
+                
+                cb(configCopy);
+            };
+        },
+
         addToApi: function (testLocation, testName, obj) {
             window.braintreeHicApi = window.braintreeHicApi || {};
             window.braintreeHicApi[testLocation] = window.braintreeHicApi[testLocation] || {};
