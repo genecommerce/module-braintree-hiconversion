@@ -10,39 +10,33 @@ define([
 
     return function (config) {
 
-        if (config) {
 
-            window.cart_config = config;
-            //testCore.addToApi('config','cart_payment_methods', config);
+            testCore.paymentMethods().add({
+                page: "cart",
+                paymentMethod: "paypalCheckout",
+                selector: ".cart-summary .paypal.checkout:not(.paypal-bml)",                
+            })
+            
+            /*
+            testCore.paymentMethods().add({
+                page: 'cart',
+                paymentMethod: 'paypalCredit',
+                selector: ".cart-summary .paypal-bml.checkout"
+            })
+            */
 
-            testCore.addToApi('cart', 'paypal', testCore.paymentMethod({
-                config: config.paypalExpress,
-                eligible: "",
-                selector: ".cart-summary .paypal.checkout:not(.paypal-bml)",
-                label: "cart_paypal"
-            }).init());
+            testCore.paymentMethods().add({
+                page: 'cart',
+                paymentMethod: 'applePay',
+                selector: ".cart-summary .applepay-minicart"
+            })
 
-            testCore.addToApi('cart','paypalCredit', testCore.paymentMethod({
-                config: config.paypalCredit,
-                eligible: "",
-                selector: ".cart-summary .paypal-bml.checkout",
-                label: "cart_paypalCredit"
-            }).init());
+            testCore.paymentMethods().add({
+                page: 'cart',
+                paymentMethod: 'googlePay',
+                selector: ".cart-summary .googlepay-minicart-logo"
+            })
 
-            testCore.addToApi('cart','applePay', testCore.paymentMethod({
-                config: config.applePay,
-                eligible: "",
-                selector: ".cart-summary .applepay-minicart",
-                label: "cart_applePay"
-            }).init());
 
-            testCore.addToApi('cart','googlePay', testCore.paymentMethod({
-                config: config.googlePay,
-                eligible: "",
-                selector: ".cart-summary .googlepay-minicart-logo",
-                label: "googlePay_cart"
-            }).init());
-
-        }
     };
 });

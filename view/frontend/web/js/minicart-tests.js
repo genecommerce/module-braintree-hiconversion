@@ -10,35 +10,37 @@ define([
 
     return function (config) {
 
-        if (config) {
+            var selectors = {
+                vertical: "[id='minicart-content-wrapper'] .checkout.paypal",
+                horiztonal: "",
+            }
 
-            //testCore.addToApi('config','minicart_payment_methods', config);
-            window.minicart_config = config;
+            testCore.paymentMethods().add({
+                page: "minicart",
+                paymentMethod: "paypalCheckout",
+                //selector: "#mingit icart-content-wrapper .paypal.checkout:not(.paypal-bml)",
+                selector: "[id='minicart-content-wrapper'] .checkout.paypal",
+            })
 
-            testCore.addToApi('minicart', 'paypal', testCore.paymentMethod({
-                config: config.paypalExpress,
-                eligible: "",
-                selector: "#minicart-content-wrapper .paypal.checkout:not(.paypal-bml)",
-            }).init());
-
-            testCore.addToApi('minicart','paypalCredit', testCore.paymentMethod({
-                config: config.paypalCredit,
-                eligible: "",
+            /*
+            testCore.paymentMethods().add({
+                page: 'minicart',
+                paymentMethod: "paypalCredit",
                 selector: "#minicart-content-wrapper .paypal-bml.checkout",
-            }).init());
+            })
+            */
 
-            testCore.addToApi('minicart','applePay', testCore.paymentMethod({
-                config: config.applePay,
-                eligible: "",
+            testCore.paymentMethods().add({
+                page: 'minicart',
+                paymentMethod: "applePay",
                 selector: "#minicart-content-wrapper .applepay-minicart",
-            }).init());
+            })
 
-            testCore.addToApi('minicart','googlePay', testCore.paymentMethod({
-                config: config.googlePay,
-                eligible: "",
+            testCore.paymentMethods().add({
+                page: 'minicart',
+                paymentMethod: "googlePay",
                 selector: "#minicart-content-wrapper .googlepay-minicart-logo",
-            }).init());
+            })
 
-        }
     };
 });
