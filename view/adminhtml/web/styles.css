@@ -10,10 +10,6 @@
     display:none;
 }
 
-.create-hic-account-label {
-    display:none;
-}
-
 [id*=braintree_hic_paypal_enabled] .control-value:before,
 [id*=braintree_hic_paypal_credit_enabled] .control-value:before,
 [id*=braintree_hic_applepay_enabled] .control-value:before,
