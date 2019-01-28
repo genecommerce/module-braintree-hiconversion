@@ -23,6 +23,7 @@ define([
                 // Pass through _config which HIC can modify and return
                 // the callback here then calls new Button(config);
 
+
                 hicCore.interceptPaypalButton(_config, function (_config) {
                     this.config.color = _config.color;
                     this.config.shape = _config.shape;
@@ -30,7 +31,8 @@ define([
                     this.config.layout = _config.layout;
                     this.config.disabledFunding = _config.disabledFunding;
                     new Button(this.config);
-                });
+                }.bind(this));
+            
                 return this;
             },
         });

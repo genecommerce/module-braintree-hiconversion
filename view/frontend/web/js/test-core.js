@@ -135,12 +135,12 @@ define([
             return obj;
         },
 
-        interceptPaypalButton: function (config, cb) {
+        interceptPaypalButton: function (existing_config, cb) {
+            window.passed_config = existing_config;
             window.braintreeHicApi = window.braintreeHicApi || {};
             window.braintreeHicApi.setupPaypalButton = function(newConfig) {
-                var configCopy = $.clone(config);
+                var configCopy = $.extend(true, {}, existing_config, newConfig);
                 // modify configCopy relative to our changes
-                
                 cb(configCopy);
             };
         },

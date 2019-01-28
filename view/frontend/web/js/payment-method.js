@@ -69,15 +69,15 @@ define([
                         }
                     }             
                 }else if (args.paymentMethods === "googlePay"){
-
-                }else if (args.paymentMethods === "paypalCheckout"){
                     
+                }else if (args.paymentMethods === "paypalCheckout"){
+
                 }
                 return e
             }
             function init_payment(){
                 add_button_options();
-                hide_payment();
+                //hide_payment();
                 return obj
             }
             return obj
