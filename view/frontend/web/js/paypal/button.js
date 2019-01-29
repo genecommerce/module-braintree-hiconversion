@@ -1,8 +1,10 @@
 define([
+    'jquery',
     'uiComponent',
     'Magento_Braintree/js/paypal/button',
     'Gene_BraintreeHiConversion/js/test-core'
 ], function (
+    $,
     Component,
     Button,
     hicCore
@@ -23,8 +25,10 @@ define([
                 // Pass through _config which HIC can modify and return
                 // the callback here then calls new Button(config);
 
+                var minicartWrapper = $('#' + this.config.id).closest('#minicart-content-wrapper');
 
-                hicCore.interceptPaypalButton(_config, function (_config) {
+
+                hicCore.interceptPaypalButton(minicartWrapper.length ? 'minicart': 'cart', _config, function (_config) {
                     this.config.color = _config.color;
                     this.config.shape = _config.shape;
                     this.config.size = _config.size;
