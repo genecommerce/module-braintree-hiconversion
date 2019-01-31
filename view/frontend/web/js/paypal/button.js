@@ -35,6 +35,7 @@ define([
                     this.config.label = _config.label;
                     this.config.branding = _config.branding;
                     this.config.fundingicons = _config.fundingicons;
+                    this.config.tagline = _config.tagline;
                     new Button(this.config);
                 }.bind(this));
             
