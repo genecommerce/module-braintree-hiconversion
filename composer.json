@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "require": {
     "gene/module-braintree": "dev-develop",
-    "hiconversion/module-integration": "^1.2"
+    "hiconversion/module-integration": "dev-develop"
   },
   "type": "magento2-module",
   "license": [
