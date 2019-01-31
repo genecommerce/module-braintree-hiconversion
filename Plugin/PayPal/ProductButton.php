@@ -7,7 +7,7 @@ namespace Gene\BraintreeHiConversion\Plugin\PayPal;
  * Replace the template used by the product button to use the HIC one
  * @package Gene\BraintreeHiConversion\Plugin\PayPal
  */
-class CartButton
+class ProductButton
 {
     const TEMPLATE_PATH = 'Gene_BraintreeHiConversion::paypal/productbutton.phtml';
 
