@@ -21,7 +21,19 @@ define([
                     label: this.config.label,
                     branding: this.config.branding,
                     fundingicons: this.config.fundingicons,
-                    disabledFunding: this.config.disabledFunding
+                    disabledFunding: this.config.disabledFunding,
+
+                    events: {
+                        onClick: function () {
+                            console.log("click");
+                        },
+                        onCancel: function () {
+                            console.log("cancel");
+                        },
+                        onError: function (err) {
+                            console.log("error");
+                        },
+                    }
                 };
 
                 var minicartWrapper = $('#' + this.config.id).closest('#minicart-content-wrapper');
@@ -36,6 +48,11 @@ define([
                     this.config.branding = _config.branding;
                     this.config.fundingicons = _config.fundingicons;
                     this.config.tagline = _config.tagline;
+                    
+                    this.config.events.onClick = function() {
+                        console.log("click2");
+                    };
+
                     new Button(this.config);
                 }.bind(this));
             
