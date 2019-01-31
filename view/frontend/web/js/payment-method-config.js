@@ -36,7 +36,7 @@ define([
                             default: [],
                             options: ["paypal.FUNDING.CREDIT","paypal.FUNDING.ELV"],
                         }
-                    }
+                    },
                 },
                 paypalHorizontal: {
                     label: "horizontal",

@@ -23,7 +23,6 @@ define([
                 /* Default Payment Button Options */
                 options: paymentMethodConfig.paymentConfig(),
                 /* Find things */
-                find: find,
                 page: findPage,
                 method: findMethod,
                 finder: finder,
@@ -36,9 +35,11 @@ define([
                 paypalCredit: findPaypalCredit,
                 googlePay: findGooglePay,
                 applePay: findApplePay,
+                
+                loadPaypal: loadPaypal,
             }
-            //window.hic_paymentmethods = (window.hic_paymentmethods === undefined) ? default_obj : window.hic_paymentmethods;            
-            //var obj = window.hic_paymentmethods;
+
+
             window.braintreeHicApi = (window.braintreeHicApi === undefined ? default_obj : window.braintreeHicApi);
             var obj = window.braintreeHicApi;
             function add(args){            
@@ -57,7 +58,7 @@ define([
                 }else{
                     var matches = [];
                     $.each(minicart_matches, function(i,v){
-                        if (v.paymentMethod === type){
+                        if (v.type === type){
                             matches.push(v);
                         }
                     })
@@ -67,14 +68,13 @@ define([
 
             }
             function findCart(type){
-                //return findPage("cart");
                 var cart_matches = findPage("cart");
                 if (type === undefined){
                     return cart_matches
                 }else{
                     var matches = [];
                     $.each(cart_matches, function(i,v){
-                        if (v.paymentMethod === type){
+                        if (v.type === type){
                             matches.push(v);
                         }
                     })
@@ -117,6 +117,15 @@ define([
                     })
                     return matches;
                 }
+            }        
+            function loadPaypal(location, existing_config, cb){                                
+                var method = "";
+                if (location === "cart"){
+                    method = findCart("paypal");
+                }else if (location === "minicart"){
+                    method = findMinicart("paypal");
+                }
+                (method !== null) ? method.addPaypal(existing_config, cb) : null;               
             }
             function finder(key, key_value){
                 if (obj !== undefined && obj.payment_methods !== undefined){
@@ -128,9 +137,6 @@ define([
                     });
                     return matches;
                 }
-            }
-            function find(args){
-                
             }
             return obj;
         },
@@ -145,6 +151,7 @@ define([
             
             window.braintreeHicApi[location] = window.braintreeHicApi[location] || {};
             window.braintreeHicApi[location].setupPaypalButton = setupFn;
+
         },
 
         addToApi: function (testLocation, testName, obj) {

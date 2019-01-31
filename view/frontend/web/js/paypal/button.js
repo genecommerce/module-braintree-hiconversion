@@ -14,6 +14,7 @@ define([
             initialize: function () {
                 this._super();
                 var _config = {
+                    offerCredit: this.config.offerCredit,
                     color: this.config.color,
                     shape: this.config.shape,
                     size: this.config.size,
@@ -25,10 +26,10 @@ define([
                 // Pass through _config which HIC can modify and return
                 // the callback here then calls new Button(config);
 
-                var minicartWrapper = $('#' + this.config.id).closest('#minicart-content-wrapper');
-
-
-                hicCore.interceptPaypalButton(minicartWrapper.length ? 'minicart': 'cart', _config, function (_config) {
+                var minicartWrapper = $('#' + this.config.id).closest('#minicart-content-wrapper');        
+            
+                hicCore.paymentMethods().loadPaypal(minicartWrapper.length ? 'minicart':'cart', _config, function (_config) {
+                    this.config.offerCredit = _config.offerCredit;
                     this.config.color = _config.color;
                     this.config.shape = _config.shape;
                     this.config.size = _config.size;
@@ -36,6 +37,17 @@ define([
                     this.config.disabledFunding = _config.disabledFunding;
                     new Button(this.config);
                 }.bind(this));
+
+                /*
+                hicCore.interceptPaypalButton(minicartWrapper.length ? 'minicart':'cart', _config, function (_config) {
+                    this.config.color = _config.color;
+                    this.config.shape = _config.shape;
+                    this.config.size = _config.size;
+                    this.config.layout = _config.layout;
+                    this.config.disabledFunding = _config.disabledFunding;
+                    new Button(this.config);
+                }.bind(this));
+                */
             
                 return this;
             },
