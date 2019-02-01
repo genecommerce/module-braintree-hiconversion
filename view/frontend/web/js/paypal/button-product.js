@@ -1,7 +1,7 @@
 define([
     'jquery',
     'uiComponent',
-    'Magento_Braintree/js/paypal/one-click-button',
+    'Magento_Braintree/js/paypal/product-page',
     'Gene_BraintreeHiConversion/js/test-core'
 ], function (
     $,
