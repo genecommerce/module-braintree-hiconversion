@@ -12,7 +12,20 @@ use Magento\Store\Model\ScopeInterface;
  */
 class Data extends AbstractHelper
 {
+    const KEY_ENABLED = 'hiconversion/configuration/enabled';
     const KEY_TESTING_ENABLED = 'hiconversion/configuration/bt_enabled';
+
+
+    /**
+     * @return boolean
+     */
+    public function isEnabled()
+    {
+        return (bool) $this->scopeConfig->getValue(
+            self::KEY_ENABLED,
+            ScopeInterface::SCOPE_STORE
+        );
+    }
 
     /**
      * @return boolean

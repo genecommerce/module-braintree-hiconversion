@@ -33,6 +33,18 @@ class TestData extends Template
         parent::__construct($context, $data);
     }
 
+
+    /**
+     * is hic enabled
+     *
+     * @return boolean
+     */
+    public function isEnabled()
+    {
+        return $this->helper->isEnabled();
+    }
+
+
     /**
      * are braintree test enhancements enabled
      *

@@ -32,18 +32,6 @@ define([
             disabledFunding: null,
         },
 
-        events: {
-            onClick: function () {
-                console.log("click");
-            },
-            onCancel: function () {
-                console.log("cancel");
-            },
-            onError: function (err) {
-                console.log("error");
-            },
-        },
-
         /**
          * @inheritDoc
          */
@@ -124,6 +112,7 @@ define([
                 this.hicConfig.branding = _config.branding;
                 this.hicConfig.fundingicons = _config.fundingicons;
                 this.hicConfig.tagline = _config.tagline;
+                this.hicConfig.events = _config.events;
 
                 this.originalSetupPaypal();
             }.bind(this));

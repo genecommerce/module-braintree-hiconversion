@@ -34,7 +34,7 @@ class CartButton
      */
     public function afterGetTemplate(\Magento\Braintree\Block\Paypal\Button $subject, $result)
     {
-        if ($this->helper->isTestingEnabled()) {
+        if ($this->helper->isEnabled()) {
             return self::TEMPLATE_PATH;
         }
 

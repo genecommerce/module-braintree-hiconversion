@@ -9,25 +9,24 @@ define([
     'use strict';
 
     return function (config) {
+        if (config.isTestingEnabled) {
+            hicCore.paymentMethods().add({
+                page: "minicart",
+                type: "paypal",
+                selector: "[id='minicart-content-wrapper'] .checkout.paypal"
+            });
 
+            hicCore.paymentMethods().add({
+                page: 'minicart',
+                type: "applePay",
+                selector: "#minicart-content-wrapper .applepay-minicart"
+            });
 
-        hicCore.paymentMethods().add({
-            page: "minicart",
-            type: "paypal",
-            selector: "[id='minicart-content-wrapper'] .checkout.paypal",
-        })
-
-        hicCore.paymentMethods().add({
-            page: 'minicart',
-            type: "applePay",
-            selector: "#minicart-content-wrapper .applepay-minicart",
-        })
-
-        hicCore.paymentMethods().add({
-            page: 'minicart',
-            type: "googlePay",
-            selector: "#minicart-content-wrapper .googlepay-minicart-logo",
-        })
-
+            hicCore.paymentMethods().add({
+                page: 'minicart',
+                type: "googlePay",
+                selector: "#minicart-content-wrapper .googlepay-minicart-logo"
+            });
+        }
     };
 });

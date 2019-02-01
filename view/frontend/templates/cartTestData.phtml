@@ -3,12 +3,16 @@
  * @var \Gene\BraintreeHiConversion\Block\TestData $block
  */
 
-if ($block->isTestingEnabled()) : ?>
+$config = [
+    'Gene_BraintreeHiConversion/js/cart-tests' => [
+        'isTestingEnabled' => $block->isTestingEnabled()
+    ]
+];
+
+if ($block->isEnabled()) : ?>
     <script type="text/x-magento-init">
     {
-        "*": {
-            "Gene_BraintreeHiConversion/js/cart-tests": {}
-        }
+        "*": <?php /* @noEscape */ echo json_encode($config); ?>
     }
     </script>
 <?php endif; ?>

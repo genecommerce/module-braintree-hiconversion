@@ -35,7 +35,7 @@ class ProductButton
     public function afterGetTemplate(\Magento\Braintree\Block\Paypal\Button $subject, $result)
     {
         // @todo change setting to check against product
-        if ($this->helper->isTestingEnabled()) {
+        if ($this->helper->isEnabled()) {
             return self::TEMPLATE_PATH;
         }
 
