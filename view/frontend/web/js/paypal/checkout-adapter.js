@@ -22,9 +22,9 @@ define([
     return _.extend(Adapter, {
         hicConfig: {
             offerCredit: null,
-            color: 'blue',
+            color: null,
             shape: null,
-            size: 'small',
+            size: null,
             layout: null,
             label: null,
             branding: null,
