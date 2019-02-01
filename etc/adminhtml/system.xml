@@ -45,24 +45,25 @@
                             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                             <config_path>hiconversion/configuration/enabled</config_path>
                         </field>
-                        <field id="bt_enabled" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <field id="testing" translate="label" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
                             <depends>
                                 <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
-                            </depends>
-                            <label>Enable HiConversion Enhancements for Braintree</label>
-                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                            <config_path>hiconversion/configuration/bt_enabled</config_path>
-                        </field>
-                        <field id="testing" translate="label" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
-                            <depends>
-                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
                             </depends>
                             <label>Testing and Optimization</label>
                             <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
                         </field>
+                        <field id="bt_enabled" translate="label" type="select" sortOrder="71" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <depends>
+                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
+                            </depends>
+                            <label>Enable HiConversion Enhancements for Braintree</label>
+                            <comment><![CDATA[<a href="https://h30.hiconversion.net/cx/t/ab/dash?braintree=true" target="_blank">Please activate the tests you want to run in HiConversion before Enabling. </a>]]></comment>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                            <config_path>hiconversion/configuration/bt_enabled</config_path>
+                        </field>
                         <field id="wallets" translate="label" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
                             <depends>
-                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
                             </depends>
                             <label>Payment Methods/Wallets Checklist</label>
                             <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
@@ -71,82 +72,71 @@
                             <depends>
                                 <field id="*/braintree_section/braintree/active_braintree_paypal">1</field>
                                 <field id="*/braintree_section/braintree/braintree_paypal/display_on_shopping_cart">1</field>
-                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
+                                <field id="*/braintree_section/braintree/braintree_paypal/button_productpage/button_productpage_enable">1</field>
                             </depends>
                             <label>PayPal</label>
                             <config_path>hiconversion/configuration/status_paypal_enabled</config_path>
                         </field>
                         <field id="paypal_disabled" type="label" translate="label" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
                             <depends>
-                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
                             </depends>
                             <label>PayPal</label>
-                            <comment>Make sure to set "Enable PayPal through Braintree" to "Yes" under "Basic Braintree Settings". Additionally make sure that "Display on Shopping Cart" is set to "Yes" under "PayPal through Braintree" section.</comment>
+                            <comment><![CDATA[Ensure the following are set to "Yes"<ul class="note"><li>"Enable PayPal through Braintree" under "Basic Braintree Settings"</li><li>"Display on Shopping Cart" under "PayPal through Braintree" section</li><li>"Enable PayPal Buy Now button on the product page" in the "Product Page" section under the "PayPal through Braintree" section</li></ul>]]></comment>
                             <config_path>hiconversion/configuration/status_paypal_disabled</config_path>
                         </field>
                         <field id="paypal_credit_enabled" type="label" translate="label" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
                             <depends>
                                 <field id="*/braintree_section/braintree/braintree_paypal_credit_active">1</field>
                                 <field id="*/braintree_section/braintree/braintree_paypal/display_on_shopping_cart">1</field>
-                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
+                                <field id="*/braintree_section/braintree/braintree_paypal/button_productpage/button_productpage_enable">1</field>
                             </depends>
                             <label>PayPal Credit</label>
                             <config_path>hiconversion/configuration/status_paypal_credit_enabled</config_path>
                         </field>
                         <field id="paypal_credit_disabled" type="label" translate="label" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
                             <depends>
-                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
                             </depends>
                             <label>PayPal Credit</label>
-                            <comment>Make sure to set "Enable PayPal Credit through Braintree" to "Yes" under "Basic Braintree Settings". Note you must first enable PayPal through Braintree. Additionally make sure that "Display on Shopping Cart" is set to "Yes" under "PayPal through Braintree" section.</comment>
+                            <comment><![CDATA[Ensure the following are set to "Yes"<ul class="note"><li>"Enable PayPal through Braintree" under "Basic Braintree Settings"</li><li>"Display on Shopping Cart" under "PayPal through Braintree" section</li><li>"Enable PayPal Buy Now button on the product page" in the "Product Page" section under the "PayPal through Braintree" section</li></ul>]]></comment>
                             <config_path>hiconversion/configuration/status_paypal_credit_disabled</config_path>
                         </field>
                         <field id="applepay_enabled" type="label" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
                             <depends>
                                 <field id="*/braintree_section/braintree/braintree_applepay/active">1</field>
-                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
                             </depends>
                             <label>ApplePay</label>
                             <config_path>hiconversion/configuration/status_applepay_enabled</config_path>
                         </field>
                         <field id="applepay_disabled" type="label" translate="label" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
                             <depends>
-                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
                             </depends>
                             <label>ApplePay</label>
-                            <comment>Make sure to set "Enable ApplePay through Braintree" to "Yes" under "ApplePay through Braintree" section.</comment>
+                            <comment>Ensure "Enable ApplePay through Braintree" is set to "Yes" under "ApplePay through Braintree" section.</comment>
                             <config_path>hiconversion/configuration/status_applepay_disabled</config_path>
                         </field>
                         <field id="googlepay_enabled" type="label" translate="label" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
                             <depends>
                                 <field id="*/braintree_section/braintree/braintree_googlepay/active">1</field>
-                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
                             </depends>
                             <label>Google Pay</label>
                             <config_path>hiconversion/configuration/status_googlepay_enabled</config_path>
                         </field>
                         <field id="googlepay_disabled" type="label" translate="label" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1">
                             <depends>
-                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
+                                <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
                             </depends>
                             <label>Google Pay</label>
-                            <comment>Make sure to set "Enable GooglePay through Braintree" to "Yes" under "GooglePay through Braintree" section.</comment>
+                            <comment>Ensure "Enable GooglePay through Braintree" is set to "Yes" under "GooglePay through Braintree" section.</comment>
                             <config_path>hiconversion/configuration/status_googlepay_disabled</config_path>
                         </field>
-                        <field id="tests" translate="label" sortOrder="170" showInDefault="1" showInWebsite="1" showInStore="1">
-                            <depends>
-                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
-                            </depends>
-                            <label>Tests</label>
-                            <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
-                        </field>
-                        <field id="test_link" type="label" translate="label" sortOrder="180" showInDefault="1" showInWebsite="1" showInStore="1">
-                            <depends>
-                                <field id="*/braintree_section/braintree/braintree_hic/bt_enabled">1</field>
-                            </depends>
-                            <label><![CDATA[<a href="https://h30.hiconversion.net/cx/t/ab/dash?braintree=true" target="_blank">Create/Manage Tests in HiConversion</a>]]></label>
-                        </field>
-                        <group id="advanced" translate="label" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <group id="advanced" translate="label" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
                             <depends>
                                 <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
                             </depends>
