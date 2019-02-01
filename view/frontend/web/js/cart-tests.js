@@ -5,37 +5,29 @@
 define([
     'jquery',
     'Gene_BraintreeHiConversion/js/test-core'
-], function ($, testCore) {
+], function ($, hicCore) {
     'use strict';
 
     return function (config) {
 
 
-            testCore.paymentMethods().add({
-                page: "cart",
-                paymentMethod: "paypalCheckout",
-                selector: ".cart-summary .paypal.checkout:not(.paypal-bml)",                
-            })
-            
-            /*
-            testCore.paymentMethods().add({
-                page: 'cart',
-                paymentMethod: 'paypalCredit',
-                selector: ".cart-summary .paypal-bml.checkout"
-            })
-            */
+        hicCore.paymentMethods().add({
+            page: "cart",
+            type: "paypal",
+            selector: ".cart-summary .paypal.checkout:not(.paypal-bml)",                
+        })
 
-            testCore.paymentMethods().add({
-                page: 'cart',
-                paymentMethod: 'applePay',
-                selector: ".cart-summary .applepay-minicart"
-            })
+        hicCore.paymentMethods().add({
+            page: 'cart',
+            type: "applePay",
+            selector: ".cart-summary .applepay-minicart"
+        })
 
-            testCore.paymentMethods().add({
-                page: 'cart',
-                paymentMethod: 'googlePay',
-                selector: ".cart-summary .googlepay-minicart-logo"
-            })
+        hicCore.paymentMethods().add({
+            page: 'cart',
+            type: 'googlePay',
+            selector: ".cart-summary .googlepay-minicart-logo"
+        })
 
 
     };

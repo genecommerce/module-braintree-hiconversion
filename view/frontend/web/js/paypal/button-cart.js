@@ -14,6 +14,7 @@ define([
             initialize: function () {
                 this._super();
                 var _config = {
+                    offerCredit: this.config.offerCredit,
                     color: this.config.color,
                     shape: this.config.shape,
                     size: this.config.size,
@@ -55,6 +56,7 @@ define([
 
                     new Button(this.config);
                 }.bind(this));
+            
             
                 return this;
             },

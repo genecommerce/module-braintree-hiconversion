@@ -5,42 +5,29 @@
 define([
     'jquery',
     'Gene_BraintreeHiConversion/js/test-core'
-], function ($, testCore) {
+], function ($, hicCore) {
     'use strict';
 
     return function (config) {
 
-            var selectors = {
-                vertical: "[id='minicart-content-wrapper'] .checkout.paypal",
-                horiztonal: "",
-            }
 
-            testCore.paymentMethods().add({
-                page: "minicart",
-                paymentMethod: "paypalCheckout",
-                //selector: "#mingit icart-content-wrapper .paypal.checkout:not(.paypal-bml)",
-                selector: "[id='minicart-content-wrapper'] .checkout.paypal",
-            })
+        hicCore.paymentMethods().add({
+            page: "minicart",
+            type: "paypal",
+            selector: "[id='minicart-content-wrapper'] .checkout.paypal",
+        })
 
-            /*
-            testCore.paymentMethods().add({
-                page: 'minicart',
-                paymentMethod: "paypalCredit",
-                selector: "#minicart-content-wrapper .paypal-bml.checkout",
-            })
-            */
+        hicCore.paymentMethods().add({
+            page: 'minicart',
+            type: "applePay",
+            selector: "#minicart-content-wrapper .applepay-minicart",
+        })
 
-            testCore.paymentMethods().add({
-                page: 'minicart',
-                paymentMethod: "applePay",
-                selector: "#minicart-content-wrapper .applepay-minicart",
-            })
-
-            testCore.paymentMethods().add({
-                page: 'minicart',
-                paymentMethod: "googlePay",
-                selector: "#minicart-content-wrapper .googlepay-minicart-logo",
-            })
+        hicCore.paymentMethods().add({
+            page: 'minicart',
+            type: "googlePay",
+            selector: "#minicart-content-wrapper .googlepay-minicart-logo",
+        })
 
     };
 });
