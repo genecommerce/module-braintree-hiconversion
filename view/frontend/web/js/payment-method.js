@@ -15,44 +15,42 @@ define([
             var style = false;
             var obj = {
                 page: args.page,
-                type: args.type,
-                config: args.config,
-                config_default: false,
-                paypalHook: false,
-                eligible: eligible(),
+                type: args.type,                
                 addPaypal: addPaypal,
                 addButton: addButton,
+                config: args.config,
+                config_default: false,             
+                paypalHook: false,
+                eligible: eligible(),                
                 removeButton: removeButton,
                 selector: args.selector,
                 options: null,
-                map: null,
                 show: show,
                 update: update,
                 hide: hide,
                 init: init_payment,
-                found: found,                
+                found: found,
             }
             function show(){
                 (style !== false) ? style.remove() : null;                
                 return obj
             }
-            function show_paypal(){
-                braintreeHicApi.setupPaypalButton({layout: 'horizontal', color:'black'});
-            }
             function addPaypal(config, cb){
-                /* Links paypal with backend */
                 obj.config_default = config;
                 obj.config = config;
                 obj.paypalHook = cb;
             }
             function update(newConfig){
-                return obj.config = $.extend(true, {}, obj.config, newConfig);            
+                obj.config = $.extend(true, {}, obj.config, newConfig);
+                return obj
             }
             function addButton(arg){
                 if (arg !== false){
                     obj.removeButton();
                 }
-                obj.paypalHook(obj.config);
+                if (obj.paypalHook !== undefined && typeof(obj.paypalHook) === "function"){
+                    obj.paypalHook(obj.config);
+                }
             }
             function removeButton(){
                 $(obj.selector).find("[id^='zoid-paypal-button']").remove();
@@ -73,13 +71,9 @@ define([
                 style = $(styleSheet);
                 return obj
             }
-            function add_button_options(){                
+            function add_button_options(){
                 var all_options = paymentMethodConfig.paymentConfig()[obj.paymentMethod];        
                 obj.options = (all_options !== undefined) ? all_options : null;
-
-                //obj.map = paymentMethodDefault.paymentConfig();
-                //var map = paymentMethodDefault.paymentConfig()[obj.paymentMethod];
-                //obj.map = (map !== undefined) ? map: null;
             }
             function eligible(){
                 var e = {
@@ -90,20 +84,18 @@ define([
                     e.secure = (location.protocol === "https:") ? true : false;
                     e.apple_device = false;
                     e.proper_device = false;
-                    e.user = false;
-                    var merchant_id = "";
+                    e.user = false;  
                     if (window.ApplePaySession !== undefined){
                         e.apple_device = true;
                         if (window.ApplePaySession.canMakePayments() === true){
                             e.proper_device = true;
+                            var merchant_id = "";
                             ApplePaySession.canMakePaymentsWithActiveCard(merchant_id).then(function (canMakePayments) {
                                 e.user = canMakePayments;                
                             })
                         }
                     }             
                 }else if (args.paymentMethods === "googlePay"){
-
-                }else if (args.paymentMethods === "paypalCheckout"){
 
                 }
                 return e

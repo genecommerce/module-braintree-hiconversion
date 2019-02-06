@@ -10,6 +10,7 @@ define([
 
     return function (config) {
         if (config.isTestingEnabled) {
+            window.konfig  = config;
             hicCore.paymentMethods().add({
                 page: "minicart",
                 type: "paypal",

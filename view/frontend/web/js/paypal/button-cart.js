@@ -36,7 +36,7 @@ define([
                     this.config.disabledFunding = _config.disabledFunding;
                     this.config.label = _config.label;
                     this.config.branding = _config.branding;
-                    this.config.fundingicons = _config.fundingicons;
+                    this.config.fundingIcons = _config.fundingicons;
                     this.config.tagline = _config.tagline;
                     this.config.events = _config.events;
 

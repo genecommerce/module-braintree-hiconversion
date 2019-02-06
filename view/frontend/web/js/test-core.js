@@ -15,30 +15,15 @@ define([
             var default_obj = {
                 add: add,
                 payment_methods: [],
-                support: {
-                    pdp: ['paypalCheckout','paypalCredit'],
-                    minicart: ['paypalCheckout','paypalCredit','applePay','googlePay'],
-                    cart: ['paypalCheckout','paypalCredit','applePay','googlePay'],
-                },
-                /* Default Payment Button Options */
                 options: paymentMethodConfig.paymentConfig(),
-                /* Find things */
                 page: findPage,
                 method: findMethod,
-                finder: finder,
-                /* Pages */
-                pdp: findProductPage,
+                find: find,
+                pdp: findProduct,
                 minicart: findMinicart,
                 cart: findCart,
-                /* Methods */
-                paypalCheckout: findPaypalCheckout,
-                paypalCredit: findPaypalCredit,
-                googlePay: findGooglePay,
-                applePay: findApplePay,
-                
                 loadPaypal: loadPaypal,
             }
-
 
             window.braintreeHicApi = (window.braintreeHicApi === undefined ? default_obj : window.braintreeHicApi);
             var obj = window.braintreeHicApi;
@@ -47,111 +32,48 @@ define([
                 obj.payment_methods.push(test_payment);
             }
             /* Pages */
-            function findProductPage(){
-                return findPage("pdp");
+            function findProduct(type){
+                var matches = obj.find({page: "product", type: type})
+                return matches = (matches.length === 1) ? matches[0] : matches;
             }
             function findMinicart(type){
-                //return findPage("minicart");
-                var minicart_matches = findPage("minicart");
-                if (type === undefined){
-                    return minicart_matches
-                }else{
-                    var matches = [];
-                    $.each(minicart_matches, function(i,v){
-                        if (v.type === type){
-                            matches.push(v);
-                        }
-                    })
-                    matches = (matches.length === 1) ? matches[0] : null;
-                    return matches
-                }
-
+                var matches = obj.find({page: "minicart", type: type})
+                return matches = (matches.length === 1) ? matches[0] : matches;
             }
             function findCart(type){
-                var cart_matches = findPage("cart");
-                if (type === undefined){
-                    return cart_matches
-                }else{
-                    var matches = [];
-                    $.each(cart_matches, function(i,v){
-                        if (v.type === type){
-                            matches.push(v);
-                        }
-                    })
-                    matches = (matches.length === 1) ? matches[0] : null;
-                    return matches
-                }
-            }
-            /* Methods */
-            function findPaypalCheckout(){
-                return findMethod("paypalCheckout");
-            }
-            function findPaypalCredit(){
-                return findMethod("paypalCredit");
-            }
-            function findApplePay(){
-                return findMethod("applePay");
-            }
-            function findGooglePay(){
-                return findMethod("googlePay");
-            }            
-
+                var matches = obj.find({page: "cart", type: type})
+                return matches = (matches.length === 1) ? matches[0] : matches;
+            }        
             function findPage(page){
-                if (obj !== undefined && obj.payment_methods !== undefined){
-                    var matches = [];
-                    $.each(obj.payment_methods, function(i,v){
-                        if (v.page === page){
-                            matches.push(v);
-                        }
-                    })
-                    return matches;
-                }
+                var matches = obj.find({page: page})
+                return matches = (matches.length === 1) ? matches[0] : matches;
             }
             function findMethod(payment_method){
-                if (obj !== undefined && obj.payment_methods !== undefined){
-                    var matches = [];
-                    $.each(obj.payment_methods, function(i,v){
-                        if (v.paymentMethod === payment_method){
-                            matches.push(v);
-                        }
-                    })
-                    return matches;
-                }
+                var matches = obj.find({type: payment_method})
+                return matches = (matches.length === 1) ? matches[0] : matches;
             }        
             function loadPaypal(location, existing_config, cb){                                
-                var method = "";
-                if (location === "cart"){
-                    method = findCart("paypal");
-                }else if (location === "minicart"){
-                    method = findMinicart("paypal");
+                var method = obj.find({page: location, type: "paypal"});
+                if (method.length !== 0){
+                    method[0].addPaypal(existing_config, cb)
                 }
-                (method !== null) ? method.addPaypal(existing_config, cb) : null;               
-            }
-            function finder(key, key_value){
-                if (obj !== undefined && obj.payment_methods !== undefined){
-                    var matches = [];
-                    $.each(obj.payment_methods, function(i,v){
-                        if (v[key] === key_value){
-                            matches.push(v);
+            }            
+            function find(args){
+                var matches = [];
+                $.each(obj.payment_methods, function(index,button){
+                        var match = true;
+                        $.each(args, function(match_key, match_value){
+                            if (button[match_key] === undefined || button[match_key] !== match_value){
+                                match = false;
+                            }
+                        })
+                        if (match === true){
+                            matches.push(button);
                         }
-                    });
-                    return matches;
-                }
+                })
+                return matches;
             }
             return obj;
-        },
-
-        interceptPaypalButton: function (location, existing_config, cb) {
-            window.braintreeHicApi = window.braintreeHicApi || {};
-            var setupFn = function(newConfig) {
-                var configCopy = $.extend(true, {}, existing_config, newConfig);
-                // modify configCopy relative to our changes
-                cb(configCopy);
-            };
-            
-            window.braintreeHicApi[location] = window.braintreeHicApi[location] || {};
-            window.braintreeHicApi[location].setupPaypalButton = setupFn;
-
         },
 
         addToApi: function (testLocation, testName, obj) {

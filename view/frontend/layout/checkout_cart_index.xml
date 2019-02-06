@@ -2,7 +2,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="checkout.cart.methods">
-            <block class="Gene\BraintreeHiConversion\Block\TestData" name="braintree.carttestdata" after="checkout.cart.methods.onepage.bottom" template="Gene_BraintreeHiConversion::cartTestData.phtml"/>
+            <block class="Gene\BraintreeHiConversion\Block\TestData" name="braintree.carttestdata" template="Gene_BraintreeHiConversion::cartTestData.phtml"/>
         </referenceContainer>
     </body>
 </page>
