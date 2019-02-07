@@ -15,21 +15,32 @@ define([
             var style = false;
             var obj = {
                 page: args.page,
-                type: args.type,                
+                type: args.type,
+                config: args.config,
+                config_default: false,                              
                 addPaypal: addPaypal,
                 addButton: addButton,
-                config: args.config,
-                config_default: false,             
                 paypalHook: false,
+                update: update,                
+                paypal_listeners: [],
+                registerClick: registerClick,
+                onClick: onClick,
                 eligible: eligible(),                
                 removeButton: removeButton,
                 selector: args.selector,
                 options: null,
                 show: show,
-                update: update,
                 hide: hide,
                 init: init_payment,
                 found: found,
+            }
+            function registerClick(cb){
+                obj.paypal_listeners.push(cb);
+            }
+            function onClick(data){
+                $.each(obj.paypal_listeners, function(i, cb){
+                    cb(data);
+                })
             }
             function show(){
                 (style !== false) ? style.remove() : null;                
@@ -38,6 +49,10 @@ define([
             function addPaypal(config, cb){
                 obj.config_default = config;
                 obj.config = config;
+                if (obj.config.events === undefined){
+                    obj.config.events = {}                
+                }
+                obj.config.events.onClick = onClick;
                 obj.paypalHook = cb;
             }
             function update(newConfig){
@@ -55,6 +70,7 @@ define([
             function removeButton(){
                 $(obj.selector).find("[id^='zoid-paypal-button']").remove();
             }
+
             function found(){
                 return $(obj.selector).length
             }        

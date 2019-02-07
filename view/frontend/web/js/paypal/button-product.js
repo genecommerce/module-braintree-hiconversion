@@ -22,7 +22,7 @@ define([
                     label: this.config.label,
                     branding: this.config.branding,
                     fundingicons: this.config.fundingicons,
-                    disabledFunding: this.config.disabledFunding
+                    disabledFunding: this.config.disabledFunding                    
                 };
                 
                 hicCore.paymentMethods().loadPaypal('product', _config, function (_config) {
@@ -36,10 +36,11 @@ define([
                     this.config.branding = _config.branding;
                     this.config.fundingIcons = _config.fundingicons;
                     this.config.tagline = _config.tagline;
-                    this.config.events = _config.events;              
+                    this.config.events = _config.events;
 
                     new Button(this.config);
                 }.bind(this));
+            
             
                 return this;
             },
