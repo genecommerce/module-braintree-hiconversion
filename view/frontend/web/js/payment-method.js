@@ -17,22 +17,24 @@ define([
                 page: args.page,
                 type: args.type,
                 config: args.config,
-                config_default: false,                              
+                config_default: false,
                 addPaypal: addPaypal,
                 addButton: addButton,
                 paypalHook: false,
-                update: update,                
+                update: update,             
                 paypal_listeners: [],
                 registerClick: registerClick,
                 onClick: onClick,
-                eligible: eligible(),                
+                eligible: eligible(),        
                 removeButton: removeButton,
                 selector: args.selector,
+                enable: null,
                 options: null,
                 show: show,
                 hide: hide,
-                init: init_payment,
+                init: init,
                 found: found,
+                loaded: loaded,
             }
             function registerClick(cb){
                 obj.paypal_listeners.push(cb);
@@ -43,7 +45,9 @@ define([
                 })
             }
             function show(){
-                (style !== false) ? style.remove() : null;                
+                if (style !== false && obj.enable === true){
+                    style.remove();
+                }
                 return obj
             }
             function addPaypal(config, cb){
@@ -70,7 +74,6 @@ define([
             function removeButton(){
                 $(obj.selector).find("[id^='zoid-paypal-button']").remove();
             }
-
             function found(){
                 return $(obj.selector).length
             }        
@@ -116,12 +119,15 @@ define([
                 }
                 return e
             }
-            function init_payment(){
-                //add_button_options();
-                //hide_payment();
-                //if (args.paymentMethods === "paypalCheckout"){
-                //    braintreeHicApi.setupPaypalButton({layout: 'horizontal', color:'black'});
-                //}
+            function loaded(){
+                if (obj.type === "paypal" && obj.paypalHook !== false){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+            function init(){                
+                hide();
                 return obj
             }
             return obj

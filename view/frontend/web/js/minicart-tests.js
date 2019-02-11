@@ -10,11 +10,10 @@ define([
 
     return function (config) {
         if (config.isTestingEnabled) {
-            window.konfig  = config;
             hicCore.paymentMethods().add({
                 page: "minicart",
                 type: "paypal",
-                selector: "[id='minicart-content-wrapper'] .checkout.paypal"
+                selector: "#minicart-content-wrapper .checkout.paypal"
             });
 
             hicCore.paymentMethods().add({

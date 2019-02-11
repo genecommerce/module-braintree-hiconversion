@@ -43,7 +43,6 @@ define([
                     new Button(this.config);
                 }.bind(this));
 
-
                 return this;
             },
         });
