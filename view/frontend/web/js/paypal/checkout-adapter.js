@@ -6,16 +6,16 @@
 /*global define*/
 define([
     'underscore',
-    'Magento_Braintree/js/view/payment/adapter'
-], function (_, Adapter) {
+    'Magento_Braintree/js/view/payment/adapter',
+    'Gene_BraintreeHiConversion/js/test-core'
+], function (_, Adapter, hicCore) {
     'use strict';
 
-    // @todo is there a config value we can pass on window.checkoutConfig when not in use?
-    /*
-        if (window.checkoutConfig...HicEnabled !== true) {
-            return Adapter;
-        }
-     */
+   
+    if (!window.checkoutConfig.hiconversion || window.checkoutConfig.hiconversion.isEnabled !== true) {
+        return Adapter;
+    }
+     
 
     Adapter.originalSetupPaypal = Adapter.setupPaypal;
 
@@ -101,8 +101,9 @@ define([
                 fullScreenLoader.stopLoader(true);
                 return;
             }
-
-            hicCore.interceptPaypalButton('checkout', this.hicConfig, function (_config) {
+            
+            hicCore.paymentMethods().loadPaypal('checkout', window.checkoutConfig.payment[this.getCode()], function (_config) {
+                this.hicConfig.offerCredit = _config.offerCredit;
                 this.hicConfig.color = _config.color;
                 this.hicConfig.shape = _config.shape;
                 this.hicConfig.size = _config.size;
@@ -110,9 +111,9 @@ define([
                 this.hicConfig.disabledFunding = _config.disabledFunding;
                 this.hicConfig.label = _config.label;
                 this.hicConfig.branding = _config.branding;
-                this.hicConfig.fundingicons = _config.fundingicons;
+                this.hicConfig.fundingIcons = _config.fundingicons;
                 this.hicConfig.tagline = _config.tagline;
-                this.hicConfig.events = _config.events;
+                this.events = _config.events;
 
                 this.originalSetupPaypal();
             }.bind(this));

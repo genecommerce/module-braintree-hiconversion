@@ -12,7 +12,7 @@ class CartButton
     const TEMPLATE_PATH = 'Gene_BraintreeHiConversion::paypal/cartbutton.phtml';
 
     /**
-     * @var \Hic\Integration\Helper
+     * @var \Gene\BraintreeHiconversion\Helper\Data
      */
     protected $helper;
 

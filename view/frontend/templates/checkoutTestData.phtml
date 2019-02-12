@@ -1,0 +1,19 @@
+<?php
+/**
+ * @var \Gene\BraintreeHiConversion\Block\TestData $block
+ */
+
+$config = [
+    'Gene_BraintreeHiConversion/js/checkout-tests' => [
+        'isTestingEnabled' => $block->isTestingEnabled()
+    ]
+];
+
+if ($block->isEnabled()) : ?>
+    <script type="text/x-magento-init">
+    {
+        "*": <?php /* @noEscape */ echo json_encode($config); ?>
+        
+    }
+    </script>
+<?php endif; ?>

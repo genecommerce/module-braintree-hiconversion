@@ -7,4 +7,12 @@
     <type name="Magento\Braintree\Block\Paypal\ProductPage">
         <plugin name="hiconversion_paypalbtn_override_product" type="\Gene\BraintreeHiConversion\Plugin\PayPal\ProductButton" />
     </type>
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="hiconversion_config_provider" xsi:type="object">Gene\BraintreeHiConversion\Model\Ui\ConfigProvider</item>
+            </argument>
+        </arguments>
+   </type>
 </config>
