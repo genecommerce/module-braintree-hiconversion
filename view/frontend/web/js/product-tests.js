@@ -9,8 +9,9 @@ define([
     'use strict';
 
     return function (config) {
-
+        
         hicCore.paymentMethods().add({
+            configTest: config,
             page: "product",
             type: "paypal",
             selector: ".product-info-main .actions .paypal"

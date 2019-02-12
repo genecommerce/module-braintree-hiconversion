@@ -8,26 +8,28 @@ define([
 ], function ($, hicCore) {
     'use strict';
 
-    return function (config) {        
-        if (config.isTestingEnabled) {
+    return function (config) {
 
             hicCore.paymentMethods().add({
+                configTest: config,
                 page: "minicart",
-                type: "paypal",
+                type: "paypal",     
                 selector: "#minicart-content-wrapper .checkout.paypal"
             });
 
             hicCore.paymentMethods().add({
+                configTest: config,
                 page: 'minicart',
                 type: "applePay",
                 selector: "#minicart-content-wrapper .applepay-minicart"
             });
 
             hicCore.paymentMethods().add({
+                configTest: config,
                 page: 'minicart',
                 type: "googlePay",
                 selector: "#minicart-content-wrapper .googlepay-minicart-logo"
             });
-        }
+            
     };
 });

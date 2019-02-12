@@ -10,24 +10,26 @@ define([
 
     return function (config) {
 
-        if (config.isTestingEnabled) {
             hicCore.paymentMethods().add({
+                configTest: config,
                 page: "cart",
                 type: "paypal",
                 selector: ".cart-summary .paypal.checkout:not(.paypal-bml)"
             });
 
             hicCore.paymentMethods().add({
+                configTest: config,
                 page: 'cart',
                 type: "applePay",
                 selector: ".cart-summary .applepay-minicart"
             });
 
             hicCore.paymentMethods().add({
+                configTest: config,
                 page: 'cart',
                 type: 'googlePay',
                 selector: ".cart-summary .googlepay-minicart-logo"
             });
-        }
+            
     };
 });

@@ -16,7 +16,8 @@ define([
             var obj = {
                 page: args.page,
                 type: args.type,
-                config: args.config,
+                configTest: args.configTest,
+                config: false,
                 config_default: false,
                 addPaypal: addPaypal,
                 addButton: addButton,
@@ -58,6 +59,9 @@ define([
                 }
                 obj.config.events.onClick = onClick;
                 obj.paypalHook = cb;
+                if (obj.configTest !== undefined && obj.configTest.isTestingEnabled === false){
+                    addButton();
+                }
             }
             function update(newConfig){
                 obj.config = $.extend(true, {}, obj.config, newConfig);
@@ -126,8 +130,12 @@ define([
                     return false;
                 }
             }
-            function init(){                
-                hide();
+            function init(){
+                if (obj.configTest !== undefined && obj.configTest.isTestingEnabled === true){
+                    hide();
+                }else{
+                    show();
+                }
                 return obj
             }
             return obj
