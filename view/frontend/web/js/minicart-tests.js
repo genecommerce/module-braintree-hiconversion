@@ -8,8 +8,9 @@ define([
 ], function ($, hicCore) {
     'use strict';
 
-    return function (config) {
+    return function (config) {        
         if (config.isTestingEnabled) {
+
             hicCore.paymentMethods().add({
                 page: "minicart",
                 type: "paypal",

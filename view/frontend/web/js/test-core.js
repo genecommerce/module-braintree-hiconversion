@@ -22,6 +22,7 @@ define([
                 pdp: findProduct,
                 minicart: findMinicart,
                 cart: findCart,
+                checkout: findCheckout,
                 loadPaypal: loadPaypal,
             }
 
@@ -33,19 +34,23 @@ define([
             }
             /* Pages */
             function findProduct(type){
-                var matches = obj.find({page: "product", type: type})
+                var matches = obj.find({page: "product", type: type});
                 return matches = (matches.length === 1) ? matches[0] : matches;
             }
             function findMinicart(type){
-                var matches = obj.find({page: "minicart", type: type})
+                var matches = obj.find({page: "minicart", type: type});
                 return matches = (matches.length === 1) ? matches[0] : matches;
             }
             function findCart(type){
-                var matches = obj.find({page: "cart", type: type})
+                var matches = obj.find({page: "cart", type: type});
                 return matches = (matches.length === 1) ? matches[0] : matches;
-            }        
+            }
+            function findCheckout(type){
+                var matches = obj.find({page: "checkout", type: type})
+                return matches = (matches.length === 1) ? matches[0] : matches;
+            }
             function findPage(page){
-                var matches = obj.find({page: page})
+                var matches = obj.find({page: page});
                 return matches = (matches.length === 1) ? matches[0] : matches;
             }
             function findMethod(payment_method){

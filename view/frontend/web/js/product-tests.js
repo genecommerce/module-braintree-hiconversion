@@ -10,7 +10,6 @@ define([
 
     return function (config) {
 
-
         hicCore.paymentMethods().add({
             page: "product",
             type: "paypal",
