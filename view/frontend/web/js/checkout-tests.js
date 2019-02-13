@@ -10,30 +10,33 @@ define([
 
     return function (config) {
 
-        if (config.isTestingEnabled) {
             hicCore.paymentMethods().add({
+                configTest: config,
                 page: "checkout",
                 type: "paypalCheckout",
                 selector: ".cart-summary .paypal.checkout:not(.paypal-bml)"
             });
 
             hicCore.paymentMethods().add({
+                configTest: config,
                 page: "checkout",
                 type: "paypalCredit",
                 selector: ".cart-summary .paypal.checkout:not(.paypal-bml)"
             });
 
             hicCore.paymentMethods().add({
+                configTest: config,
                 page: 'checkout',
                 type: "applePay",
                 selector: ".cart-summary .applepay-minicart"
             });
 
             hicCore.paymentMethods().add({
+                configTest: config,
                 page: 'checkout',
                 type: 'googlePay',
                 selector: ".cart-summary .googlepay-minicart-logo"
             });
-        }
+
     };
 });

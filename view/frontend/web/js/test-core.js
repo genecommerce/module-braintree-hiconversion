@@ -26,7 +26,7 @@ define([
                 loadPaypal: loadPaypal,
             }
 
-            window.braintreeHicApi = (window.braintreeHicApi === undefined ? default_obj : window.braintreeHicApi);
+            window.braintreeHicApi = (window.braintreeHicApi === undefined) ? default_obj : window.braintreeHicApi;
             var obj = window.braintreeHicApi;
             function add(args){            
                 var test_payment = paymentMethod.new(args).init();
@@ -34,19 +34,19 @@ define([
             }
             /* Pages */
             function findProduct(type){
-                var matches = obj.find({page: "product", type: type});
+                var matches = obj.find({page: 'product', type: type});
                 return matches = (matches.length === 1) ? matches[0] : matches;
             }
             function findMinicart(type){
-                var matches = obj.find({page: "minicart", type: type});
+                var matches = obj.find({page: 'minicart', type: type});
                 return matches = (matches.length === 1) ? matches[0] : matches;
             }
             function findCart(type){
-                var matches = obj.find({page: "cart", type: type});
+                var matches = obj.find({page: 'cart', type: type});
                 return matches = (matches.length === 1) ? matches[0] : matches;
             }
             function findCheckout(type){
-                var matches = obj.find({page: "checkout", type: type})
+                var matches = obj.find({page: 'checkout', type: type})
                 return matches = (matches.length === 1) ? matches[0] : matches;
             }
             function findPage(page){
@@ -57,10 +57,10 @@ define([
                 var matches = obj.find({type: payment_method})
                 return matches = (matches.length === 1) ? matches[0] : matches;
             }        
-            function loadPaypal(location, existing_config, cb){                                
-                var method = obj.find({page: location, type: "paypal"});
+            function loadPaypal(location, type, config, cb){                                
+                var method = obj.find({page: location, type: type});
                 if (method.length !== 0){
-                    method[0].addPaypal(existing_config, cb)
+                    method[0].addPaypal(config, cb)
                 }
             }            
             function find(args){

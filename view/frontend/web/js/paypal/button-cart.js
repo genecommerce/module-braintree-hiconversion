@@ -24,10 +24,12 @@ define([
                     fundingicons: this.config.fundingicons,
                     disabledFunding: this.config.disabledFunding
                 };
-
+                
                 var minicartWrapper = $('#' + this.config.id).closest('#minicart-content-wrapper');
-
-                hicCore.paymentMethods().loadPaypal(minicartWrapper.length ? 'minicart': 'cart', _config, function (_config) {
+                var location = minicartWrapper.length ? 'minicart': 'cart';
+                var type = 'paypal';
+                
+                hicCore.paymentMethods().loadPaypal(location, type, _config, function (_config) {
                     this.config.offerCredit = _config.offerCredit;
                     this.config.color = _config.color;
                     this.config.shape = _config.shape;
