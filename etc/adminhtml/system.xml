@@ -58,7 +58,7 @@
                                 <field id="*/braintree_section/braintree/braintree_hic/enabled">1</field>
                             </depends>
                             <label>Enable HiConversion Enhancements for Braintree</label>
-                            <comment><![CDATA[<a href="https://h30.hiconversion.net/cx/t/ab/dash?braintree=true" target="_blank">Please activate the tests you want to run in HiConversion before Enabling. </a>]]></comment>
+                            <comment><![CDATA[<a href="https://h30.hiconversion.net/cx/t/ab/dash?braintree=true" target="_blank">Click here to view Hiconversion tests. </a> Note: Changes will not occur until HiConversion tests are active.]]></comment>
                             <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                             <config_path>hiconversion/configuration/bt_enabled</config_path>
                         </field>
