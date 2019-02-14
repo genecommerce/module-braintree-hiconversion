@@ -14,27 +14,11 @@ define([
             var style = false;
             var obj = {
                 page: args.page,
-                type: args.type,    
+                type: args.type,
                 configTest: args.configTest,
                 config: false,
-                config_default: false,
-                addPaypal: addPaypal,
-                addButton: addButton,
-                paypalHook: false,
-                update: update,             
-                paypal_listeners: {
-                    click: [],
-                    cancel: [],
-                    error: [],
-                },
-                registerClick: registerClick,
-                registerCancel: registerCancel,
-                registerError: registerError,
-                onClick: onClick,
-                onCancel: onCancel,
-                onError: onError,
-                eligible: eligible(),        
-                removeButton: removeButton,
+                config_default: false,                      
+                eligible: eligible(),               
                 selector: args.selector,
                 enable: null,
                 options: null,
@@ -131,7 +115,7 @@ define([
                     config: true,
                     test: true,
                 }
-                if (args.paymentMethod === 'applePay'){
+                if (args.type === 'applePay'){
                     e.secure = (location.protocol === 'https:') ? true : false;
                     e.apple_device = false;
                     e.proper_device = false;
@@ -146,7 +130,7 @@ define([
                             })
                         }
                     }             
-                }else if (args.paymentMethods === 'googlePay'){
+                }else if (args.type === 'googlePay'){
 
                 }
                 return e
@@ -159,12 +143,35 @@ define([
                 }
             }
             function disable_test(){
-                localStorage.setItem(obj.test.name, "true");
+                localStorage.setItem(obj.test.name, 'true');
             }
             function enable_test(){
                 localStorage.removeItem(obj.test.name);
             }
+            function add_paypal_methods(){
+                $.extend(true, obj, {
+                    addPaypal: addPaypal,
+                    addButton: addButton,
+                    removeButton: removeButton,
+                    paypalHook: false,
+                    update: update,             
+                    paypal_listeners: {
+                        click: [],
+                        cancel: [],
+                        error: [],
+                    },
+                    registerClick: registerClick,
+                    registerCancel: registerCancel,
+                    registerError: registerError,
+                    onClick: onClick,
+                    onCancel: onCancel,
+                    onError: onError
+                });
+            }
             function init(){
+                if (obj.type === 'paypal' || obj.type === 'paypalCheckout' || obj.type === 'paypalCredit'){
+                    add_paypal_methods();
+                }
                 if (obj.configTest !== undefined && obj.configTest.isTestingEnabled === true){
                     var time = 250;
                     hide();
