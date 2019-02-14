@@ -173,7 +173,6 @@ define([
                         } else {
                             setTimeout(function(){waitFor()}, time)
                         }
-                        count += 1;
                     }
                     waitFor();            
                 }else{
