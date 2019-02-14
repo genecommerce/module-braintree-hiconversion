@@ -24,22 +24,22 @@ define([
                         },
                         color: {
                             default: 'gold',
-                            options: ["gold","blue","silver","black","white"]
+                            options: ['gold','blue','silver','black','white']
                         }                        
                     },
                     funding: {
                         allowed: {
-                            default: ["paypal.FUNDING.CARD","paypal.FUNDING.CREDIT"],
-                            options: ["paypal.FUNDING.CARD","paypal.FUNDING.CREDIT","paypal.FUNDING.ELV"],
+                            default: ['paypal.FUNDING.CARD','paypal.FUNDING.CREDIT'],
+                            options: ['paypal.FUNDING.CARD','paypal.FUNDING.CREDIT','paypal.FUNDING.ELV'],
                         },
                         disallowed: {
                             default: [],
-                            options: ["paypal.FUNDING.CREDIT","paypal.FUNDING.ELV"],
+                            options: ['paypal.FUNDING.CREDIT','paypal.FUNDING.ELV'],
                         }
                     },
                 },
                 paypalHorizontal: {
-                    label: "horizontal",
+                    label: 'horizontal',
                     style: {
                         layout: 'horizontal',
                         size: {
@@ -52,7 +52,7 @@ define([
                         },
                         color: {
                             default: 'gold',
-                            options: ["gold","blue","silver","black","white"]
+                            options: ['gold','blue','silver','black','white']
                         },
                         fundingicons: {
                             default: 'false',
@@ -61,17 +61,17 @@ define([
                         tagline:{
                             default: 'false',
                             options: ['false','true'],
-                            dependency: "tagline will only show if funding icons set to false"
+                            dependency: 'tagline will only show if funding icons set to false'
                         }
                     },
                     funding: {
                         allowed: {
-                            default: ["paypal.FUNDING.CARD","paypal.FUNDING.CREDIT"],
-                            options: ["paypal.FUNDING.CARD","paypal.FUNDING.CREDIT","paypal.FUNDING.ELV"],
+                            default: ['paypal.FUNDING.CARD','paypal.FUNDING.CREDIT'],
+                            options: ['paypal.FUNDING.CARD','paypal.FUNDING.CREDIT','paypal.FUNDING.ELV'],
                         },
                         disallowed: {
                             default: [],
-                            options: ["paypal.FUNDING.CREDIT","paypal.FUNDING.ELV"],
+                            options: ['paypal.FUNDING.CREDIT','paypal.FUNDING.ELV'],
                         }
                     }
                 },
@@ -79,20 +79,20 @@ define([
                     label: 'checkout',
                     style: {
                         color: {
-                            default: "gold",
-                            options: ["gold","blue","silver","black","white"]
+                            default: 'gold',
+                            options: ['gold','blue','silver','black','white']
                         },
                         shape: {
                             default: 'rect',
                             options: ['pill','rect']
                         },
                         size: {
-                            default: "medium",
+                            default: 'medium',
                             options: ['small','medium','large','responsive']
                         },
                         tagline: {
-                            default: "false",
-                            options: ["false","true"]
+                            default: 'false',
+                            options: ['false','true']
                         }
                     }
                 },              
@@ -100,8 +100,8 @@ define([
                     label: 'credit',
                     style: {
                         color: {
-                            default: "darkblue",
-                            options: ["darkblue",'black','white']
+                            default: 'darkblue',
+                            options: ['darkblue','black','white']
                         },
                         shape: {
                             default: 'rect',
@@ -112,8 +112,8 @@ define([
                             options: ['small','medium','large','responsive']
                         },
                         tagline: {
-                            default: "false",
-                            options: ["false","true"]
+                            default: 'false',
+                            options: ['false','true']
                         }
                     }     
                 },
@@ -121,8 +121,8 @@ define([
                     label: 'pay',                                
                     style: {
                         color: {
-                            default: "gold",
-                            options: ["gold","blue","silver","black","white"]
+                            default: 'gold',
+                            options: ['gold','blue','silver','black','white']
                         },
                         shape: {
                             default: 'rect',
@@ -133,8 +133,8 @@ define([
                             options: ['small','medium','large','responsive']
                         },
                         tagline: {
-                            default: "false",
-                            options: ["false","true"]
+                            default: 'false',
+                            options: ['false','true']
                         }
                     }
                 },
@@ -146,7 +146,7 @@ define([
                             options: ['gold','blue','silver','black','white']
                         },
                         shape: {
-                            default: "rect",
+                            default: 'rect',
                             options: ['pill','rect']
                         },
                         size: {
@@ -156,7 +156,7 @@ define([
                     }
                 },    
                 applePay: {
-                    label: "applepay",
+                    label: 'applepay',
                     style: {
                         color: {
                             default: 'black',
@@ -165,7 +165,7 @@ define([
                     }
                 },
                 googlePay: {
-                    label: "googlepay",
+                    label: 'googlepay',
                     style: {
                         color: {
                             default: 'black',

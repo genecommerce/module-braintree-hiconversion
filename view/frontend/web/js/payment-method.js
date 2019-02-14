@@ -5,8 +5,7 @@
 define([
     'jquery',
     'Gene_BraintreeHiConversion/js/payment-method-config',
-    'Gene_BraintreeHiConversion/js/payment-method-default',
-], function ($, paymentMethodConfig, paymentMethodDefault) {
+], function ($, paymentMethodConfig) {
     'use strict';
 
     return {
@@ -143,7 +142,7 @@ define([
                         e.apple_device = true;
                         if (window.ApplePaySession.canMakePayments() === true){
                             e.proper_device = true;
-                            var merchant_id = "";
+                            var merchant_id = '';
                             ApplePaySession.canMakePaymentsWithActiveCard(merchant_id).then(function (canMakePayments) {
                                 e.user = canMakePayments;                
                             })
@@ -163,7 +162,7 @@ define([
             }
             function init(){
                 if (obj.configTest !== undefined && obj.configTest.isTestingEnabled === true){
-                    var localName = "braintree-hic-disable-test-" + obj.page;
+                    var localName = 'braintree-hic-disable-test-' + obj.page;
                     var time = 250;
                     hide();
                     function waitFor(){

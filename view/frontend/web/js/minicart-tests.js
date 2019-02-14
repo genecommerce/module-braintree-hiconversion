@@ -12,23 +12,23 @@ define([
 
             hicCore.paymentMethods().add({
                 configTest: config,
-                page: "minicart",
-                type: "paypal",     
-                selector: "#minicart-content-wrapper .checkout.paypal"
+                page: 'minicart',
+                type: 'paypal',     
+                selector: '#minicart-content-wrapper .checkout.paypal'
             });
 
             hicCore.paymentMethods().add({
                 configTest: config,
                 page: 'minicart',
-                type: "applePay",
-                selector: "#minicart-content-wrapper .applepay-minicart"
+                type: 'applePay',
+                selector: '#minicart-content-wrapper .applepay-minicart'
             });
 
             hicCore.paymentMethods().add({
                 configTest: config,
                 page: 'minicart',
-                type: "googlePay",
-                selector: "#minicart-content-wrapper .googlepay-minicart-logo"
+                type: 'googlePay',
+                selector: '#minicart-content-wrapper .googlepay-minicart-logo'
             });
             
     };
