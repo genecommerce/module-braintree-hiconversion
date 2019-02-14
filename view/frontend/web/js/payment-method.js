@@ -46,16 +46,16 @@ define([
                 loaded: loaded,
             }
             function register(type, cb){
-                return (typeof(cb) === "function") ? obj.paypal_listeners[type].push(cb) : "must be function";
+                return (typeof(cb) === 'function') ? obj.paypal_listeners[type].push(cb) : 'must be function';
             }
             function registerClick(cb){
-                return register("click", cb);
+                return register('click', cb);
             }
             function registerCancel(cb){
-                return register("cancel", cb);
+                return register('cancel', cb);
             }
             function registerError(cb){
-                return register("error", cb);
+                return register('error', cb);
             }
             function onClick(callback){
                 $.each(obj.paypal_listeners.click, function(i, cb){
@@ -163,10 +163,23 @@ define([
             }
             function init(){
                 if (obj.configTest !== undefined && obj.configTest.isTestingEnabled === true){
+                    var localName = "braintree-hic-disable-test-" + obj.page;
+                    var time = 250;
                     hide();
+                    function waitFor(){
+                        var state = localStorage.getItem(localName);
+                        if (state !== null){
+                            show(true);
+                        } else {
+                            setTimeout(function(){waitFor()}, time)
+                        }
+                        count += 1;
+                    }
+                    waitFor();            
                 }else{
-                    show();
+                    show(true);
                 }
+  
                 return obj
             }
             return obj

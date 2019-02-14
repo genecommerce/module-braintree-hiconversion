@@ -12,30 +12,30 @@ define([
 
             hicCore.paymentMethods().add({
                 configTest: config,
-                page: "checkout",
-                type: "paypalCheckout",
-                selector: "#payment-method-braintree-paypal"
-            });
-
-            hicCore.paymentMethods().add({
-                configTest: config,
-                page: "checkout",
-                type: "paypalCredit",
-                selector: "#payment-method-braintree-paypal-credit"
+                page: 'checkout',
+                type: 'paypalCheckout',
+                selector: '#payment-method-braintree-paypal'
             });
 
             hicCore.paymentMethods().add({
                 configTest: config,
                 page: 'checkout',
-                type: "applePay",
-                selector: "#payment-method-braintree-applepay"
+                type: 'paypalCredit',
+                selector: '#payment-method-braintree-paypal-credit'
+            });
+
+            hicCore.paymentMethods().add({
+                configTest: config,
+                page: 'checkout',
+                type: 'applePay',
+                selector: '#payment-method-braintree-applepay'
             });
 
             hicCore.paymentMethods().add({
                 configTest: config,
                 page: 'checkout',
                 type: 'googlePay',
-                selector: "#payment-method-braintree-googlepay"
+                selector: '#payment-method-braintree-googlepay'
             });
 
     };
