@@ -14,28 +14,28 @@ define([
                 configTest: config,
                 page: "checkout",
                 type: "paypalCheckout",
-                selector: ".cart-summary .paypal.checkout:not(.paypal-bml)"
+                selector: "#payment-method-braintree-paypal"
             });
 
             hicCore.paymentMethods().add({
                 configTest: config,
                 page: "checkout",
                 type: "paypalCredit",
-                selector: ".cart-summary .paypal.checkout:not(.paypal-bml)"
+                selector: "#payment-method-braintree-paypal-credit"
             });
 
             hicCore.paymentMethods().add({
                 configTest: config,
                 page: 'checkout',
                 type: "applePay",
-                selector: ".cart-summary .applepay-minicart"
+                selector: "#payment-method-braintree-applepay"
             });
 
             hicCore.paymentMethods().add({
                 configTest: config,
                 page: 'checkout',
                 type: 'googlePay',
-                selector: ".cart-summary .googlepay-minicart-logo"
+                selector: "#payment-method-braintree-googlepay"
             });
 
     };
