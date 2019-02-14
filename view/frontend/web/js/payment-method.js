@@ -14,7 +14,7 @@ define([
             var style = false;
             var obj = {
                 page: args.page,
-                type: args.type,
+                type: args.type,    
                 configTest: args.configTest,
                 config: false,
                 config_default: false,
@@ -43,6 +43,11 @@ define([
                 init: init,
                 found: found,
                 loaded: loaded,
+                test: {
+                    name: 'bt-hic-disable-test-' + args.page,
+                    disable: disable_test,
+                    enable: enable_test,
+                },
             }
             function register(type, cb){
                 return (typeof(cb) === 'function') ? obj.paypal_listeners[type].push(cb) : 'must be function';
@@ -100,11 +105,8 @@ define([
                 obj.config.events.onCancel = onCancel;
                 obj.config.events.onError = onError;
                 obj.paypalHook = cb;
-                if (obj.configTest.isTestingEnabled === false){
-                    addButton();
-                }else if (obj.configTest.isTestingEnabled === true && obj.page === 'checkout'){
-                    addButton();
-                }
+                addButton();
+                return obj;
             }
             function update(newConfig){
                 obj.config = $.extend(true, {}, obj.config, newConfig);
@@ -124,10 +126,6 @@ define([
             function found(){
                 return $(obj.selector).length
             }        
-            function add_button_options(){
-                var all_options = paymentMethodConfig.paymentConfig()[obj.paymentMethod];        
-                obj.options = (all_options !== undefined) ? all_options : null;
-            }
             function eligible(){
                 var e = {
                     config: true,
@@ -160,13 +158,18 @@ define([
                     return false;
                 }
             }
+            function disable_test(){
+                localStorage.setItem(obj.test.name, "true");
+            }
+            function enable_test(){
+                localStorage.removeItem(obj.test.name);
+            }
             function init(){
                 if (obj.configTest !== undefined && obj.configTest.isTestingEnabled === true){
-                    var localName = 'braintree-hic-disable-test-' + obj.page;
                     var time = 250;
                     hide();
                     function waitFor(){
-                        var state = localStorage.getItem(localName);
+                        var state = localStorage.getItem(obj.test.name);
                         if (state !== null){
                             show(true);
                         } else {

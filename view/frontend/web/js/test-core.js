@@ -24,6 +24,16 @@ define([
                 cart: findCart,
                 checkout: findCheckout,
                 loadPaypal: loadPaypal,
+                tests: {
+                    names: [
+                        'bt-hic-disable-test-product',
+                        'bt-hic-disable-test-minicart',
+                        'bt-hic-disable-test-cart',
+                        'bt-hic-disable-test-checkout'
+                    ],
+                    enable: enable_tests,
+                    disable: disable_tests,
+                }
             }
 
             window.braintreeHicApi = (window.braintreeHicApi === undefined) ? default_obj : window.braintreeHicApi;
@@ -77,6 +87,16 @@ define([
                         }
                 })
                 return matches;
+            }
+            function disable_tests(){
+                $.each(obj.tests.names, function(i,name){
+                    localStorage.setItem(name,"true");
+                });
+            }
+            function enable_tests(){
+                $.each(obj.tests.names, function(i,name){
+                    localStorage.removeItem(name);
+                })
             }
             return obj;
         },
