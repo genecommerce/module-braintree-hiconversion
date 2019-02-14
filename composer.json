@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "require": {
     "gene/module-braintree": "dev-feature/pp-btn-pdp",
-    "hiconversion/module-integration": "^1.2"
+    "hiconversion/module-integration": "^1.2.2"
   },
   "type": "magento2-module",
   "license": [
