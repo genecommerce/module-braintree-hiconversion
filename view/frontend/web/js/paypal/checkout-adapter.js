@@ -20,7 +20,6 @@ define([
 
     return _.extend(Adapter, {
         hicConfig: {
-            offerCredit: null,
             color: null,
             shape: null,
             size: null,
@@ -80,7 +79,7 @@ define([
          */
     
         getBranding: function () {
-            return (typeof(this.hicConfig.branding) === 'boolean') ? this.hicConfig.branding : null;
+            return (this.hicConfig.branding && this.hicConfig.branding.length) ? this.hicConfig.branding : null;
         },
 
         /**
@@ -115,11 +114,10 @@ define([
     
 
             hicCore.paymentMethods().loadPaypal(location, type, button_config, function (_config) {
-                this.hicConfig.offerCredit = _config.offerCredit;
-                this.hicConfig.color = _config.color;
-                this.hicConfig.shape = _config.shape;
-                this.hicConfig.size = _config.size;
-                this.hicConfig.layout = _config.layout;
+                this.hicConfig.color = _config.style.color;
+                this.hicConfig.shape = _config.style.shape;
+                this.hicConfig.size = _config.style.size;
+                this.hicConfig.layout = _config.style.layout;
                 this.hicConfig.disabledFunding = _config.disabledFunding;
                 this.hicConfig.label = _config.label;
                 this.hicConfig.branding = _config.branding;

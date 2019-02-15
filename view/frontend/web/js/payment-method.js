@@ -16,9 +16,9 @@ define([
                 page: args.page,
                 type: args.type,
                 configTest: args.configTest,
-                config: false,
-                config_default: false,                      
-                eligible: eligible(),               
+                config: {},
+                config_default: {},
+                eligible: eligible(),        
                 selector: args.selector,
                 enable: null,
                 options: null,
@@ -83,19 +83,8 @@ define([
                 style = $(styleSheet);
                 return obj;
             }
-            function addPaypal(config, cb){
-                obj.config_default = config;
-                obj.config = (obj.config === false) ? obj.config_default : obj.config;
-                obj.config.events = (obj.config.events === undefined) ? {} : obj.config.events;
-                obj.config.events.onClick = onClick;
-                obj.config.events.onCancel = onCancel;
-                obj.config.events.onError = onError;
-                obj.paypalHook = cb;
-                addButton();
-                return obj;
-            }
             function update(newConfig){
-                obj.config = $.extend(true, {}, obj.config, newConfig);
+                $.extend(true, obj.config, newConfig);
                 return obj
             }
             function addButton(arg){
@@ -105,6 +94,17 @@ define([
                 if (obj.paypalHook !== undefined && typeof(obj.paypalHook) === 'function'){
                     obj.paypalHook(obj.config);
                 }
+                return obj;
+            }
+            function addPaypal(config, cb){
+                obj.config_default = config;
+                obj.config = $.extend(true, {}, obj.config_default, obj.config);
+                obj.config.events = (obj.config.events === undefined) ? {} : obj.config.events;
+                obj.config.events.onClick = onClick;
+                obj.config.events.onCancel = onCancel;
+                obj.config.events.onError = onError;
+                obj.paypalHook = cb;
+                addButton();
                 return obj;
             }
             function removeButton(){
