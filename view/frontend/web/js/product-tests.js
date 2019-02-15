@@ -12,7 +12,7 @@ define([
         
         hicCore.paymentMethods().add({
             configTest: config,
-            page: 'product',
+            page: 'pdp',
             type: 'paypal',
             selector: '.product-info-main .actions .paypal'
         })

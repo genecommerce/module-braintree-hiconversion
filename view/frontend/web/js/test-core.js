@@ -26,7 +26,7 @@ define([
                 loadPaypal: loadPaypal,
                 tests: {
                     names: [
-                        'bt-hic-disable-test-product',
+                        'bt-hic-disable-test-pdp',
                         'bt-hic-disable-test-minicart',
                         'bt-hic-disable-test-cart',
                         'bt-hic-disable-test-checkout'
@@ -44,7 +44,7 @@ define([
             }
             /* Pages */
             function findProduct(type){
-                var matches = obj.find({page: 'product', type: type});
+                var matches = obj.find({page: 'pdp', type: type});
                 return matches = (matches.length === 1) ? matches[0] : matches;
             }
             function findMinicart(type){

@@ -26,7 +26,6 @@ define([
                 hide: hide,
                 init: init,
                 found: found,
-                loaded: loaded,
                 test: {
                     name: 'bt-hic-disable-test-' + args.page,
                     disable: disable_test,
@@ -49,16 +48,19 @@ define([
                 $.each(obj.paypal_listeners.click, function(i, cb){
                     cb(callback);
                 })
+                return obj;
             }
             function onCancel(callback){
                 $.each(obj.paypal_listeners.cancel, function(i, cb){
                     cb(callback);
                 })
+                return obj;
             }
             function onError(callback){
                 $.each(obj.paypal_listeners.error, function(i, cb){
                     cb(callback);
-                })                
+                })
+                return obj;       
             }
             function show(force){
                 if (style !== false){
@@ -66,7 +68,7 @@ define([
                         style.remove();
                     }
                 }
-                return obj
+                return obj;
             }
             function hide(){
                 var text = args.selector + '{display:none;}'
@@ -79,7 +81,7 @@ define([
                     styleSheet.appendChild(document.createTextNode(text));
                 }
                 style = $(styleSheet);
-                return obj
+                return obj;
             }
             function addPaypal(config, cb){
                 obj.config_default = config;
@@ -103,12 +105,14 @@ define([
                 if (obj.paypalHook !== undefined && typeof(obj.paypalHook) === 'function'){
                     obj.paypalHook(obj.config);
                 }
+                return obj;
             }
             function removeButton(){
                 $(obj.selector).find('[id^="zoid-paypal-button"]').remove();
+                return obj;
             }
             function found(){
-                return $(obj.selector).length
+                return $(obj.selector).length;
             }        
             function eligible(){
                 var e = {
@@ -133,7 +137,7 @@ define([
                 }else if (args.type === 'googlePay'){
 
                 }
-                return e
+                return e;
             }
             function loaded(){
                 if (obj.type === 'paypal' && obj.paypalHook !== false){
@@ -154,7 +158,8 @@ define([
                     addButton: addButton,
                     removeButton: removeButton,
                     paypalHook: false,
-                    update: update,             
+                    update: update,
+                    loaded: loaded,
                     paypal_listeners: {
                         click: [],
                         cancel: [],
