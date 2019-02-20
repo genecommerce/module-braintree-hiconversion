@@ -25,10 +25,10 @@ define([
                     disabledFunding: this.config.disabledFunding
                 };
                 
-                var location = 'pdp';
+                var page = 'pdp';
                 var type = 'paypal';                        
 
-                hicCore.paymentMethods().loadPaypal(location, type, _config, function (_config) {
+                hicCore.paymentMethods().loadPaypal(page, type, _config, function (_config) {
                     this.config.offerCredit = _config.offerCredit;
                     this.config.color = _config.color;
                     this.config.shape = _config.shape;

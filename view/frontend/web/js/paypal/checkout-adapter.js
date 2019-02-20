@@ -108,12 +108,12 @@ define([
                 return;
             }
             
-            var location = 'checkout';
+            var page = 'checkout';
             var type = this.config.offerCredit == true ? 'paypalCredit' : 'paypalCheckout';
             var button_config = window.checkoutConfig.payment[this.getCode()];
     
 
-            hicCore.paymentMethods().loadPaypal(location, type, button_config, function (_config) {
+            hicCore.paymentMethods().loadPaypal(page, type, button_config, function (_config) {
                 this.hicConfig.color = _config.style.color;
                 this.hicConfig.shape = _config.style.shape;
                 this.hicConfig.size = _config.style.size;

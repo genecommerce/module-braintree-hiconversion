@@ -26,14 +26,15 @@ define([
                 hide: hide,
                 init: init,
                 found: found,
-                test: {
+                test: {                    
                     name: 'bt-hic-disable-test-' + args.page,
-                    disable: disable_test,
-                    enable: enable_test,
+                    state: findState,
+                    disable: disableTest,
+                    enable: enableTest,
                 },
             }
             function register(type, cb){
-                return (typeof(cb) === 'function') ? obj.paypal_listeners[type].push(cb) : 'must be function';
+                return (typeof(cb) === 'function') ? obj.listeners[type].push(cb) : 'must be function';
             }
             function registerClick(cb){
                 return register('click', cb);
@@ -44,23 +45,20 @@ define([
             function registerError(cb){
                 return register('error', cb);
             }
-            function onClick(callback){
-                $.each(obj.paypal_listeners.click, function(i, cb){
-                    cb(callback);
-                })
+            function onEvent(store, callback){
+                $.each(store, function(i, cb){
+                    cb(callback)
+                });
                 return obj;
+            }
+            function onClick(callback){
+                return onEvent(obj.listeners.click, callback);
             }
             function onCancel(callback){
-                $.each(obj.paypal_listeners.cancel, function(i, cb){
-                    cb(callback);
-                })
-                return obj;
+                return onEvent(obj.listeners.click, callback);
             }
             function onError(callback){
-                $.each(obj.paypal_listeners.error, function(i, cb){
-                    cb(callback);
-                })
-                return obj;       
+                return onEvent(obj.listeners.click, callback);    
             }
             function show(force){
                 if (style !== false){
@@ -75,7 +73,6 @@ define([
                 var styleSheet = document.createElement('style');
                 document.getElementsByTagName('head')[0].appendChild(styleSheet);
                 if (styleSheet.styleSheet) {
-                    // ie case
                     styleSheet.styleSheet.cssText = text;
                 } else {
                     styleSheet.appendChild(document.createTextNode(text));
@@ -146,11 +143,14 @@ define([
                     return false;
                 }
             }
-            function disable_test(){
+            function disableTest(){
                 localStorage.setItem(obj.test.name, 'true');
             }
-            function enable_test(){
+            function enableTest(){
                 localStorage.removeItem(obj.test.name);
+            }
+            function findState(){
+                return localStorage.getItem(obj.test.name);
             }
             function add_paypal_methods(){
                 $.extend(true, obj, {
@@ -160,11 +160,12 @@ define([
                     paypalHook: false,
                     update: update,
                     loaded: loaded,
-                    paypal_listeners: {
+                    listeners: {
                         click: [],
                         cancel: [],
                         error: [],
                     },
+                    register: register, 
                     registerClick: registerClick,
                     registerCancel: registerCancel,
                     registerError: registerError,
@@ -180,12 +181,13 @@ define([
                 if (obj.configTest !== undefined && obj.configTest.isTestingEnabled === true){
                     var time = 250;
                     hide();
-                    function waitFor(){
-                        var state = localStorage.getItem(obj.test.name);
-                        if (state !== null){
+                    function waitFor(){                 
+                        if (findState() !== null){
                             show(true);
                         } else {
-                            setTimeout(function(){waitFor()}, time)
+                            setTimeout(function(){
+                                waitFor()
+                            }, time)
                         }
                     }
                     waitFor();            

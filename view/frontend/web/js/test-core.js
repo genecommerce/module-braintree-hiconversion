@@ -31,8 +31,9 @@ define([
                         'bt-hic-disable-test-cart',
                         'bt-hic-disable-test-checkout'
                     ],
-                    enable: enable_tests,
-                    disable: disable_tests,
+                    enable: enableTests,
+                    disable: disableTests,
+                    states: findStates,
                 }
             }
 
@@ -44,33 +45,27 @@ define([
             }
             /* Pages */
             function findProduct(type){
-                var matches = obj.find({page: 'pdp', type: type});
-                return matches = (matches.length === 1) ? matches[0] : matches;
+                return obj.find({page: 'pdp', type: type});
             }
             function findMinicart(type){
-                var matches = obj.find({page: 'minicart', type: type});
-                return matches = (matches.length === 1) ? matches[0] : matches;
+                return obj.find({page: 'minicart', type: type});
             }
             function findCart(type){
-                var matches = obj.find({page: 'cart', type: type});
-                return matches = (matches.length === 1) ? matches[0] : matches;
+                return obj.find({page: 'cart', type: type});
             }
             function findCheckout(type){
-                var matches = obj.find({page: 'checkout', type: type})
-                return matches = (matches.length === 1) ? matches[0] : matches;
+                return obj.find({page: 'checkout', type: type})
             }
             function findPage(page){
-                var matches = obj.find({page: page});
-                return matches = (matches.length === 1) ? matches[0] : matches;
+                return obj.find({page: page});
             }
             function findMethod(payment_method){
-                var matches = obj.find({type: payment_method})
-                return matches = (matches.length === 1) ? matches[0] : matches;
+                return obj.find({type: payment_method})
             }        
             function loadPaypal(location, type, config, cb){                                
                 var method = obj.find({page: location, type: type});
-                if (method.length !== 0){
-                    method[0].addPaypal(config, cb)
+                if (typeof(method === 'object') && method.length === undefined){
+                    method.addPaypal(config, cb);
                 }
             }            
             function find(args){
@@ -86,25 +81,26 @@ define([
                             matches.push(button);
                         }
                 })
-                return matches;
+                return matches = (matches.length === 1) ? matches[0] : matches;
             }
-            function disable_tests(){
+            function disableTests(){
                 $.each(obj.tests.names, function(i,name){
                     localStorage.setItem(name,"true");
                 });
             }
-            function enable_tests(){
+            function enableTests(){
                 $.each(obj.tests.names, function(i,name){
                     localStorage.removeItem(name);
                 })
             }
+            function findStates(){
+                var result = {};
+                $.each(obj.tests.names, function(i,name){
+                    result[name] = localStorage.getItem(name)
+                })
+                return result;
+            }
             return obj;
-        },
-
-        addToApi: function (testLocation, testName, obj) {
-            window.braintreeHicApi = window.braintreeHicApi || {};
-            window.braintreeHicApi[testLocation] = window.braintreeHicApi[testLocation] || {};
-            window.braintreeHicApi[testLocation][testName] = obj;
         },
 
     }
