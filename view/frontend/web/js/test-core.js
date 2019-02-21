@@ -42,13 +42,13 @@ define([
                         ],
                         device: [
                             'bt-hic-disable-test-desktop',
-                            //'bt-hic-disable-test-tablet',
+                            'bt-hic-disable-test-tablet',
                             'bt-hic-disable-test-mobile',
                         ],
                     },
                     enable: enableTests,
                     disable: disableTests,
-                    states: findStates,
+                    status: findStatus,
                     safe: setSafe,
                 }
             }
@@ -117,23 +117,24 @@ define([
                     })
                 })
             }
-            function findStates(){
+            function findStatus(){
                 var results = {
-                    safe: localStorage.getItem('bt-hic-disable-test-safe'),
+                    safe: (localStorage.getItem('bt-hic-disable-test-safe') === 'false') ? false : true,
                     page: {},
                     type: {},
                     device: {}
                 };
                 $.each(obj.tests.names, function(key,names){
                     $.each(names, function(i,name){
-                        results[key][name] = localStorage.getItem(name);
+                        var status = localStorage.getItem(name);
+                        results[key][name] = (status === 'true') ? true : false;
                     })
                 })
                 return results;
             }
             function setSafe(type){
                 var net = 'bt-hic-disable-test-safe';
-                (type === false) ? localStorage.setItem(net, "false") : localStorage.removeItem(net);
+                (type === false) ? localStorage.setItem(net, 'false') : localStorage.removeItem(net);
                 return localStorage.getItem(net);
             }
             return obj;

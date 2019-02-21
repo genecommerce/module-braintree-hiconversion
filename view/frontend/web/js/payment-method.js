@@ -19,20 +19,19 @@ define([
                 config: {},
                 config_default: {},
                 style: styleElem,
-                eligible: eligible(),        
+                eligible: eligible(),
                 selector: args.selector,
                 enable: null,
-                options: null,
                 show: show,
                 hide: hide,
                 init: init,
                 found: found,
-                test: {                    
+                test: {
+                    safe: 'bt-hic-disable-test-safe',
                     page: 'bt-hic-disable-test-' + args.page,
                     type: 'bt-hic-disable-test-' + args.type,
                     device: 'bt-hic-disable-test-' + 'desktop',
-                    state: findState,
-                    states: findStates,
+                    status: findStatuses,
                     disable: disableTest,
                     enable: enableTest,
                 },
@@ -148,40 +147,35 @@ define([
                 return e;
             }
             function loaded(){
-                if (obj.type === 'paypal' && obj.paypalHook !== false){
-                    return true;
+                return (obj.type === 'paypal' && obj.paypalHook !== false) ? true : false;
+            }
+            function changeTest(enable, type){
+                if (type === undefined){
+                    $.each(['page','type','device'],function(i,name){
+                        (enable) ? localStorage.removeItem(obj.test[name]) :localStorage.setItem(obj.test[name],'true');
+                    })
                 }else{
-                    return false;
+                    (enable) ? localStorage.removeItem(obj.test[name]) :localStorage.setItem(obj.test[name],'true');
                 }
+                return obj;
             }
             function disableTest(type){
-                if (type === undefined){
-                    $.each(['page','type','device'],function(i,name){
-                        localStorage.setItem(obj.test[name],'true');
-                    })
-                }else{
-                    localStorage.setItem(obj.test[type], 'true');
-                }
+                return changeTest(true, type);
             }
             function enableTest(type){
-                if (type === undefined){
-                    $.each(['page','type','device'],function(i,name){
-                        localStorage.removeItem(obj.test[name]);
-                    })
-                }else{
-                    localStorage.removeItem(obj.test[type]);
-                }
+                return changeTest(false, type);
             }
-            function findState(type){
+            function findStatus(type){
                 var find = obj.test[type];
-                return localStorage.getItem(find);
+                return (localStorage.getItem(find) === 'true') ? true : false;
             }
-            function findStates(){
+            function findStatuses(){
                 return {
-                    safe: localStorage.getItem('bt-hic-disable-test-safe'),
-                    page: findState('page'),
-                    type: findState('type'),
-                    device: findState('device')
+                    safe: findStatus('safe'),
+                    page: findStatus('page'),
+                    type: findStatus('type'),
+                    device: findStatus('device'),
+                    visible: (styleElem() !== false) ? false : true,
                 };
             }
             function add_paypal_methods(){
@@ -214,11 +208,10 @@ define([
                     var time = 250;
                     hide();
                     function waitFor(){
-                        var states = findStates();
-                        var safe = localStorage.getItem('bt-hic-disable-test-safe');
-                        if (safe === 'false'){
+                        var status = findStatuses();
+                        if (status.safe === false){
                             hide();
-                        }else if (states.page !== null || states.type !== null || states.device !== null){
+                        } else if (status.page !== false || status.type !== false || status.device !== false){
                             show(true);
                         } else {
                             setTimeout(function(){
