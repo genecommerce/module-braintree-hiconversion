@@ -18,22 +18,38 @@ define([
                 options: paymentMethodConfig.paymentConfig(),
                 page: findPage,
                 method: findMethod,
-                find: find,
+                search: search,
+                find: find,                
                 pdp: findProduct,
                 minicart: findMinicart,
                 cart: findCart,
                 checkout: findCheckout,
                 loadPaypal: loadPaypal,
                 tests: {
-                    names: [
-                        'bt-hic-disable-test-pdp',
-                        'bt-hic-disable-test-minicart',
-                        'bt-hic-disable-test-cart',
-                        'bt-hic-disable-test-checkout'
-                    ],
+                    names: {
+                        page: [
+                            'bt-hic-disable-test-pdp',
+                            'bt-hic-disable-test-minicart',
+                            'bt-hic-disable-test-cart',
+                            'bt-hic-disable-test-checkout',
+                        ],
+                        type: [
+                            'bt-hic-disable-test-paypal',
+                            'bt-hic-disable-test-paypalCheckout',
+                            'bt-hic-disable-test-paypalCredit',
+                            'bt-hic-disable-test-applePay',
+                            'bt-hic-disable-test-googlePay',
+                        ],
+                        device: [
+                            'bt-hic-disable-test-desktop',
+                            //'bt-hic-disable-test-tablet',
+                            'bt-hic-disable-test-mobile',
+                        ],
+                    },
                     enable: enableTests,
                     disable: disableTests,
                     states: findStates,
+                    safe: setSafe,
                 }
             }
 
@@ -67,13 +83,13 @@ define([
                 if (typeof(method === 'object') && method.length === undefined){
                     method.addPaypal(config, cb);
                 }
-            }            
-            function find(args){
+            }
+            function search(args){
                 var matches = [];
                 $.each(obj.payment_methods, function(index,button){
                         var match = true;
                         $.each(args, function(match_key, match_value){
-                            if (button[match_key] === undefined || button[match_key] !== match_value){
+                            if (match === false || button[match_key] === undefined || button[match_key] !== match_value){
                                 match = false;
                             }
                         })
@@ -81,24 +97,44 @@ define([
                             matches.push(button);
                         }
                 })
-                return matches = (matches.length === 1) ? matches[0] : matches;
+                return matches;
+            }
+            function find(args){
+                var matches = search(args)
+                return (matches.length === 1) ? matches[0] : false;
             }
             function disableTests(){
-                $.each(obj.tests.names, function(i,name){
-                    localStorage.setItem(name,"true");
-                });
+                $.each(obj.tests.names, function(key,names){
+                    $.each(names, function(i,name){
+                        localStorage.setItem(name,'true');
+                    })
+                })
             }
             function enableTests(){
-                $.each(obj.tests.names, function(i,name){
-                    localStorage.removeItem(name);
+                $.each(obj.tests.names, function(key,names){
+                    $.each(names, function(i,name){
+                        localStorage.removeItem(name);
+                    })
                 })
             }
             function findStates(){
-                var result = {};
-                $.each(obj.tests.names, function(i,name){
-                    result[name] = localStorage.getItem(name)
+                var results = {
+                    safe: localStorage.getItem('bt-hic-disable-test-safe'),
+                    page: {},
+                    type: {},
+                    device: {}
+                };
+                $.each(obj.tests.names, function(key,names){
+                    $.each(names, function(i,name){
+                        results[key][name] = localStorage.getItem(name);
+                    })
                 })
-                return result;
+                return results;
+            }
+            function setSafe(type){
+                var net = 'bt-hic-disable-test-safe';
+                (type === false) ? localStorage.setItem(net, "false") : localStorage.removeItem(net);
+                return localStorage.getItem(net);
             }
             return obj;
         },

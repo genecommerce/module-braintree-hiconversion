@@ -18,6 +18,7 @@ define([
                 configTest: args.configTest,
                 config: {},
                 config_default: {},
+                style: styleElem,
                 eligible: eligible(),        
                 selector: args.selector,
                 enable: null,
@@ -27,8 +28,11 @@ define([
                 init: init,
                 found: found,
                 test: {                    
-                    name: 'bt-hic-disable-test-' + args.page,
+                    page: 'bt-hic-disable-test-' + args.page,
+                    type: 'bt-hic-disable-test-' + args.type,
+                    device: 'bt-hic-disable-test-' + 'desktop',
                     state: findState,
+                    states: findStates,
                     disable: disableTest,
                     enable: enableTest,
                 },
@@ -60,24 +64,31 @@ define([
             function onError(callback){
                 return onEvent(obj.listeners.click, callback);    
             }
-            function show(force){
-                if (style !== false){
+            function styleElem(){
+                var elem = $('style[data-page="'+obj.page+'"][data-type="'+obj.type+'"]');
+                return (elem.length === 0) ? false : elem;
+            }
+            function show(force){                
+                if (styleElem() !== false){
                     if (obj.enable || force){
-                        style.remove();
+                        styleElem().remove();
                     }
                 }
                 return obj;
             }
             function hide(){
-                var text = args.selector + '{display:none;}'
-                var styleSheet = document.createElement('style');
-                document.getElementsByTagName('head')[0].appendChild(styleSheet);
-                if (styleSheet.styleSheet) {
-                    styleSheet.styleSheet.cssText = text;
-                } else {
-                    styleSheet.appendChild(document.createTextNode(text));
+                if (styleElem() === false){
+                    var text = args.selector + '{display:none;}';
+                    var styleSheet = document.createElement('style');
+                        styleSheet.setAttribute('data-page', obj.page);
+                        styleSheet.setAttribute('data-type', obj.type);                    
+                    document.getElementsByTagName('head')[0].appendChild(styleSheet);
+                    if (styleSheet.styleSheet) {
+                        styleSheet.styleSheet.cssText = text;
+                    } else {
+                        styleSheet.appendChild(document.createTextNode(text));
+                    }
                 }
-                style = $(styleSheet);
                 return obj;
             }
             function update(newConfig){
@@ -143,14 +154,35 @@ define([
                     return false;
                 }
             }
-            function disableTest(){
-                localStorage.setItem(obj.test.name, 'true');
+            function disableTest(type){
+                if (type === undefined){
+                    $.each(['page','type','device'],function(i,name){
+                        localStorage.setItem(obj.test[name],'true');
+                    })
+                }else{
+                    localStorage.setItem(obj.test[type], 'true');
+                }
             }
-            function enableTest(){
-                localStorage.removeItem(obj.test.name);
+            function enableTest(type){
+                if (type === undefined){
+                    $.each(['page','type','device'],function(i,name){
+                        localStorage.removeItem(obj.test[name]);
+                    })
+                }else{
+                    localStorage.removeItem(obj.test[type]);
+                }
             }
-            function findState(){
-                return localStorage.getItem(obj.test.name);
+            function findState(type){
+                var find = obj.test[type];
+                return localStorage.getItem(find);
+            }
+            function findStates(){
+                return {
+                    safe: localStorage.getItem('bt-hic-disable-test-safe'),
+                    page: findState('page'),
+                    type: findState('type'),
+                    device: findState('device')
+                };
             }
             function add_paypal_methods(){
                 $.extend(true, obj, {
@@ -175,14 +207,18 @@ define([
                 });
             }
             function init(){
-                if (obj.type === 'paypal' || obj.type === 'paypalCheckout' || obj.type === 'paypalCredit'){
+                if (/paypal/i.test(obj.type)){
                     add_paypal_methods();
                 }
                 if (obj.configTest !== undefined && obj.configTest.isTestingEnabled === true){
                     var time = 250;
                     hide();
-                    function waitFor(){                 
-                        if (findState() !== null){
+                    function waitFor(){
+                        var states = findStates();
+                        var safe = localStorage.getItem('bt-hic-disable-test-safe');
+                        if (safe === 'false'){
+                            hide();
+                        }else if (states.page !== null || states.type !== null || states.device !== null){
                             show(true);
                         } else {
                             setTimeout(function(){
@@ -190,7 +226,7 @@ define([
                             }, time)
                         }
                     }
-                    waitFor();            
+                    waitFor();
                 }else{
                     show(true);
                 }
