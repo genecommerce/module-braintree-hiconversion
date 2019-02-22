@@ -5,8 +5,9 @@
 define([
     'jquery',
     'Gene_BraintreeHiConversion/js/payment-method',
-    'Gene_BraintreeHiConversion/js/payment-method-config'
-], function ($, paymentMethod, paymentMethodConfig) {
+    'Gene_BraintreeHiConversion/js/payment-method-config',
+    'Gene_BraintreeHiConversion/js/test-flag',
+], function ($, paymentMethod, paymentMethodConfig, testFlag) {
     'use strict';
 
     return {            
@@ -25,6 +26,7 @@ define([
                 cart: findCart,
                 checkout: findCheckout,
                 loadPaypal: loadPaypal,
+                flag: testFlag.new(),
                 tests: {
                     names: {
                         page: [
@@ -49,7 +51,8 @@ define([
                     enable: enableTests,
                     disable: disableTests,
                     status: findStatus,
-                    safe: setSafe,
+                    ignore: ignoreFlags,
+                    ignoreName: 'bt-hic-disable-test-ignore-flags',
                 }
             }
 
@@ -104,22 +107,22 @@ define([
                 return (matches.length === 1) ? matches[0] : false;
             }
             function disableTests(){
-                $.each(obj.tests.names, function(key,names){
+                $.each(obj.tests.names, function(key,names){                    
                     $.each(names, function(i,name){
-                        localStorage.setItem(name,'true');
+                        obj.flag.create(name, 'true');
                     })
                 })
             }
             function enableTests(){
                 $.each(obj.tests.names, function(key,names){
                     $.each(names, function(i,name){
-                        localStorage.removeItem(name);
+                        obj.flag.destroy(name);
                     })
                 })
             }
             function findStatus(){
                 var results = {
-                    safe: (localStorage.getItem('bt-hic-disable-test-safe') === 'false') ? false : true,
+                    ignoreFlags: obj.flag.read(obj.tests.ignoreName),
                     page: {},
                     type: {},
                     device: {}
@@ -132,13 +135,10 @@ define([
                 })
                 return results;
             }
-            function setSafe(type){
-                var net = 'bt-hic-disable-test-safe';
-                (type === false) ? localStorage.setItem(net, 'false') : localStorage.removeItem(net);
-                return localStorage.getItem(net);
+            function ignoreFlags(status){                
+                return obj.flag.create(obj.tests.ignoreName, status);
             }
             return obj;
         },
-
     }
 });

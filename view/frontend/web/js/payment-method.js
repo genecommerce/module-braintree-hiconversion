@@ -5,7 +5,8 @@
 define([
     'jquery',
     'Gene_BraintreeHiConversion/js/payment-method-config',
-], function ($, paymentMethodConfig) {
+    'Gene_BraintreeHiConversion/js/test-flag',
+], function ($, paymentMethodConfig, testFlag) {
     'use strict';
 
     return {
@@ -19,6 +20,7 @@ define([
                 config: {},
                 config_default: {},
                 style: styleElem,
+                flag: testFlag.new(),
                 eligible: eligible(),
                 selector: args.selector,
                 enable: null,
@@ -27,7 +29,7 @@ define([
                 init: init,
                 found: found,
                 test: {
-                    safe: 'bt-hic-disable-test-safe',
+                    ignoreFlag: 'bt-hic-disable-test-ignore-flags',
                     page: 'bt-hic-disable-test-' + args.page,
                     type: 'bt-hic-disable-test-' + args.type,
                     device: 'bt-hic-disable-test-' + 'desktop',
@@ -69,7 +71,7 @@ define([
             }
             function show(force){                
                 if (styleElem() !== false){
-                    if (obj.enable || force){
+                    if (obj.enable !== null|| force === true){
                         styleElem().remove();
                     }
                 }
@@ -149,33 +151,29 @@ define([
             function loaded(){
                 return (obj.type === 'paypal' && obj.paypalHook !== false) ? true : false;
             }
-            function changeTest(enable, type){
-                if (type === undefined){
-                    $.each(['page','type','device'],function(i,name){
-                        (enable) ? localStorage.removeItem(obj.test[name]) :localStorage.setItem(obj.test[name],'true');
-                    })
-                }else{
-                    (enable) ? localStorage.removeItem(obj.test[name]) :localStorage.setItem(obj.test[name],'true');
-                }
-                return obj;
-            }
             function disableTest(type){
-                return changeTest(true, type);
+                var name = obj.test[type];
+                return obj.flag.create(name, 'true');     
             }
             function enableTest(type){
-                return changeTest(false, type);
+                var name = obj.test[type];
+                return obj.flag.destroy(name);
             }
             function findStatus(type){
                 var find = obj.test[type];
-                return (localStorage.getItem(find) === 'true') ? true : false;
+                return obj.flag.read(find);
             }
             function findStatuses(){
                 return {
-                    safe: findStatus('safe'),
-                    page: findStatus('page'),
-                    type: findStatus('type'),
-                    device: findStatus('device'),
+                    ignoreFlags: obj.flag.read(obj.test.ignoreFlag),
+                    flags: {
+                        page: findStatus('page'),
+                        type: findStatus('type'),
+                        device: findStatus('device')
+                    },
                     visible: (styleElem() !== false) ? false : true,
+                    found: (found() === 1) ? true : false,
+                    enableShow: (obj.enable === null) ? false : true,
                 };
             }
             function add_paypal_methods(){
@@ -208,10 +206,10 @@ define([
                     var time = 250;
                     hide();
                     function waitFor(){
-                        var status = findStatuses();
-                        if (status.safe === false){
+                        var status  = findStatuses();
+                        if (status.ignoreFlags === true){
                             hide();
-                        } else if (status.page !== false || status.type !== false || status.device !== false){
+                        } else if (status.flags.page !== false || status.flags.type !== false || status.flags.device !== false){
                             show(true);
                         } else {
                             setTimeout(function(){
