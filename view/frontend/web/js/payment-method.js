@@ -37,7 +37,7 @@ define([
                     disable: disableTest,
                     enable: enableTest,
                 },
-            }
+            }            
             function register(type, cb){
                 return (typeof(cb) === 'function') ? obj.listeners[type].push(cb) : 'must be function';
             }

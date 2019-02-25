@@ -19,6 +19,7 @@ define([
                 options: paymentMethodConfig.paymentConfig(),
                 page: findPage,
                 method: findMethod,
+                device: findDevice,
                 search: search,
                 find: find,                
                 pdp: findProduct,
@@ -53,7 +54,7 @@ define([
                     status: findStatus,
                     ignore: ignoreFlags,
                     ignoreName: 'bt-hic-disable-test-ignore-flags',
-                }
+                }                
             }
 
             window.braintreeHicApi = (window.braintreeHicApi === undefined) ? default_obj : window.braintreeHicApi;
@@ -61,6 +62,22 @@ define([
             function add(args){            
                 var test_payment = paymentMethod.new(args).init();
                 obj.payment_methods.push(test_payment);
+            }
+            function findDevice(){
+                var width = window.matchMedia('screen and (min-width: 768px)').matches;
+                var height = window.matchMedia('screen and (min-height: 768px)').matches;
+                var orientation = (window.matchMedia('(orientation: landscape)').matches) ? 'landscape' : 'portrait';
+                var hover = window.matchMedia('(hover: hover)').matches;
+                var noHover = window.matchMedia('(hover: none)').matches;
+                var device = null;
+
+                if (height === false || width === false){
+                    device = 'mobile';
+                }else{
+                    device = (noHover) ? 'tablet' : 'desktop';
+                }
+
+                return device;
             }
             /* Pages */
             function findProduct(type){
