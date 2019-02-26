@@ -5,8 +5,7 @@
 define([
     'jquery',
     'Gene_BraintreeHiConversion/js/payment-method-config',
-    'Gene_BraintreeHiConversion/js/test-flag',
-], function ($, paymentMethodConfig, testFlag) {
+], function ($, paymentMethodConfig) {
     'use strict';
 
     return {
@@ -16,26 +15,22 @@ define([
             var obj = {
                 page: args.page,
                 type: args.type,
-                configTest: args.configTest,
+                device: window.braintreeHicApi.device,
                 config: {},
                 config_default: {},
-                style: styleElem,
-                flag: testFlag.new(),
-                eligible: eligible(),
-                selector: args.selector,
-                enable: null,
-                show: show,
-                hide: hide,
                 init: init,
-                found: found,
+                elem: {
+                    enable: false,
+                    style: styleElem,
+                    selector: args.selector,
+                    hide: hide,
+                    show: show,
+                    found: found,
+                },
+                status: findStatus,
                 test: {
-                    ignoreFlag: 'bt-hic-disable-test-ignore-flags',
-                    page: 'bt-hic-disable-test-' + args.page,
-                    type: 'bt-hic-disable-test-' + args.type,
-                    device: 'bt-hic-disable-test-' + 'desktop',
-                    status: findStatuses,
-                    disable: disableTest,
-                    enable: enableTest,
+                    eligible: eligible(),
+                    config: args.configTest,
                 },
             }            
             function register(type, cb){
@@ -60,10 +55,10 @@ define([
                 return onEvent(obj.listeners.click, callback);
             }
             function onCancel(callback){
-                return onEvent(obj.listeners.click, callback);
+                return onEvent(obj.listeners.cancel, callback);
             }
             function onError(callback){
-                return onEvent(obj.listeners.click, callback);    
+                return onEvent(obj.listeners.error, callback);    
             }
             function styleElem(){
                 var elem = $('style[data-page="'+obj.page+'"][data-type="'+obj.type+'"]');
@@ -71,7 +66,7 @@ define([
             }
             function show(force){                
                 if (styleElem() !== false){
-                    if (obj.enable !== null|| force === true){
+                    if (obj.elem.enable !== false || force === true){
                         styleElem().remove();
                     }
                 }
@@ -79,10 +74,10 @@ define([
             }
             function hide(){
                 if (styleElem() === false){
-                    var text = args.selector + '{display:none;}';
+                    var text = obj.elem.selector + '{display:none;}';
                     var styleSheet = document.createElement('style');
                         styleSheet.setAttribute('data-page', obj.page);
-                        styleSheet.setAttribute('data-type', obj.type);                    
+                        styleSheet.setAttribute('data-type', obj.type);
                     document.getElementsByTagName('head')[0].appendChild(styleSheet);
                     if (styleSheet.styleSheet) {
                         styleSheet.styleSheet.cssText = text;
@@ -98,7 +93,7 @@ define([
             }
             function addButton(arg){
                 if (arg !== false){
-                    obj.removeButton();
+                    removeButton();
                 }
                 if (obj.paypalHook !== undefined && typeof(obj.paypalHook) === 'function'){
                     obj.paypalHook(obj.config);
@@ -117,11 +112,11 @@ define([
                 return obj;
             }
             function removeButton(){
-                $(obj.selector).find('[id^="zoid-paypal-button"]').remove();
+                $(obj.elem.selector).find('[id^="zoid-paypal-button"]').remove();
                 return obj;
             }
             function found(){
-                return $(obj.selector).length;
+                return $(obj.elem.selector).length;
             }        
             function eligible(){
                 var e = {
@@ -147,43 +142,23 @@ define([
 
                 }
                 return e;
-            }
-            function loaded(){
-                return (obj.type === 'paypal' && obj.paypalHook !== false) ? true : false;
-            }
-            function disableTest(type){
-                var name = obj.test[type];
-                return obj.flag.create(name, 'true');     
-            }
-            function enableTest(type){
-                var name = obj.test[type];
-                return obj.flag.destroy(name);
-            }
-            function findStatus(type){
-                var find = obj.test[type];
-                return obj.flag.read(find);
-            }
-            function findStatuses(){
+            }    
+            function findStatus(){
                 return {
-                    ignoreFlags: obj.flag.read(obj.test.ignoreFlag),
-                    flags: {
-                        page: findStatus('page'),
-                        type: findStatus('type'),
-                        device: findStatus('device')
-                    },
                     visible: (styleElem() !== false) ? false : true,
                     found: (found() === 1) ? true : false,
-                    enableShow: (obj.enable === null) ? false : true,
+                    enableShow: (obj.elem.enable === false) ? false : true,
                 };
             }
             function add_paypal_methods(){
                 $.extend(true, obj, {
                     addPaypal: addPaypal,
-                    addButton: addButton,
-                    removeButton: removeButton,
+                    elem: {
+                        add: addButton,
+                        remove: removeButton,
+                    },
                     paypalHook: false,
                     update: update,
-                    loaded: loaded,
                     listeners: {
                         click: [],
                         cancel: [],
@@ -199,32 +174,24 @@ define([
                 });
             }
             function init(){
+
                 if (/paypal/i.test(obj.type)){
                     add_paypal_methods();
                 }
-                if (obj.configTest !== undefined && obj.configTest.isTestingEnabled === true){
-                    var time = 250;
+
+                var loc = document.location || window.location;
+                var origin = loc.origin || loc.protocol + "//" + loc.host;
+                window.postMessage({group: 'update-bt-ge-hi', page: obj.page, type: obj.type}, origin);
+
+                if (obj.test.config !== undefined && obj.test.config.isTestingEnabled === true){
                     hide();
-                    function waitFor(){
-                        var status  = findStatuses();
-                        if (status.ignoreFlags === true){
-                            hide();
-                        } else if (status.flags.page !== false || status.flags.type !== false || status.flags.device !== false){
-                            show(true);
-                        } else {
-                            setTimeout(function(){
-                                waitFor()
-                            }, time)
-                        }
-                    }
-                    waitFor();
                 }else{
                     show(true);
                 }
   
-                return obj
+                return obj;
             }
-            return obj
+            return obj;
         },
               
     }
