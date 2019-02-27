@@ -4,15 +4,15 @@ namespace Gene\BraintreeHiConversion\Plugin\PayPal;
 
 /**
  * Class CartButton
- * Replace the template used by the cart button to use the HIC one
+ * Replace the template used by the product button to use the HIC one
  * @package Gene\BraintreeHiConversion\Plugin\PayPal
  */
-class CartButton
+class ProductButton
 {
-    const TEMPLATE_PATH = 'Gene_BraintreeHiConversion::paypal/cartbutton.phtml';
+    const TEMPLATE_PATH = 'Gene_BraintreeHiConversion::paypal/productbutton.phtml';
 
     /**
-     * @var \Gene\BraintreeHiconversion\Helper\Data
+     * @var \Hic\Integration\Helper
      */
     protected $helper;
 
@@ -34,6 +34,7 @@ class CartButton
      */
     public function afterGetTemplate(\Magento\Braintree\Block\Paypal\Button $subject, $result)
     {
+        // @todo change setting to check against product
         if ($this->helper->isEnabled()) {
             return self::TEMPLATE_PATH;
         }

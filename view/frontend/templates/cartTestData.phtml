@@ -1,34 +1,18 @@
 <?php
 /**
- * @var \Gene\BraintreeHiConversion\Block\CartTestData $block
+ * @var \Gene\BraintreeHiConversion\Block\TestData $block
  */
-$styleConfig = [
-    'buttonColorTestEnabled' => $block->isPaypalButtonColorTestEnabled(),
-    'buttonShapeTestEnabled' => $block->isPaypalButtonShapeTestEnabled()
-];
+
 $config = [
-    'paypalExpress' => array_merge([
-        'testEnabled' => $block->isPaypalExpressTestEnabled(),
-        'disabled' => $block->isPaypalExpressDisabled()
-    ], $styleConfig),
-    'paypalCredit' => array_merge([
-        'testEnabled' => $block->isPaypalCreditTestEnabled(),
-        'disabled' => $block->isPaypalCreditDisabled()
-    ], $styleConfig),
-    'applePay' => [
-        'testEnabled' => $block->isApplePayTestEnabled(),
-        'disabled' => $block->isApplePayDisabled()
-    ],
-    'googlePay' => [
-        'testEnabled' => $block->isGooglePayTestEnabled(),
-        'disabled' => $block->isGooglePayDisabled()
+    'Gene_BraintreeHiConversion/js/cart-tests' => [
+        'isTestingEnabled' => $block->isTestingEnabled()
     ]
 ];
-?>
-<script type="text/x-magento-init">
-{
-    "*": {
-        "Gene_BraintreeHiConversion/js/cart-tests": <?php /* @noEscape */ echo json_encode($config); ?>
+
+if ($block->isEnabled()) : ?>
+    <script type="text/x-magento-init">
+    {
+        "*": <?php /* @noEscape */ echo json_encode($config); ?>
     }
-}
-</script>
+    </script>
+<?php endif; ?>

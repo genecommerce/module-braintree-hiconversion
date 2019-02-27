@@ -5,44 +5,31 @@
 define([
     'jquery',
     'Gene_BraintreeHiConversion/js/test-core'
-], function ($, testCore) {
+], function ($, hicCore) {
     'use strict';
 
     return function (config) {
 
-        if (config) {
+            hicCore.paymentMethods().add({
+                configTest: config,
+                page: 'cart',
+                type: 'paypal',
+                selector: '.cart-summary .paypal.checkout:not(.paypal-bml)'
+            });
 
-            window.cart_config = config;
-            //testCore.addToApi('config','cart_payment_methods', config);
+            hicCore.paymentMethods().add({
+                configTest: config,
+                page: 'cart',
+                type: 'applePay',
+                selector: '.cart-summary .applepay-minicart'
+            });
 
-            testCore.addToApi('cart', 'paypal', testCore.paymentMethod({
-                config: config.paypalExpress,
-                eligible: "",
-                selector: ".cart-summary .paypal.checkout:not(.paypal-bml)",
-                label: "cart_paypal"
-            }).init());
-
-            testCore.addToApi('cart','paypalCredit', testCore.paymentMethod({
-                config: config.paypalCredit,
-                eligible: "",
-                selector: ".cart-summary .paypal-bml.checkout",
-                label: "cart_paypalCredit"
-            }).init());
-
-            testCore.addToApi('cart','applePay', testCore.paymentMethod({
-                config: config.applePay,
-                eligible: "",
-                selector: ".cart-summary .applepay-minicart",
-                label: "cart_applePay"
-            }).init());
-
-            testCore.addToApi('cart','googlePay', testCore.paymentMethod({
-                config: config.googlePay,
-                eligible: "",
-                selector: ".cart-summary .googlepay-minicart-logo",
-                label: "googlePay_cart"
-            }).init());
-
-        }
+            hicCore.paymentMethods().add({
+                configTest: config,
+                page: 'cart',
+                type: 'googlePay',
+                selector: '.cart-summary .googlepay-minicart-logo'
+            });
+            
     };
 });

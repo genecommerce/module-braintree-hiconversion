@@ -1,12 +1,19 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
-        <payment>
-            <hiconversion>
-                <configuration>
-                    <enabled>0</enabled>
-                </configuration>
-            </hiconversion>
-        </payment>
+        <hiconversion>
+            <configuration>
+                <enabled>0</enabled>
+                <bt_enabled>0</bt_enabled>
+                <status_paypal_enabled>Enabled</status_paypal_enabled>
+                <status_paypal_disabled>Not Enabled</status_paypal_disabled>
+                <status_paypal_credit_enabled>Enabled</status_paypal_credit_enabled>
+                <status_paypal_credit_disabled>Not Enabled</status_paypal_credit_disabled>
+                <status_applepay_enabled>Enabled</status_applepay_enabled>
+                <status_applepay_disabled>Not Enabled</status_applepay_disabled>
+                <status_googlepay_enabled>Enabled</status_googlepay_enabled>
+                <status_googlepay_disabled>Not Enabled</status_googlepay_disabled>
+            </configuration>
+        </hiconversion>
     </default>
 </config>

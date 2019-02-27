@@ -12,24 +12,31 @@ define([
 
             hicCore.paymentMethods().add({
                 configTest: config,
-                page: 'minicart',
-                type: 'paypal',     
-                selector: '#minicart-content-wrapper .checkout.paypal'
+                page: 'checkout',
+                type: 'paypalCheckout',
+                selector: '#payment-method-braintree-paypal'
             });
 
             hicCore.paymentMethods().add({
                 configTest: config,
-                page: 'minicart',
+                page: 'checkout',
+                type: 'paypalCredit',
+                selector: '#payment-method-braintree-paypal-credit'
+            });
+
+            hicCore.paymentMethods().add({
+                configTest: config,
+                page: 'checkout',
                 type: 'applePay',
-                selector: '#minicart-content-wrapper .applepay-minicart'
+                selector: '#payment-method-braintree-applepay'
             });
 
             hicCore.paymentMethods().add({
                 configTest: config,
-                page: 'minicart',
+                page: 'checkout',
                 type: 'googlePay',
-                selector: '#minicart-content-wrapper .googlepay-minicart-logo'
+                selector: '#payment-method-braintree-googlepay'
             });
-            
+
     };
 });
