@@ -9,14 +9,13 @@ define([
     'use strict';
 
     return function (config) {
-        
-        hicCore.paymentMethods().add({
-            configTest: config,
-            page: 'pdp',
-            type: 'paypal',
-            selector: '.product-info-main .actions .paypal'
-        })
-
-
+        if (config && config.isPaypalActiveOnPdp) {
+            hicCore.paymentMethods().add({
+                configTest: config,
+                page: 'pdp',
+                type: 'paypal',
+                selector: '.product-info-main .actions .paypal'
+            });
+        }
     };
 });

@@ -9,34 +9,39 @@ define([
     'use strict';
 
     return function (config) {
-
-            hicCore.paymentMethods().add({
-                configTest: config,
-                page: 'checkout',
-                type: 'paypalCheckout',
-                selector: '#payment-method-braintree-paypal'
-            });
-
-            hicCore.paymentMethods().add({
-                configTest: config,
-                page: 'checkout',
-                type: 'paypalCredit',
-                selector: '#payment-method-braintree-paypal-credit'
-            });
-
-            hicCore.paymentMethods().add({
-                configTest: config,
-                page: 'checkout',
-                type: 'applePay',
-                selector: '#payment-method-braintree-applepay'
-            });
-
-            hicCore.paymentMethods().add({
-                configTest: config,
-                page: 'checkout',
-                type: 'googlePay',
-                selector: '#payment-method-braintree-googlepay'
-            });
-
+        if (config) {
+            if (config.isPaypalActive) {
+                hicCore.paymentMethods().add({
+                    configTest: config,
+                    page: 'checkout',
+                    type: 'paypalCheckout',
+                    selector: '#payment-method-braintree-paypal'
+                });
+            }
+            if (config.isCreditActive) {
+                hicCore.paymentMethods().add({
+                    configTest: config,
+                    page: 'checkout',
+                    type: 'paypalCredit',
+                    selector: '#payment-method-braintree-paypal-credit'
+                });
+            }
+            if (config.isApplePayActive) {
+                hicCore.paymentMethods().add({
+                    configTest: config,
+                    page: 'checkout',
+                    type: 'applePay',
+                    selector: '#payment-method-braintree-applepay'
+                });
+            }
+            if (config.isGooglePayActive) {
+                hicCore.paymentMethods().add({
+                    configTest: config,
+                    page: 'checkout',
+                    type: 'googlePay',
+                    selector: '#payment-method-braintree-googlepay'
+                });
+            }
+        }
     };
 });
