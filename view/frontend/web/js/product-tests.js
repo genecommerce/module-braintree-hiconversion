@@ -9,7 +9,7 @@ define([
     'use strict';
 
     return function (config) {
-        if (config && config.isPaypalActiveOnPdp) {
+        if (config && config.isPaypalActive && config.isPaypalActiveOnPdp) {
             hicCore.paymentMethods().add({
                 configTest: config,
                 page: 'pdp',

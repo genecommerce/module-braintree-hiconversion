@@ -17,15 +17,17 @@ define([
                     type: 'paypalCheckout',
                     selector: '#payment-method-braintree-paypal'
                 });
+
+                if (config.isCreditActive) {
+                    hicCore.paymentMethods().add({
+                        configTest: config,
+                        page: 'checkout',
+                        type: 'paypalCredit',
+                        selector: '#payment-method-braintree-paypal-credit'
+                    });
+                }
             }
-            if (config.isCreditActive) {
-                hicCore.paymentMethods().add({
-                    configTest: config,
-                    page: 'checkout',
-                    type: 'paypalCredit',
-                    selector: '#payment-method-braintree-paypal-credit'
-                });
-            }
+           
             if (config.isApplePayActive) {
                 hicCore.paymentMethods().add({
                     configTest: config,

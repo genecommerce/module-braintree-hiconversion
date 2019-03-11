@@ -10,7 +10,7 @@ define([
 
     return function (config) {
         if (config) {
-            if (config.isPaypalActiveOnCart) {
+            if (config.isPaypalActive && config.isPaypalActiveOnCart) {
                 hicCore.paymentMethods().add({
                     configTest: config,
                     page: 'cart',
