@@ -23,7 +23,7 @@ define([
                 selector: '.product-info-main .actions .paypal',
                 needs: ['isPaypalActive','config.isPaypalActiveOnPdp'],
                 configTest: config,
-            })
+            });
 
             api.add({
                 type: 'applePay',
@@ -31,7 +31,7 @@ define([
                 selector: '#minicart-content-wrapper .applepay-minicart',
                 needs: ['isApplePayActive'],
                 configTest: config,
-            })
+            });
 
             api.add({
                 type: 'googlePay',
@@ -39,7 +39,7 @@ define([
                 selector: '#minicart-content-wrapper .googlepay-minicart-logo',
                 needs: ['isGooglePayActive'],
                 configTest: config,
-            })
+            });
         }
     };
 });

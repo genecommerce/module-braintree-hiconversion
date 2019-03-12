@@ -24,7 +24,7 @@ define([
                 selector: '#payment-method-braintree-paypal',
                 needs: ['isPaypalActive'],
                 configTest: config,
-            })
+            });
 
             api.add({
                 configTest: config,
@@ -33,21 +33,21 @@ define([
                 selector: '#payment-method-braintree-paypal-credit',
                 needs: ['isPaypalActive','isCreditActive'],
                 configTest: config,
-            })
+            });
 
             api.add({
                 configTest: config,
                 page: 'checkout',
                 type: 'applePay',
                 selector: '#payment-method-braintree-applepay'
-            })
+            });
 
             api.add({
                 configTest: config,
                 page: 'checkout',
                 type: 'googlePay',
                 selector: '#payment-method-braintree-googlepay'
-            })
+            });
 
         }
     };
