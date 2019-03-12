@@ -28,8 +28,8 @@ define([
                 var minicartWrapper = $('#' + this.config.id).closest('#minicart-content-wrapper');
                 var page = minicartWrapper.length ? 'minicart': 'cart';
                 var type = 'paypal';
-                
-                hicCore.paymentMethods().loadPaypal(page, type, _config, function (_config) {
+                var api = hicCore.api().load();
+                api.loadPaypal(page, type, _config, function (_config) {
                     this.config.offerCredit = _config.offerCredit;
                     this.config.color = _config.color;
                     this.config.shape = _config.shape;
@@ -44,7 +44,7 @@ define([
 
                     new Button(this.config);
                 }.bind(this));
-
+                
                 return this;
             },
         });

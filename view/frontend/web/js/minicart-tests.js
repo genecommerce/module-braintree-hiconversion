@@ -11,30 +11,35 @@ define([
     return function (config) {
 
         if (config) {
-            if (config.isPaypalActive && config.isPaypalActiveOnCart) {
-                hicCore.paymentMethods().add({
-                    configTest: config,
-                    page: 'minicart',
-                    type: 'paypal',
-                    selector: '#minicart-content-wrapper .checkout.paypal'
-                });
-            }
-            if (config.isApplePayActive) {
-                hicCore.paymentMethods().add({
-                    configTest: config,
-                    page: 'minicart',
-                    type: 'applePay',
-                    selector: '#minicart-content-wrapper .applepay-minicart'
-                });
-            }
-            if (config.isGooglePayActive) {
-                hicCore.paymentMethods().add({
-                    configTest: config,
-                    page: 'minicart',
-                    type: 'googlePay',
-                    selector: '#minicart-content-wrapper .googlepay-minicart-logo'
-                });
-            }
+                
+
+            var api = hicCore.api().page({
+                configTest: config,
+            });        
+                
+            api.add({
+                type: 'paypal',
+                page: 'minicart',
+                selector: '.product-info-main .actions .paypal',
+                needs: ['isPaypalActive','config.isPaypalActiveOnPdp'],
+                configTest: config,
+            })
+
+            api.add({
+                type: 'applePay',
+                page: 'minicart',
+                selector: '#minicart-content-wrapper .applepay-minicart',
+                needs: ['isApplePayActive'],
+                configTest: config,
+            })
+
+            api.add({
+                type: 'googlePay',
+                page: 'minicart',
+                selector: '#minicart-content-wrapper .googlepay-minicart-logo',
+                needs: ['isGooglePayActive'],
+                configTest: config,
+            })
         }
     };
 });

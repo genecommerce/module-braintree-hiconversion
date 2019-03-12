@@ -26,9 +26,11 @@ define([
                 };
                 
                 var page = 'pdp';
-                var type = 'paypal';                        
-
-                hicCore.paymentMethods().loadPaypal(page, type, _config, function (_config) {
+                var type = 'paypal';
+                
+                var api = hicCore.api().load();
+                
+                api.loadPaypal(page, type, _config, function (_config) {
                     this.config.offerCredit = _config.offerCredit;
                     this.config.color = _config.color;
                     this.config.shape = _config.shape;
@@ -40,10 +42,9 @@ define([
                     this.config.fundingIcons = _config.fundingicons;
                     this.config.tagline = _config.tagline;
                     this.config.events = _config.events;
-
                     new Button(this.config);
-                }.bind(this));
-                        
+                }.bind(this));            
+
                 return this;
             },
         });

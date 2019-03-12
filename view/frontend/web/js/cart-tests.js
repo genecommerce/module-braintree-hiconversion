@@ -10,32 +10,36 @@ define([
 
     return function (config) {
         if (config) {
-            if (config.isPaypalActive && config.isPaypalActiveOnCart) {
-                hicCore.paymentMethods().add({
-                    configTest: config,
-                    page: 'cart',
-                    type: 'paypal',
-                    selector: '.cart-summary .paypal.checkout:not(.paypal-bml)'
-                });
-            }
 
-            if (config.isApplePayActive) {
-                hicCore.paymentMethods().add({
-                    configTest: config,
-                    page: 'cart',
-                    type: 'applePay',
-                    selector: '.cart-summary .applepay-minicart'
-                });
-            }
+            var api = hicCore.api().page({
+                configTest: config,
+                page: 'cart'
+            });        
+                
+            api.add({
+                type: 'paypal',
+                page: 'cart',
+                selector: '.product-info-main .actions .paypal',
+                needs: ['isPaypalActive','isPaypalActiveOnCart','config.isPaypalActiveOnPdp'],
+                configTest: config,
+            })
 
-            if (config.isGooglePayActive) {
-                hicCore.paymentMethods().add({
-                    configTest: config,
-                    page: 'cart',
-                    type: 'googlePay',
-                    selector: '.cart-summary .googlepay-minicart-logo'
-                });
-            }
+            api.add({
+                type: 'applePay',
+                page: 'cart',
+                selector: '#minicart-content-wrapper .applepay-minicart',
+                needs: ['isApplePayActive'],
+                configTest: config,
+            })
+
+            api.add({
+                type: 'googlePay',
+                page: 'cart',
+                selector: '#minicart-content-wrapper .googlepay-minicart-logo',
+                needs: ['isGooglePayActive'],
+                configTest: config,
+            })
+
         }
 
     };

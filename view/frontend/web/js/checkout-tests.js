@@ -10,40 +10,45 @@ define([
 
     return function (config) {
         if (config) {
-            if (config.isPaypalActive) {
-                hicCore.paymentMethods().add({
-                    configTest: config,
-                    page: 'checkout',
-                    type: 'paypalCheckout',
-                    selector: '#payment-method-braintree-paypal'
-                });
 
-                if (config.isCreditActive) {
-                    hicCore.paymentMethods().add({
-                        configTest: config,
-                        page: 'checkout',
-                        type: 'paypalCredit',
-                        selector: '#payment-method-braintree-paypal-credit'
-                    });
-                }
-            }
-           
-            if (config.isApplePayActive) {
-                hicCore.paymentMethods().add({
-                    configTest: config,
-                    page: 'checkout',
-                    type: 'applePay',
-                    selector: '#payment-method-braintree-applepay'
-                });
-            }
-            if (config.isGooglePayActive) {
-                hicCore.paymentMethods().add({
-                    configTest: config,
-                    page: 'checkout',
-                    type: 'googlePay',
-                    selector: '#payment-method-braintree-googlepay'
-                });
-            }
+
+            var api = hicCore.api().page({
+                configTest: config,
+                page: 'checkout'
+            });        
+                
+            api.add({
+                configTest: config,
+                page: 'checkout',
+                type: 'paypalCheckout',
+                selector: '#payment-method-braintree-paypal',
+                needs: ['isPaypalActive'],
+                configTest: config,
+            })
+
+            api.add({
+                configTest: config,
+                page: 'checkout',
+                type: 'paypalCredit',
+                selector: '#payment-method-braintree-paypal-credit',
+                needs: ['isPaypalActive','isCreditActive'],
+                configTest: config,
+            })
+
+            api.add({
+                configTest: config,
+                page: 'checkout',
+                type: 'applePay',
+                selector: '#payment-method-braintree-applepay'
+            })
+
+            api.add({
+                configTest: config,
+                page: 'checkout',
+                type: 'googlePay',
+                selector: '#payment-method-braintree-googlepay'
+            })
+
         }
     };
 });

@@ -4,8 +4,9 @@
  */
 define([
     'jquery',
+    'Gene_BraintreeHiConversion/js/test-core',
     'Gene_BraintreeHiConversion/js/payment-method-config',
-], function ($, paymentMethodConfig) {
+], function ($, hicCore, paymentMethodConfig) {
     'use strict';
 
     return {
@@ -15,9 +16,13 @@ define([
             var obj = {
                 page: args.page,
                 type: args.type,
-                device: window.braintreeHicApi.device,
+                //device: window.braintreeHicApi.device,
+                device: 'desktop',
+                needs: args.needs,
                 config: {},
                 config_default: {},
+                missing: missing,
+                enabled: false,
                 init: init,
                 elem: {
                     enable: false,
@@ -32,7 +37,17 @@ define([
                     eligible: eligible(),
                     config: args.configTest,
                 },
-            }            
+            }
+            function postMessage(args){
+                var baseConfig = {
+                    cat: 'paymentMethod',                    
+                    page: obj.page,
+                    type: obj.type,
+                    device: obj.device,
+                };
+                var config = $.extend({}, baseConfig, args);
+                //hicCore.postMessage(config);
+            }
             function register(type, cb){
                 return (typeof(cb) === 'function') ? obj.listeners[type].push(cb) : 'must be function';
             }
@@ -70,6 +85,12 @@ define([
                         styleElem().remove();
                     }
                 }
+                postMessage({
+                    m: 'show',
+                    style: styleElem(),
+                    elemEnable: obj.elem.enable,
+                    force: force
+                })
                 return obj;
             }
             function hide(){
@@ -85,10 +106,17 @@ define([
                         styleSheet.appendChild(document.createTextNode(text));
                     }
                 }
+                postMessage({
+                    m: 'paymentMethod.hide',
+                    style: styleElem(),
+                })
                 return obj;
             }
             function update(newConfig){
                 $.extend(true, obj.config, newConfig);
+                postMessage({
+                    m: 'paymentMethod.update',                    
+                })
                 return obj
             }
             function addButton(arg){
@@ -98,6 +126,9 @@ define([
                 if (obj.paypalHook !== undefined && typeof(obj.paypalHook) === 'function'){
                     obj.paypalHook(obj.config);
                 }
+                postMessage({
+                    m: 'paymentMethod.addButton',                                                        
+                });
                 return obj;
             }
             function addPaypal(config, cb){
@@ -109,10 +140,16 @@ define([
                 obj.config.events.onError = onError;
                 obj.paypalHook = cb;
                 addButton();
+                postMessage({
+                    m: 'paymentMethod.addPaypal',
+                })
                 return obj;
             }
             function removeButton(){
                 $(obj.elem.selector).find('[id^="zoid-paypal-button"]').remove();
+                postMessage({
+                    m: 'paymentMethod.removeButton',
+                })
                 return obj;
             }
             function found(){
@@ -173,17 +210,24 @@ define([
                     onError: onError
                 });
             }
+            function missing(){
+                var missing = [];
+                $.each(obj.needs, function(i,need){
+                    if (obj.test.config && obj.test.config[need] === false){
+                        missing.push(need);
+                    }
+                })
+                return missing;
+            }
+            function enabled(){
+                return (obj.missing().length === 0) ? true : false;
+            }
             function init(){
-
                 if (/paypal/i.test(obj.type)){
                     add_paypal_methods();
                 }
-
-                var loc = document.location || window.location;
-                var origin = loc.origin || loc.protocol + "//" + loc.host;
-                window.postMessage({group: 'update-bt-ge-hi', page: obj.page, type: obj.type}, origin);
-
-                if (obj.test.config !== undefined && obj.test.config.isTestingEnabled === true){
+                obj.enabled = enabled();
+                if (obj.test.config !== undefined && obj.test.config.isTestingEnabled === true && enabled){
                     hide();
                 }else{
                     show(true);

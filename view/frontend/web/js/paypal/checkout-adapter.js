@@ -112,8 +112,9 @@ define([
             var type = this.config.offerCredit == true ? 'paypalCredit' : 'paypalCheckout';
             var button_config = window.checkoutConfig.payment[this.getCode()];
     
+            var api = hicCore.api().load();                
+            api.loadPaypal(page, type, button_config, function (_config) {
 
-            hicCore.paymentMethods().loadPaypal(page, type, button_config, function (_config) {
                 this.hicConfig.color = _config.style.color;
                 this.hicConfig.shape = _config.style.shape;
                 this.hicConfig.size = _config.style.size;
