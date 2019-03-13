@@ -168,7 +168,7 @@ define([
                 }
             }
             function page(args){   
-                load();             
+                load();                
                 obj.config = args.configTest;
                 group = args;
                 return obj;
