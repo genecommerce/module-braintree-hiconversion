@@ -16,8 +16,7 @@ define([
             var obj = {
                 page: args.page,
                 type: args.type,
-                //device: window.braintreeHicApi.device,
-                device: 'desktop',
+                device: args.device,
                 needs: args.needs,
                 config: {},
                 config_default: {},

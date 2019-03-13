@@ -75,6 +75,7 @@ define([
                 }
             }                   
             function add(args){
+                args.device = findDevice();
                 var wallet = paymentMethod.new(args).init();
                 if (wallet.enabled === true){
                     obj.payment_methods.push(wallet);
@@ -168,7 +169,7 @@ define([
                 }
             }
             function page(args){   
-                load();                
+                load();
                 obj.config = args.configTest;
                 group = args;
                 return obj;
