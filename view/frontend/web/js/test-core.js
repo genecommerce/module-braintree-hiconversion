@@ -67,28 +67,22 @@ define([
                 window.postMessage({config}, origin);
             }
             function hicReady(){
-                if (obj.timing.hicLate === true) {
-                    return false;
-                }else{
-                    obj.timing.hicReady = true;
-                    return true;
-                }
+                return obj.timing.hicReady = (obj.timing.hicLate) ? false : true;
             }                   
             function add(args){
                 args.device = findDevice();
                 var wallet = paymentMethod.new(args).init();
                 if (wallet.enabled === true){
                     obj.payment_methods.push(wallet);
-                    obj.paymentMethods.enabled.push(wallet);
-                    postMessage({
-                        name: 'paymentMethodAdded',
-                        page: wallet.page,
-                        type: wallet.type,
-                    });
-                }else{
-                    obj.paymentMethods.disabled.push(wallet);
                 }
+                (wallet.enabled === true) ? (obj.paymentMethods.enabled.push(wallet)) : (obj.paymentMethods.disabled.push(wallet));
                 obj.paymentMethods.all.push(wallet);
+                postMessage({
+                    name: 'paymentMethodAdded',
+                    page: wallet.page,
+                    type: wallet.type,
+                    enabled: wallet.enabled,
+                });
             }
             function loadPaypal(page, type, config, cb){
                 var time_interval = 250;
@@ -139,8 +133,6 @@ define([
             }
             function search(args){
                 var matches = [];
-                var wallets = (args.match === undefined) ? obj.payment_methods : obj.paymentMethods[args.match];
-                delete args.match;
                 $.each(obj.payment_methods, function(index,button){
                         var match = true;
                         $.each(args, function(match_key, match_value){
@@ -170,7 +162,12 @@ define([
             }
             function page(args){   
                 load();
-                obj.config = args.configTest;
+
+                var konfig = $.extend({}, args.configTest);
+                obj.isTestingEnabled = konfig.isTestingEnabled;
+                delete konfig.isTestingEnabled;
+                obj.config = konfig;
+
                 group = args;
                 return obj;
             }

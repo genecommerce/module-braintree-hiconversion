@@ -34,8 +34,6 @@ define([
                 status: findStatus,
                 test: {
                     eligible: eligible(),
-                    isTestingEnabled: args.configTest.isTestingEnabled,
-                    config: {},
                 },
             }
             function postMessage(args){
@@ -226,8 +224,12 @@ define([
                 if (/paypal/i.test(obj.type)){
                     add_paypal_methods();
                 }
-                delete args.configTest.isTestingEnabled;
-                obj.test.config = args.configTest;
+
+                var konfig = $.extend({}, args.configTest);
+                obj.test.isTestingEnabled = konfig.isTestingEnabled;
+                delete konfig.isTestingEnabled;
+                obj.test.config = konfig;
+
                 obj.enabled = enabled();
                 if (obj.test.config !== undefined && obj.test.config.isTestingEnabled === true && enabled){
                     hide();
