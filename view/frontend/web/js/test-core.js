@@ -13,7 +13,6 @@ define([
         api: function(){
             var group = null;
             var obj = {
-                payment_methods: [],
                 paymentMethods: {
                     enabled: [],
                     disabled: [],
@@ -47,14 +46,14 @@ define([
                 version: "1.0.0",       
             }
 
-            function show(){
-                $.each(obj.payment_methods, function(i,payment_method){
-                    payment_method.elem.show(true);
+            function show(force){
+                $.each(obj.paymentMethods.enabled, function(i,wallet){
+                    wallet.elem.show(force);
                 });
             }
             function hide(){
-                $.each(obj.payment_methods, function(i,payment_method){
-                    payment_method.elem.hide();
+                $.each(obj.paymentMethods.enabled, function(i,wallet){
+                    wallet.elem.hide();
                 });
             }
             function postMessage(args){
@@ -72,9 +71,6 @@ define([
             function add(args){
                 args.device = findDevice();
                 var wallet = paymentMethod.new(args).init();
-                if (wallet.enabled === true){
-                    obj.payment_methods.push(wallet);
-                }
                 (wallet.enabled === true) ? (obj.paymentMethods.enabled.push(wallet)) : (obj.paymentMethods.disabled.push(wallet));
                 obj.paymentMethods.all.push(wallet);
                 postMessage({
@@ -112,7 +108,6 @@ define([
                 }
                 return device;
             }
-            /* Pages */
             function findProduct(type){
                 return obj.find({page: 'pdp', type: type});
             }
@@ -128,12 +123,13 @@ define([
             function findPage(page){
                 return obj.find({page: page});
             }
-            function findMethod(payment_method){
-                return obj.find({type: payment_method})
+            function findMethod(type){
+                return obj.find({type: type})
             }
-            function search(args){
+            function search(args, narrow){
                 var matches = [];
-                $.each(obj.payment_methods, function(index,button){
+                var wallets = (narrow) ? obj.paymentMethods[narrow] : obj.paymentMethods.enabled;
+                $.each(wallets, function(index,button){
                         var match = true;
                         $.each(args, function(match_key, match_value){
                             if (match === false || button[match_key] === undefined || button[match_key] !== match_value){
@@ -146,8 +142,8 @@ define([
                 })
                 return matches;
             }
-            function find(args){
-                var matches = search(args)
+            function find(args, narrow){
+                var matches = search(args, narrow)
                 return (matches.length === 1) ? matches[0] : false;
             }
 
