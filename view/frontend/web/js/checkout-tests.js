@@ -39,14 +39,16 @@ define([
                 configTest: config,
                 page: 'checkout',
                 type: 'applePay',
-                selector: '#payment-method-braintree-applepay'
+                selector: '#payment-method-braintree-applepay',
+                needs: ['isApplePayActive'],
             });
 
             api.add({
                 configTest: config,
                 page: 'checkout',
                 type: 'googlePay',
-                selector: '#payment-method-braintree-googlepay'
+                selector: '#payment-method-braintree-googlepay',
+                needs: ['isGooglePayActive'],
             });
 
         }
