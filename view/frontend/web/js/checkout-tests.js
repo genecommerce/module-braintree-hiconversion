@@ -23,7 +23,6 @@ define([
                 type: 'paypalCheckout',
                 selector: '#payment-method-braintree-paypal',
                 needs: ['isPaypalActive'],
-                configTest: config,
             });
 
             api.add({
@@ -32,7 +31,6 @@ define([
                 type: 'paypalCredit',
                 selector: '#payment-method-braintree-paypal-credit',
                 needs: ['isPaypalActive','isCreditActive'],
-                configTest: config,
             });
 
             api.add({
