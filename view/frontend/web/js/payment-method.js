@@ -4,9 +4,8 @@
  */
 define([
     'jquery',
-    'Gene_BraintreeHiConversion/js/test-core',
     'Gene_BraintreeHiConversion/js/payment-method-config',
-], function ($, hicCore, paymentMethodConfig) {
+], function ($, paymentMethodConfig) {
     'use strict';
 
     return {
@@ -37,14 +36,17 @@ define([
                 },
             }
             function postMessage(args){
+                var loc = document.location || window.location;
+                var origin = loc.origin || loc.protocol + "//" + loc.host;
                 var baseConfig = {
+                    group: 'update-bt-ge-hi',
                     cat: 'paymentMethod',                    
                     page: obj.page,
                     type: obj.type,
                     device: obj.device,
                 };
                 var config = $.extend({}, baseConfig, args);
-                //hicCore.postMessage(config);
+                window.postMessage({config}, origin);
             }
             function register(type, cb){
                 return (typeof(cb) === 'function') ? obj.listeners[type].push(cb) : 'must be function';
@@ -85,7 +87,6 @@ define([
                 }
                 postMessage({
                     m: 'show',
-                    style: styleElem(),
                     elemEnable: obj.elem.enable,
                     force: force
                 })
@@ -106,7 +107,6 @@ define([
                 }
                 postMessage({
                     m: 'paymentMethod.hide',
-                    style: styleElem(),
                 })
                 return obj;
             }
@@ -231,7 +231,11 @@ define([
                 delete konfig.isTestingEnabled;
                 obj.test.config = konfig;
 
-                (enabled()) ? hide() : show(true);
+                if (enabled() === true){
+                    hide();
+                }else{
+                    show(true);
+                }
   
                 return obj;
             }

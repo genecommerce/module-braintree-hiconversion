@@ -33,6 +33,7 @@ define([
                 show: show,
                 hide: hide,
                 postMessage: postMessage,
+                backup: backup,
                 timing: {
                     btReady: false,
                     hicReady: false,
@@ -64,6 +65,24 @@ define([
                 };
                 var config = $.extend({}, baseConfig, args);
                 window.postMessage({config}, origin);
+            }
+            function backup(){
+                var time_interval = 250;
+                var total_time = 0;
+                var time_limit = 15000;
+                function waitFor(){
+                    total_time = total_time + time_interval;
+                    obj.timing.totalTime = total_time;
+                    if (obj.timing.hicReady === false && total_time > time_limit){	
+                        obj.timing.hicLate = true;	
+                        obj.show(true);	
+                    }else if (obj.timing.hicReady === false){	
+                        setTimeout(function(){	
+                            waitFor();	
+                        }, time_interval);	
+                    }	
+                }	
+                waitFor();
             }
             function hicReady(){
                 return obj.timing.hicReady = (obj.timing.hicLate) ? false : true;
@@ -149,6 +168,7 @@ define([
 
             function load(){
                 if (window.braintreeHicApi === undefined){
+                    backup();
                     window.braintreeHicApi = obj;
                     return window.braintreeHicApi;
                 }else{

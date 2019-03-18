@@ -19,7 +19,7 @@ define([
             api.add({
                 type: 'paypal',
                 page: 'cart',
-                selector: '.product-info-main .actions .paypal',
+                selector: '.cart-summary .paypal.checkout:not(.paypal-bml)',
                 needs: ['isPaypalActive','isPaypalActiveOnCart'],
                 configTest: config,
             });
@@ -27,7 +27,7 @@ define([
             api.add({
                 type: 'applePay',
                 page: 'cart',
-                selector: '#minicart-content-wrapper .applepay-minicart',
+                selector: '.cart-summary .applepay-minicart',
                 needs: ['isApplePayActive'],
                 configTest: config,
             });
@@ -35,7 +35,7 @@ define([
             api.add({
                 type: 'googlePay',
                 page: 'cart',
-                selector: '#minicart-content-wrapper .googlepay-minicart-logo',
+                selector: '.cart-summary .googlepay-minicart-logo',
                 needs: ['isGooglePayActive'],
                 configTest: config,
             });
