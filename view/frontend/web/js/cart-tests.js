@@ -20,7 +20,7 @@ define([
                 type: 'paypal',
                 page: 'cart',
                 selector: '.product-info-main .actions .paypal',
-                needs: ['isPaypalActive','isPaypalActiveOnCart','config.isPaypalActiveOnPdp'],
+                needs: ['isPaypalActive','isPaypalActiveOnCart'],
                 configTest: config,
             });
 

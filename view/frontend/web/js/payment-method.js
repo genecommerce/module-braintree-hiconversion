@@ -20,8 +20,8 @@ define([
                 needs: args.needs,
                 config: {},
                 config_default: {},
-                missing: missing,
-                enabled: false,
+                missing: [],
+                enabled: enabled,
                 init: init,
                 elem: {
                     enable: false,
@@ -173,8 +173,6 @@ define([
                             })
                         }
                     }             
-                }else if (args.type === 'googlePay'){
-
                 }
                 return e;
             }    
@@ -208,17 +206,20 @@ define([
                     onError: onError
                 });
             }
-            function missing(){
-                var missing = [];
+            function enabled(args, clear){
+                obj.missing = [];
+                if (typeof(args) === 'object'){
+                    obj.needs = (clear === true) ? args : $.merge(obj.needs, args);
+                }
+                if (obj.test.isTestingEnabled === false){
+                    obj.missing.push("isTestingEnabled");
+                }
                 $.each(obj.needs, function(i,need){
-                    if (obj.test.config && obj.test.config[need] === false){
-                        missing.push(need);
+                    if (obj.test && obj.test.config && obj.test.config[need] !== true){
+                        obj.missing.push(need);
                     }
                 })
-                return missing;
-            }
-            function enabled(){
-                return (obj.missing().length === 0) ? true : false;
+                return (obj.missing.length === 0) ? true : false;
             }
             function init(){
                 if (/paypal/i.test(obj.type)){
@@ -230,13 +231,7 @@ define([
                 delete konfig.isTestingEnabled;
                 obj.test.config = konfig;
 
-                obj.enabled = enabled();
-
-                if (obj.test !== undefined && obj.test.isTestingEnabled && enabled){
-                    hide();
-                }else{
-                    show(true);
-                }
+                (enabled()) ? hide() : show(true);
   
                 return obj;
             }

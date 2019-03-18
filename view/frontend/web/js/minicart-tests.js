@@ -21,7 +21,7 @@ define([
                 type: 'paypal',
                 page: 'minicart',
                 selector: '.product-info-main .actions .paypal',
-                needs: ['isPaypalActive','config.isPaypalActiveOnPdp'],
+                needs: ['isPaypalActive','isPaypalActiveOnCart'],
                 configTest: config,
             });
 

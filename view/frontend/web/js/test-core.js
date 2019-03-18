@@ -47,12 +47,12 @@ define([
             }
 
             function show(force){
-                $.each(obj.paymentMethods.enabled, function(i,wallet){
+                $.each(obj.paymentMethods.enabled(), function(i,wallet){
                     wallet.elem.show(force);
                 });
             }
             function hide(){
-                $.each(obj.paymentMethods.enabled, function(i,wallet){
+                $.each(obj.paymentMethods.enabled(), function(i,wallet){
                     wallet.elem.hide();
                 });
             }
@@ -71,13 +71,13 @@ define([
             function add(args){
                 args.device = findDevice();
                 var wallet = paymentMethod.new(args).init();
-                (wallet.enabled === true) ? (obj.paymentMethods.enabled.push(wallet)) : (obj.paymentMethods.disabled.push(wallet));
+                (wallet.enabled() === true) ? (obj.paymentMethods.enabled.push(wallet)) : (obj.paymentMethods.disabled.push(wallet));
                 obj.paymentMethods.all.push(wallet);
                 postMessage({
                     name: 'paymentMethodAdded',
                     page: wallet.page,
                     type: wallet.type,
-                    enabled: wallet.enabled,
+                    enabled: wallet.enabled(),
                 });
             }
             function loadPaypal(page, type, config, cb){
