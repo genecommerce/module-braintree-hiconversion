@@ -47,12 +47,12 @@ define([
             }
 
             function show(force){
-                $.each(obj.paymentMethods.enabled(), function(i,wallet){
+                $.each(obj.paymentMethods.enabled, function(i,wallet){
                     wallet.elem.show(force);
                 });
             }
             function hide(){
-                $.each(obj.paymentMethods.enabled(), function(i,wallet){
+                $.each(obj.paymentMethods.enabled, function(i,wallet){
                     wallet.elem.hide();
                 });
             }
