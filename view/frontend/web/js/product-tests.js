@@ -18,7 +18,7 @@ define([
             page: 'pdp',
             type: 'paypal',
             selector: '.product-info-main .actions .paypal',
-            needs: ['isPaypalActive','isPaypalActiveOnCart','isPaypalActiveOnPdp'],
+            needs: ['isPaypalActive','isPaypalActiveOnPdp'],
         });
 
     };

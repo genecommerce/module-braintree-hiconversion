@@ -231,7 +231,8 @@ define([
                 obj.test.config = konfig;
 
                 obj.enabled = enabled();
-                if (obj.test.config !== undefined && obj.test.config.isTestingEnabled === true && enabled){
+
+                if (obj.test !== undefined && obj.test.isTestingEnabled && enabled){
                     hide();
                 }else{
                     show(true);
