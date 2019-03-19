@@ -23,7 +23,6 @@ define([
                 setEnabled: setEnabled,
                 init: init,
                 elem: {
-                    enable: false,
                     style: styleElem,
                     selector: args.selector,
                     hide: hide,
@@ -31,6 +30,7 @@ define([
                     found: found,
                 },
                 status: findStatus,
+                testing: false,
                 test: {
                     eligible: eligible(),
                 },
@@ -81,13 +81,13 @@ define([
             }
             function show(force){                
                 if (styleElem() !== false){
-                    if (obj.elem.enable !== false || force === true){
+                    if (obj.testing !== false || force === true){
                         styleElem().remove();
                     }
                 }
                 postMessage({
                     m: 'show',
-                    elemEnable: obj.elem.enable,
+                    testing: obj.testing,
                     force: force
                 })
                 return obj;
@@ -180,7 +180,7 @@ define([
                 return {
                     visible: (styleElem() !== false) ? false : true,
                     found: (found() === 1) ? true : false,
-                    enableShow: (obj.elem.enable === false) ? false : true,
+                    enableShow: (obj.testing === false) ? false : true,
                 };
             }
             function add_paypal_methods(){
