@@ -10,13 +10,16 @@ define([
 
     return function (config) {
         
-        hicCore.paymentMethods().add({
+        var api = hicCore.api().page({
+            configTest: config,
+        });        
+        api.add({
             configTest: config,
             page: 'pdp',
             type: 'paypal',
-            selector: '.product-info-main .actions .paypal'
-        })
-
+            selector: '.product-info-main .actions .paypal',
+            needs: ['isPaypalActive','isPaypalActiveOnPdp'],
+        });
 
     };
 });

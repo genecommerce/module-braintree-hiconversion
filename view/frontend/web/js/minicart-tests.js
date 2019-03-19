@@ -10,26 +10,36 @@ define([
 
     return function (config) {
 
-            hicCore.paymentMethods().add({
+        if (config) {
+                
+
+            var api = hicCore.api().page({
                 configTest: config,
+            });        
+                
+            api.add({
+                type: 'paypal',
                 page: 'minicart',
-                type: 'paypal',     
-                selector: '#minicart-content-wrapper .checkout.paypal'
+                selector: '#minicart-content-wrapper .checkout.paypal',
+                needs: ['isPaypalActive','isPaypalActiveOnCart'],
+                configTest: config,
             });
 
-            hicCore.paymentMethods().add({
-                configTest: config,
-                page: 'minicart',
+            api.add({
                 type: 'applePay',
-                selector: '#minicart-content-wrapper .applepay-minicart'
+                page: 'minicart',
+                selector: '#minicart-content-wrapper .braintree-applepay-minicart',
+                needs: ['isApplePayActive'],
+                configTest: config,
             });
 
-            hicCore.paymentMethods().add({
-                configTest: config,
-                page: 'minicart',
+            api.add({
                 type: 'googlePay',
-                selector: '#minicart-content-wrapper .googlepay-minicart-logo'
+                page: 'minicart',
+                selector: '#minicart-content-wrapper .googlepay-minicart-logo',
+                needs: ['isGooglePayActive'],
+                configTest: config,
             });
-            
+        }
     };
 });

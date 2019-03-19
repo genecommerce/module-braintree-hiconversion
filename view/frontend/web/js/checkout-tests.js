@@ -9,34 +9,46 @@ define([
     'use strict';
 
     return function (config) {
+        if (config) {
 
-            hicCore.paymentMethods().add({
+
+            var api = hicCore.api().page({
+                configTest: config,
+                page: 'checkout'
+            });        
+                
+            api.add({
                 configTest: config,
                 page: 'checkout',
                 type: 'paypalCheckout',
-                selector: '#payment-method-braintree-paypal'
+                selector: '#payment-method-braintree-paypal',
+                needs: ['isPaypalActive'],
             });
 
-            hicCore.paymentMethods().add({
+            api.add({
                 configTest: config,
                 page: 'checkout',
                 type: 'paypalCredit',
-                selector: '#payment-method-braintree-paypal-credit'
+                selector: '#payment-method-braintree-paypal-credit',
+                needs: ['isPaypalActive','isCreditActive'],
             });
 
-            hicCore.paymentMethods().add({
+            api.add({
                 configTest: config,
                 page: 'checkout',
                 type: 'applePay',
-                selector: '#payment-method-braintree-applepay'
+                selector: '#payment-method-braintree-applepay',
+                needs: ['isApplePayActive'],
             });
 
-            hicCore.paymentMethods().add({
+            api.add({
                 configTest: config,
                 page: 'checkout',
                 type: 'googlePay',
-                selector: '#payment-method-braintree-googlepay'
+                selector: '#payment-method-braintree-googlepay',
+                needs: ['isGooglePayActive'],
             });
 
+        }
     };
 });

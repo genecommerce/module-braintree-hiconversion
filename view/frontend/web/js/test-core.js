@@ -9,91 +9,111 @@ define([
 ], function ($, paymentMethod, paymentMethodConfig) {
     'use strict';
 
-    return {            
-        
-        paymentMethods: function(){
-            var default_obj = {                
-                payment_methods: [],
+    return {
+        api: function(){
+            var group = null;
+            var obj = {
+                paymentMethods: {
+                    enabled: [],
+                    disabled: [],
+                    all: [],
+                },
                 add: add,
                 loadPaypal: loadPaypal,                
-                options: paymentMethodConfig.paymentConfig(),
                 page: findPage,
                 method: findMethod,
-                device: findDevice(),
+                device: findDevice,
                 search: search,
                 find: find,
                 pdp: findProduct,
                 minicart: findMinicart,
                 cart: findCart,
                 checkout: findCheckout,
+                config: null,
                 show: show,
                 hide: hide,
+                postMessage: postMessage,
+                backup: backup,
                 timing: {
                     btReady: false,
                     hicReady: false,
                     hicLate: false,
                     totalTime: 0,
                 },
-                hicReady: hicReady
+                test: {
+                    config: null
+                },
+                hicReady: hicReady,
+                version: "1.1.0", 
             }
 
-            function show(){
-                $.each(obj.payment_methods, function(i,payment_method){
-                    payment_method.elem.show(true);
+            function show(force){
+                $.each(obj.paymentMethods.enabled, function(i,wallet){
+                    wallet.elem.show(force);
                 });
             }
             function hide(){
-                $.each(obj.payment_methods, function(i,payment_method){
-                    payment_method.elem.hide();
+                $.each(obj.paymentMethods.enabled, function(i,wallet){
+                    wallet.elem.hide();
                 });
             }
-
+            function postMessage(args){
+                var loc = document.location || window.location;
+                var origin = loc.origin || loc.protocol + "//" + loc.host;
+                var baseConfig = {
+                    group: 'update-bt-ge-hi'
+                };
+                var config = $.extend({}, baseConfig, args);
+                window.postMessage({config}, origin);
+            }
             function backup(){
                 var time_interval = 250;
                 var total_time = 0;
                 var time_limit = 15000;
-                function waitFor(){                                                
+                function waitFor(){
                     total_time = total_time + time_interval;
                     obj.timing.totalTime = total_time;
-                    if (obj.timing.hicReady === false && total_time > time_limit){
-                        obj.timing.hicLate = true;
-                        obj.show();
-                    }else if (obj.timing.hicReady === false){
+                    if (obj.timing.hicReady === false && total_time > time_limit){	
+                        obj.timing.hicLate = true;	
+                        obj.show(true);	
+                    }else if (obj.timing.hicReady === false){	
+                        setTimeout(function(){	
+                            waitFor();	
+                        }, time_interval);	
+                    }	
+                }	
+                waitFor();
+            }
+            function hicReady(){
+                return obj.timing.hicReady = (obj.timing.hicLate) ? false : true;
+            }                   
+            function add(args){
+                args.device = findDevice();
+                var wallet = paymentMethod.new(args).init();
+                (wallet.getEnabled() === true) ? (obj.paymentMethods.enabled.push(wallet)) : (obj.paymentMethods.disabled.push(wallet));
+                obj.paymentMethods.all.push(wallet);
+                postMessage({
+                    name: 'paymentMethodAdded',
+                    page: wallet.page,
+                    type: wallet.type,
+                    enabled: wallet.getEnabled(),
+                });
+            }
+            function loadPaypal(page, type, config, cb){
+                var time_interval = 250;
+                var total_time = 0;
+                function waitForPaypal(){                                                
+                    total_time = total_time + time_interval;
+                    var wallet = obj.find({page: page, type: type})
+                    if (wallet !== false){
+                        wallet.addPaypal(config, cb);
+                    }else{
                         setTimeout(function(){
-                            waitFor();
+                            waitForPaypal();
                         }, time_interval);
                     }
                 }
-                waitFor();
-            }
-
-            function hicReady(){
-                if (obj.timing.hicLate === true) {
-                    return false;
-                }else{
-                    obj.timing.hicReady = true;
-                    return true;
-                }
-            }
-
-            if (window.braintreeHicApi === undefined){
-                window.braintreeHicApi = default_obj;
-                var obj = window.braintreeHicApi;
-                backup();
-            }else{
-                window.braintreeHicApi = window.braintreeHicApi;
-                var obj = window.braintreeHicApi;
-            }
-            
-            function add(args){            
-                var test_payment = paymentMethod.new(args).init();
-                obj.payment_methods.push(test_payment);
-            }
-            function loadPaypal(location, type, config, cb){                                
-                var method = obj.find({page: location, type: type});
-                if (typeof(method === 'object') && method.length === undefined){
-                    method.addPaypal(config, cb);
-                }
+                waitForPaypal();
             }
             function findDevice(){
                 var width = window.matchMedia('screen and (min-width: 768px)').matches;
@@ -107,7 +127,6 @@ define([
                 }
                 return device;
             }
-            /* Pages */
             function findProduct(type){
                 return obj.find({page: 'pdp', type: type});
             }
@@ -123,12 +142,13 @@ define([
             function findPage(page){
                 return obj.find({page: page});
             }
-            function findMethod(payment_method){
-                return obj.find({type: payment_method})
+            function findMethod(type){
+                return obj.find({type: type})
             }
-            function search(args){
+            function search(args, narrow){
                 var matches = [];
-                $.each(obj.payment_methods, function(index,button){
+                var wallets = (narrow) ? obj.paymentMethods[narrow] : obj.paymentMethods.enabled;
+                $.each(wallets, function(index,button){
                         var match = true;
                         $.each(args, function(match_key, match_value){
                             if (match === false || button[match_key] === undefined || button[match_key] !== match_value){
@@ -141,11 +161,36 @@ define([
                 })
                 return matches;
             }
-            function find(args){
-                var matches = search(args)
+            function find(args, narrow){
+                var matches = search(args, narrow)
                 return (matches.length === 1) ? matches[0] : false;
             }
-            return obj;
+
+            function load(){
+                if (window.braintreeHicApi === undefined){
+                    backup();
+                    window.braintreeHicApi = obj;
+                    return window.braintreeHicApi;
+                }else{
+                    obj = window.braintreeHicApi;
+                    return obj;
+                }
+            }
+            function page(args){   
+                load();
+
+                var konfig = $.extend({}, args.configTest);
+                obj.isTestingEnabled = konfig.isTestingEnabled;
+                delete konfig.isTestingEnabled;
+                obj.config = konfig;
+
+                group = args;
+                return obj;
+            }
+            return {
+                page: page,
+                load: load
+            }
         },
     }
 });

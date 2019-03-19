@@ -9,27 +9,38 @@ define([
     'use strict';
 
     return function (config) {
+        if (config) {
 
-            hicCore.paymentMethods().add({
+            var api = hicCore.api().page({
                 configTest: config,
-                page: 'cart',
+                page: 'cart'
+            });        
+                
+            api.add({
                 type: 'paypal',
-                selector: '.cart-summary .paypal.checkout:not(.paypal-bml)'
+                page: 'cart',
+                selector: '.cart-summary .paypal.checkout:not(.paypal-bml)',
+                needs: ['isPaypalActive','isPaypalActiveOnCart'],
+                configTest: config,
             });
 
-            hicCore.paymentMethods().add({
-                configTest: config,
-                page: 'cart',
+            api.add({
                 type: 'applePay',
-                selector: '.cart-summary .applepay-minicart'
+                page: 'cart',
+                selector: '.cart-summary .braintree-applepay-minicart',
+                needs: ['isApplePayActive'],
+                configTest: config,
             });
 
-            hicCore.paymentMethods().add({
-                configTest: config,
-                page: 'cart',
+            api.add({
                 type: 'googlePay',
-                selector: '.cart-summary .googlepay-minicart-logo'
+                page: 'cart',
+                selector: '.cart-summary .googlepay-minicart-logo',
+                needs: ['isGooglePayActive'],
+                configTest: config,
             });
-            
+
+        }
+
     };
 });

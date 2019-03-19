@@ -4,9 +4,7 @@
  */
 
 $config = [
-    'Gene_BraintreeHiConversion/js/product-tests' => [
-        'isTestingEnabled' => $block->isTestingEnabled()
-    ]
+    'Gene_BraintreeHiConversion/js/product-tests' => $block->getConfig()
 ];
 
 if ($block->isEnabled()) : ?>

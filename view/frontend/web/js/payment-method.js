@@ -11,16 +11,18 @@ define([
     return {
 
         new: function(args){
-            var style = false;
             var obj = {
                 page: args.page,
                 type: args.type,
-                device: window.braintreeHicApi.device,
+                device: args.device,
+                needs: args.needs,
                 config: {},
                 config_default: {},
+                missing: [],
+                getEnabled: getEnabled,
+                setEnabled: setEnabled,
                 init: init,
                 elem: {
-                    enable: false,
                     style: styleElem,
                     selector: args.selector,
                     hide: hide,
@@ -28,11 +30,24 @@ define([
                     found: found,
                 },
                 status: findStatus,
+                testing: false,
                 test: {
                     eligible: eligible(),
-                    config: args.configTest,
                 },
-            }            
+            }
+            function postMessage(args){
+                var loc = document.location || window.location;
+                var origin = loc.origin || loc.protocol + "//" + loc.host;
+                var baseConfig = {
+                    group: 'update-bt-ge-hi',
+                    cat: 'paymentMethod',                    
+                    page: obj.page,
+                    type: obj.type,
+                    device: obj.device,
+                };
+                var config = $.extend({}, baseConfig, args);
+                window.postMessage({config}, origin);
+            }
             function register(type, cb){
                 return (typeof(cb) === 'function') ? obj.listeners[type].push(cb) : 'must be function';
             }
@@ -66,10 +81,15 @@ define([
             }
             function show(force){                
                 if (styleElem() !== false){
-                    if (obj.elem.enable !== false || force === true){
+                    if (obj.testing !== false || force === true){
                         styleElem().remove();
                     }
                 }
+                postMessage({
+                    m: 'show',
+                    testing: obj.testing,
+                    force: force
+                })
                 return obj;
             }
             function hide(){
@@ -85,10 +105,16 @@ define([
                         styleSheet.appendChild(document.createTextNode(text));
                     }
                 }
+                postMessage({
+                    m: 'paymentMethod.hide',
+                })
                 return obj;
             }
             function update(newConfig){
                 $.extend(true, obj.config, newConfig);
+                postMessage({
+                    m: 'paymentMethod.update',                    
+                })
                 return obj
             }
             function addButton(arg){
@@ -98,6 +124,9 @@ define([
                 if (obj.paypalHook !== undefined && typeof(obj.paypalHook) === 'function'){
                     obj.paypalHook(obj.config);
                 }
+                postMessage({
+                    m: 'paymentMethod.addButton',                                                        
+                });
                 return obj;
             }
             function addPaypal(config, cb){
@@ -109,10 +138,16 @@ define([
                 obj.config.events.onError = onError;
                 obj.paypalHook = cb;
                 addButton();
+                postMessage({
+                    m: 'paymentMethod.addPaypal',
+                })
                 return obj;
             }
             function removeButton(){
                 $(obj.elem.selector).find('[id^="zoid-paypal-button"]').remove();
+                postMessage({
+                    m: 'paymentMethod.removeButton',
+                })
                 return obj;
             }
             function found(){
@@ -138,8 +173,6 @@ define([
                             })
                         }
                     }             
-                }else if (args.type === 'googlePay'){
-
                 }
                 return e;
             }    
@@ -147,7 +180,7 @@ define([
                 return {
                     visible: (styleElem() !== false) ? false : true,
                     found: (found() === 1) ? true : false,
-                    enableShow: (obj.elem.enable === false) ? false : true,
+                    enableShow: (obj.testing === false) ? false : true,
                 };
             }
             function add_paypal_methods(){
@@ -173,17 +206,29 @@ define([
                     onError: onError
                 });
             }
+            function setEnabled(args, clear){
+                return obj.needs = (clear === true) ? args : $.extend(true, obj.needs, args);
+            }
+            function getEnabled(){
+                obj.missing = [];
+                $.each(obj.needs, function(i,need){
+                    if (obj.test && obj.test.config && obj.test.config[need] !== true){
+                        obj.missing.push(need);
+                    }
+                })
+                return (obj.missing.length === 0) ? true : false;
+            }
             function init(){
-
                 if (/paypal/i.test(obj.type)){
                     add_paypal_methods();
                 }
 
-                var loc = document.location || window.location;
-                var origin = loc.origin || loc.protocol + "//" + loc.host;
-                window.postMessage({group: 'update-bt-ge-hi', page: obj.page, type: obj.type}, origin);
+                var konfig = $.extend({}, args.configTest);
+                obj.test.isTestingEnabled = konfig.isTestingEnabled;
+                delete konfig.isTestingEnabled;
+                obj.test.config = konfig;
 
-                if (obj.test.config !== undefined && obj.test.config.isTestingEnabled === true){
+                if (obj.test && obj.test.isTestingEnabled && getEnabled()){
                     hide();
                 }else{
                     show(true);
