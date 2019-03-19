@@ -27,7 +27,7 @@ define([
             api.add({
                 type: 'applePay',
                 page: 'cart',
-                selector: '.cart-summary .applepay-minicart',
+                selector: '.cart-summary .braintree-applepay-minicart',
                 needs: ['isApplePayActive'],
                 configTest: config,
             });
