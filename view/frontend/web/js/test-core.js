@@ -90,13 +90,13 @@ define([
             function add(args){
                 args.device = findDevice();
                 var wallet = paymentMethod.new(args).init();
-                (wallet.enabled() === true) ? (obj.paymentMethods.enabled.push(wallet)) : (obj.paymentMethods.disabled.push(wallet));
+                (wallet.getEnabled() === true) ? (obj.paymentMethods.enabled.push(wallet)) : (obj.paymentMethods.disabled.push(wallet));
                 obj.paymentMethods.all.push(wallet);
                 postMessage({
                     name: 'paymentMethodAdded',
                     page: wallet.page,
                     type: wallet.type,
-                    enabled: wallet.enabled(),
+                    enabled: wallet.getEnabled(),
                 });
             }
             function loadPaypal(page, type, config, cb){

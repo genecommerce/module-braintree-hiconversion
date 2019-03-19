@@ -11,7 +11,6 @@ define([
     return {
 
         new: function(args){
-            var style = false;
             var obj = {
                 page: args.page,
                 type: args.type,
@@ -20,7 +19,8 @@ define([
                 config: {},
                 config_default: {},
                 missing: [],
-                enabled: enabled,
+                getEnabled: getEnabled,
+                setEnabled: setEnabled,
                 init: init,
                 elem: {
                     enable: false,
@@ -206,14 +206,11 @@ define([
                     onError: onError
                 });
             }
-            function enabled(args, clear){
+            function setEnabled(args, clear){
+                return obj.needs = (clear === true) ? args : $.extend(true, obj.needs, args);
+            }
+            function getEnabled(){
                 obj.missing = [];
-                if (typeof(args) === 'object'){
-                    obj.needs = (clear === true) ? args : $.merge(obj.needs, args);
-                }
-                if (obj.test.isTestingEnabled === false){
-                    obj.missing.push("isTestingEnabled");
-                }
                 $.each(obj.needs, function(i,need){
                     if (obj.test && obj.test.config && obj.test.config[need] !== true){
                         obj.missing.push(need);
@@ -231,7 +228,7 @@ define([
                 delete konfig.isTestingEnabled;
                 obj.test.config = konfig;
 
-                if (enabled() === true){
+                if (obj.test && obj.test.isTestingEnabled && getEnabled()){
                     hide();
                 }else{
                     show(true);
