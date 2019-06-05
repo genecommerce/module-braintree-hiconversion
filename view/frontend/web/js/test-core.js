@@ -9,6 +9,8 @@ define([
 ], function ($, paymentMethod, paymentMethodConfig) {
     'use strict';
 
+    /* Testing */
+
     return {
         api: function(){
             var group = null;
