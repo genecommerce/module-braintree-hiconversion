@@ -12,7 +12,7 @@ define([
 ], function (_, $, Adapter, hicCore) {
     'use strict';
 
-    if (!window.checkoutConfig.hiconversion || window.checkoutConfig.hiconversion.isEnabled !== true) {
+    if (!window.checkoutConfig || !window.checkoutConfig.hiconversion || window.checkoutConfig.hiconversion.isEnabled !== true) {
         return Adapter;
     }
      
