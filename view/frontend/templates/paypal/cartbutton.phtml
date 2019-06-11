@@ -6,17 +6,17 @@
 /**
  * @var \Magento\Braintree\Block\Paypal\Button $block
  */
-$id = $block->getContainerId() . mt_rand();
+$paypalId = $block->getContainerId() . mt_rand();
 $config = [
     'Gene_BraintreeHiConversion/js/paypal/button-cart' => [
             'config' => [
-                'id' => $id,
+                'id' => $paypalId,
                 'environment' => $block->getEnvironment(),
                 'clientToken' => $block->getClientToken(),
                 'displayName' => $block->getMerchantName(),
                 'payeeEmail' => $block->getPayeeEmail(),
                 'actionSuccess' => $block->getActionSuccess(),
-                'offerCredit' => $block->isCreditActive(),
+                'offerCredit' => false,
                 'shape' => $block->getButtonShape(),
                 'size' => $block->getButtonSize(),
                 'layout' => $block->getButtonLayout(),
@@ -25,14 +25,43 @@ $config = [
             ]
     ]
 ];
+
+$paypalCreditId = $block->getContainerId() . mt_rand();
+if ($block->isCreditActive()) {
+    $paypalCreditConfig = [
+        'Magento_Braintree/js/paypal/button' => [
+            'id' => $paypalCreditId,
+            'environment' => $block->getEnvironment(),
+            'clientToken' => $block->getClientToken(),
+            'displayName' => $block->getMerchantName(),
+            'payeeEmail' => $block->getPayeeEmail(),
+            'actionSuccess' => $block->getActionSuccess(),
+            'offerCredit' => true,
+            'shape' => $block->getButtonShape(),
+            'size' => $block->getButtonSize(),
+            'layout' => $block->getButtonLayout(),
+            'color' => 'darkblue'
+        ]
+    ];
+}
+
 ?>
 
-<div data-mage-init='<?php /* @noEscape */ echo json_encode($config); ?>'
-     class="paypal checkout paypal-logo braintree-paypal-btn braintree-paypal-logo<?php
-     /* @noEscape */ echo $block->getContainerId(); ?>-container">
-    <div data-currency="<?php /* @noEscape */ echo $block->getCurrency(); ?>"
-         data-locale="<?php /* @noEscape */ echo $block->getLocale(); ?>"
-         data-amount="<?php /* @noEscape */ echo $block->getAmount(); ?>"
-         id="<?php /* @noEscape */ echo $id; ?>"
+<div data-mage-init="<?= $block->escapeHtmlAttr(json_encode($config)) ?>"
+     class="paypal checkout paypal-logo braintree-paypal-btn braintree-paypal-logo <?= $block->escapeHtmlAttr($block->getContainerId()) ?>-container <?= $block->escapeHtmlAttr($block->getExtraClassname()) ?>">
+    <div data-currency="<?= $block->escapeHtmlAttr($block->getCurrency()) ?>"
+         data-locale="<?= $block->escapeHtmlAttr($block->getLocale()) ?>"
+         data-amount="<?= $block->escapeHtmlAttr($block->getAmount()) ?>"
+         id="<?= $block->escapeHtmlAttr($paypalId) ?>"
          class="action-braintree-paypal-logo"></div>
 </div>
+<?php if ($block->isCreditActive()) : ?>
+<div data-mage-init="<?= $block->escapeHtmlAttr(json_encode($paypalCreditConfig)) ?>"
+     class="paypal checkout paypal-logo braintree-paypal-btn braintree-paypal-logo <?= $block->escapeHtmlAttr($block->getContainerId()) ?>-container <?= $block->escapeHtmlAttr($block->getExtraClassname()) ?>">
+    <div data-currency="<?= $block->escapeHtmlAttr($block->getCurrency()) ?>"
+         data-locale="<?= $block->escapeHtmlAttr($block->getLocale()) ?>"
+         data-amount="<?= $block->escapeHtmlAttr($block->getAmount()) ?>"
+         id="<?= $block->escapeHtmlAttr($paypalCreditId) ?>"
+         class="action-braintree-paypal-logo"></div>
+</div>
+<?php endif; ?>
