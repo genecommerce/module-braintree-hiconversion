@@ -26,8 +26,8 @@ define([
                 };
                 
                 var minicartWrapper = $('#' + this.config.id).closest('#minicart-content-wrapper');
-                var page = minicartWrapper.length ? 'minicart': 'cart';
-                var type = 'paypal';
+                var page = minicartWrapper.length ? 'minicart' : 'cart';
+                var type = (this.config.offerCredit) ? 'paypalCredit' : 'paypal';
                 var api = hicCore.api().load();
                 api.loadPaypal(page, type, _config, function (_config) {
                     this.config.offerCredit = _config.offerCredit;
@@ -41,7 +41,6 @@ define([
                     this.config.fundingIcons = _config.fundingicons;
                     this.config.tagline = _config.tagline;
                     this.config.events = _config.events;
-
                     new Button(this.config);
                 }.bind(this));
                 

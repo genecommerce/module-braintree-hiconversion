@@ -26,10 +26,8 @@ define([
                 };
                 
                 var page = 'pdp';
-                var type = 'paypal';
-                
-                var api = hicCore.api().load();
-                
+                var type = (this.config.offerCredit) ? 'paypalCredit' : 'paypal';                
+                var api = hicCore.api().load();                
                 api.loadPaypal(page, type, _config, function (_config) {
                     this.config.offerCredit = _config.offerCredit;
                     this.config.color = _config.color;

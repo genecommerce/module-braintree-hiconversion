@@ -20,7 +20,15 @@ define([
             api.add({
                 type: 'paypal',
                 page: 'minicart',
-                selector: '#minicart-content-wrapper .checkout.paypal',
+                selector: '.paypalCheckout.minicart',
+                needs: ['isPaypalActive','isPaypalActiveOnCart'],
+                configTest: config,
+            });
+
+            api.add({
+                type: 'paypalCredit',
+                page: 'minicart',
+                selector: '.paypalCredit.minicart',
                 needs: ['isPaypalActive','isPaypalActiveOnCart'],
                 configTest: config,
             });

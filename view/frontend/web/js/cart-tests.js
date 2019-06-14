@@ -19,7 +19,15 @@ define([
             api.add({
                 type: 'paypal',
                 page: 'cart',
-                selector: '.cart-summary .paypal.checkout:not(.paypal-bml)',
+                selector: '.paypalCheckout.cart',
+                needs: ['isPaypalActive','isPaypalActiveOnCart'],
+                configTest: config,
+            });
+
+            api.add({
+                type: 'paypalCredit',
+                page: 'cart',
+                selector: '.paypalCredit.cart',
                 needs: ['isPaypalActive','isPaypalActiveOnCart'],
                 configTest: config,
             });
