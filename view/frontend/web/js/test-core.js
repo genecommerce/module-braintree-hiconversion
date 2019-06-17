@@ -46,7 +46,7 @@ define([
                     config: null
                 },
                 hicReady: hicReady,
-                version: "1.1.0", 
+                version: "1.2.0",
             }
 
             function show(force){
