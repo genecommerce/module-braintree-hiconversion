@@ -13,7 +13,6 @@ define([
 
             var api = hicCore.api().page({
                 configTest: config,
-                page: 'cart'
             });        
                 
             api.add({
@@ -28,7 +27,7 @@ define([
                 type: 'paypalCredit',
                 page: 'cart',
                 selector: '.paypalCredit.cart',
-                needs: ['isPaypalActive','isPaypalActiveOnCart'],
+                needs: ['isPaypalActive','isPaypalActiveOnCart','isCreditActive'],
                 configTest: config,
             });
 

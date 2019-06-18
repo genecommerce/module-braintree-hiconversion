@@ -29,7 +29,7 @@ define([
                 type: 'paypalCredit',
                 page: 'minicart',
                 selector: '.paypalCredit.minicart',
-                needs: ['isPaypalActive','isPaypalActiveOnCart'],
+                needs: ['isPaypalActive','isPaypalActiveOnCart','isCreditActive'],
                 configTest: config,
             });
 

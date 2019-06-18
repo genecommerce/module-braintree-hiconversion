@@ -26,7 +26,7 @@ define([
                 };
                 
                 var page = 'pdp';
-                var type = (this.config.offerCredit) ? 'paypalCredit' : 'paypal';                
+                var type = (this.config.offerCredit) ? 'paypalCredit' : 'paypal';        
                 var api = hicCore.api().load();                
                 api.loadPaypal(page, type, _config, function (_config) {
                     this.config.offerCredit = _config.offerCredit;

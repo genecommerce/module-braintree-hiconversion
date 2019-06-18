@@ -25,7 +25,7 @@ define([
             type: 'paypalCredit',
             page: 'pdp',
             selector: '.paypalCredit.pdp',
-            needs: ['isPaypalActive','isPaypalActiveOnCart'],
+            needs: ['isPaypalActive','isPaypalActiveOnCart','isCreditActive'],
             configTest: config,
         });
 
