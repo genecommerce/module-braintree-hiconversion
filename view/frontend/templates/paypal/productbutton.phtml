@@ -58,12 +58,23 @@ if ($block->isCreditActive()) {
 <div data-mage-init='<?= /** @noEscape */ json_encode($config) ?>'
      class="paypalCheckout pdp paypal checkout paypal-logo braintree-paypal-logo <?= $block->escapeHtmlAttr($block->getContainerId()) ?>-container">         
     <style>
-        .paypalCheckout.pdp{
+        .paypalCheckout.pdp,
+        .paypalCredit.pdp{
             display: block;
         }
         @media screen and (min-width: 768px){
-            .paypalCheckout.pdp{
-                width: 49%;
+            .paypalCheckout.pdp,
+            .paypalCredit.pdp{
+                width: auto;
+                margin-left: 0px !important;
+            }
+            .paypalCheckout.pdp .paypal-button,
+            .paypalCredit.pdp .paypal-button{
+                text-align: left;
+            }
+            .paypalCheckout.pdp .paypal-button-size-responsive,
+            .paypalCredit.pdp .paypal-button-size-responsive{
+                width: 49% !important;
             }
         }
     </style>
@@ -77,16 +88,6 @@ if ($block->isCreditActive()) {
 <?php if ($block->isCreditActive()) : ?>
 <div data-mage-init='<?= /** @noEscape */ json_encode($paypalCreditConfig) ?>'
      class="paypalCredit pdp paypal checkout paypal-logo braintree-paypal-logo <?= $block->escapeHtmlAttr($block->getContainerId()) ?>-container">
-    <style>
-        .paypalCredit.pdp{
-            display: block;
-        }
-        @media screen and (min-width: 768px){
-            .paypalCredit.pdp{
-                width: 49%;
-            }
-        }
-    </style>
     <div data-currency="<?= $block->escapeHtmlAttr($block->getCurrency()) ?>"
          data-locale="<?= $block->escapeHtmlAttr($block->getLocale()) ?>"
          data-amount="<?= $block->escapeHtmlAttr($block->getAmount()) ?>"
