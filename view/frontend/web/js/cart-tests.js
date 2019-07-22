@@ -13,8 +13,10 @@ define([
 
             var api = hicCore.api().page({
                 configTest: config,
-            });        
-                
+            });   
+            
+            /* Cart Wallets: paypal, paypalcredit, applepay, and googlepay */
+            
             api.add({
                 type: 'paypal',
                 page: 'cart',
