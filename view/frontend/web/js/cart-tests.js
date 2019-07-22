@@ -19,6 +19,7 @@ define([
                 type: 'paypal',
                 page: 'cart',
                 selector: '.paypalCheckout.cart',
+                buttonSelector: '.paypalCheckout.cart .paypal-button',
                 needs: ['isPaypalActive','isPaypalActiveOnCart'],
                 configTest: config,
             });
@@ -27,6 +28,7 @@ define([
                 type: 'paypalCredit',
                 page: 'cart',
                 selector: '.paypalCredit.cart',
+                buttonSelector: '.paypalCredit.cart .paypal-button',
                 needs: ['isPaypalActive','isPaypalActiveOnCart','isCreditActive'],
                 configTest: config,
             });
@@ -35,6 +37,7 @@ define([
                 type: 'applePay',
                 page: 'cart',
                 selector: '.cart-summary .braintree-applepay-minicart',
+                buttonSelector: '.cart-summary .braintree-applepay-minicart .braintree-apple-pay-button',
                 needs: ['isApplePayActive'],
                 configTest: config,
             });
@@ -43,6 +46,7 @@ define([
                 type: 'googlePay',
                 page: 'cart',
                 selector: '.cart-summary .googlepay-minicart-logo',
+                buttonSelector: '.cart-summary .googlepay-minicart-logo .braintree-googlepay-button',
                 needs: ['isGooglePayActive'],
                 configTest: config,
             });

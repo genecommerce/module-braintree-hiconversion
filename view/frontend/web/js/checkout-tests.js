@@ -21,6 +21,7 @@ define([
                 page: 'checkout',
                 type: 'paypalCheckout',
                 selector: '#payment-method-braintree-paypal',
+                buttonSelector: '#payment-method-braintree-paypal .paypal-button',
                 needs: ['isPaypalActive'],
                 configTest: config,
             });
@@ -29,6 +30,7 @@ define([
                 page: 'checkout',
                 type: 'paypalCredit',
                 selector: '#payment-method-braintree-paypal-credit',
+                buttonSelector: '#payment-method-braintree-paypal-credit .paypal-button',
                 needs: ['isPaypalActive','isCreditActive'],
                 configTest: config,
             });
@@ -37,6 +39,7 @@ define([
                 page: 'checkout',
                 type: 'applePay',
                 selector: '#payment-method-braintree-applepay',
+                buttonSelector: '#payment-method-braintree-applepay .braintree-apple-pay-button',
                 needs: ['isApplePayActive'],
                 configTest: config,
             });
@@ -45,6 +48,7 @@ define([
                 page: 'checkout',
                 type: 'googlePay',
                 selector: '#payment-method-braintree-googlepay',
+                buttonSelector: '#payment-method-braintree-googlepay .braintree-googlepay-button',
                 needs: ['isGooglePayActive'],
                 configTest: config,
             });

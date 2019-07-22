@@ -25,9 +25,11 @@ define([
                 elem: {
                     style: styleElem,
                     selector: args.selector,
+                    buttonSelector: args.buttonSelector,
                     hide: hide,
                     show: show,
                     found: found,
+                    buttonFound: buttonFound,
                 },
                 status: findStatus,
                 testing: false,
@@ -152,7 +154,10 @@ define([
             }
             function found(){
                 return $(obj.elem.selector).length;
-            }        
+            }
+            function buttonFound(){
+                return $(obj.elem.buttonSelector).length
+            }
             function eligible(){
                 var e = {
                     config: true,

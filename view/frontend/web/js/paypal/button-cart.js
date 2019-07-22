@@ -41,7 +41,7 @@ define([
                     this.config.fundingIcons = _config.fundingicons;
                     this.config.tagline = _config.tagline;
                     this.config.events = _config.events;
-                    new Button(this.config);
+                    new Button(this.config); 
                 }.bind(this));
                 
                 return this;

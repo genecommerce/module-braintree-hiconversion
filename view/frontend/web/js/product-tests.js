@@ -17,6 +17,7 @@ define([
             page: 'pdp',
             type: 'paypal',
             selector: '.paypalCheckout.pdp',
+            buttonSelector: '.paypalCheckout.pdp .paypal-button',
             needs: ['isPaypalActive','isPaypalActiveOnPdp'],
             configTest: config,
         });
@@ -25,6 +26,7 @@ define([
             type: 'paypalCredit',
             page: 'pdp',
             selector: '.paypalCredit.pdp',
+            buttonSelector: '.paypalCredit.pdp .paypal-button',
             needs: ['isPaypalActive','isPaypalActiveOnCart','isCreditActive'],
             configTest: config,
         });
