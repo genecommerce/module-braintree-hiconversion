@@ -62,6 +62,9 @@ define([
             function registerError(cb){
                 return register('error', cb);
             }
+            function registerRender(cb){
+                return register('render', cb);
+            }
             function onEvent(store, callback){
                 $.each(store, function(i, cb){
                     cb(callback)
@@ -76,6 +79,9 @@ define([
             }
             function onError(callback){
                 return onEvent(obj.listeners.error, callback);    
+            }
+            function onRender(callback){
+                return onEvent(obj.listeners.render, callback);
             }
             function styleElem(){
                 var elem = $('style[data-page="'+obj.page+'"][data-type="'+obj.type+'"]');
@@ -138,6 +144,7 @@ define([
                 obj.config.events.onClick = onClick;
                 obj.config.events.onCancel = onCancel;
                 obj.config.events.onError = onError;
+                obj.config.events.onRender = onRender;
                 obj.paypalHook = cb;
                 addButton();
                 postMessage({
@@ -201,14 +208,17 @@ define([
                         click: [],
                         cancel: [],
                         error: [],
+                        render: [],
                     },
                     register: register, 
                     registerClick: registerClick,
                     registerCancel: registerCancel,
                     registerError: registerError,
+                    registerRender: registerRender,
                     onClick: onClick,
                     onCancel: onCancel,
-                    onError: onError
+                    onError: onError,
+                    onRender: onRender
                 });
             }
             function setEnabled(args, clear){
