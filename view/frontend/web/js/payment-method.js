@@ -169,14 +169,19 @@ define([
                return window.braintreeHicApi.desiredConfig[obj.page][obj.type] = newDesiredConfig;
             }
             function applyDesiredConfig(){
-                if (obj.desiredConfig().config !== undefined){
-                    update(obj.desiredConfig().config);
-                    addButton();
-                }
-                if (obj.desiredConfig().show){
-                    show(true);
+                var isPaypal = (obj.type === 'paypalCredit' || obj.type === 'paypalCheckout') ? true : false;
+                var desiredConfig = obj.desiredConfig();
+                if (obj.test && obj.test.isTestingEnabled && getEnabled() && window.braintreeHicApi.timing.hicLate === false){
+                    if (isPaypal){
+                        update(desiredConfig);
+                        addButton();
+                    }
+                    (desiredConfig.show) ? show(true) : hide();
                 }else{
-                    hide();
+                    if (isPaypal){
+                        addButton();
+                    }
+                    show(true);
                 }
             }
             function setAndApplyDesiredConfig(desiredConfig){
@@ -265,7 +270,7 @@ define([
                 return (obj.missing.length === 0) ? true : false;
             }
             function init(){
-                if (/paypal/i.test(obj.type)){
+                if (obj.type === 'paypalCheckout' || obj.type === 'paypalCredit'){
                     add_paypal_methods();
                 }
 
@@ -274,11 +279,7 @@ define([
                 delete konfig.isTestingEnabled;
                 obj.test.config = konfig;
 
-                if (obj.test && obj.test.isTestingEnabled && getEnabled()){
-                    hide();
-                }else{
-                    show(true);
-                }
+                obj.setAndApplyDesiredConfig({});
   
                 return obj;
             }

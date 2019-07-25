@@ -133,6 +133,7 @@ define([
                 var time_interval = 250;
                 var total_time = 0;
                 var time_limit = 15000;
+                // var time_limit = 5000;
                 function waitFor(){
                     total_time = total_time + time_interval;
                     obj.timing.totalTime = total_time;
@@ -250,11 +251,6 @@ define([
                 group = args;
                 return obj;
             }
-            return {
-                page: page,
-                load: load
-
-            }
             function setDesiredConfig(desiredConfig){
                 obj.desiredConfig = $.extend(true, {}, obj.desiredConfig, desiredConfig);
                 $.each(obj.desiredConfig, function(walletLocation, wallets){
@@ -280,6 +276,10 @@ define([
             function setAndApplyDesiredConfig(desiredConfig){
                 setDesiredConfig(desiredConfig);
                 applyDesiredConfig();
+            }
+            return {
+                page: page,
+                load: load
             }
         },
     }
