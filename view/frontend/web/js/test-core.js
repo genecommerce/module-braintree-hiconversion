@@ -9,8 +9,6 @@ define([
 ], function ($, paymentMethod, paymentMethodConfig) {
     'use strict';
 
-    /* Testing */
-
     return {
         api: function(){
             var group = null;
@@ -47,6 +45,69 @@ define([
                 },
                 hicReady: hicReady,
                 version: "1.2.0",
+                setDesiredConfig: setDesiredConfig,
+                applyDesiredConfig: applyDesiredConfig,
+                setAndApplyDesiredConfig: setAndApplyDesiredConfig,
+                desiredConfig: {
+                    pdp: {
+                        paypalCheckout: {
+                            show: false,
+                            config: {}
+                        },
+                        paypalCredit: {
+                            show: false,
+                            config: {}
+                        },
+                    },
+                    minicart: {
+                        applePay: {
+                            show: false
+                        },
+                        googlePay: {
+                            show: false
+                        },
+                        paypalCheckout: {
+                            show: false,
+                            config: {},
+                        },
+                        paypalCredit: {
+                            show: false,
+                            config: {}
+                        },
+                    },
+                    cart: {
+                        applePay: {
+                            show: false
+                        },
+                        googlePay: {
+                            show: false
+                        },
+                        paypalCheckout: {
+                            show: false,
+                            config: {}
+                        },
+                        paypalCredit: {
+                            show: false,
+                            config: {}
+                        }
+                    },
+                    checkout: {
+                        applePay: {
+                            show: false
+                        },
+                        googlePay: {
+                            show: false
+                        },
+                        paypalCheckout: {
+                            show: false,
+                            config: {}
+                        },
+                        paypalCredit: {
+                            show: false,
+                            config: {}
+                        }
+                    }
+                }
             }
 
             function show(force){
@@ -192,6 +253,33 @@ define([
             return {
                 page: page,
                 load: load
+
+            }
+            function setDesiredConfig(desiredConfig){
+                obj.desiredConfig = $.extend(true, {}, obj.desiredConfig, desiredConfig);
+                $.each(obj.desiredConfig, function(walletLocation, wallets){
+                    $.each(wallets, function(walletType, walletConfig){
+                        var wallet = find({page: walletLocation, type: walletType});
+                        if (wallet !== false){
+                            wallet.setDesiredConfig({});
+                        }
+                    })
+                })
+                return obj.desiredConfig;
+            }
+            function applyDesiredConfig(){
+                $.each(obj.desiredConfig, function(walletLocation, wallets){
+                    $.each(wallets, function(walletType, walletConfig){
+                        var wallet = find({page: walletLocation, type: walletType});
+                        if (wallet !== false){
+                            wallet.applyDesiredConfig();
+                        }
+                    })
+                })
+            }
+            function setAndApplyDesiredConfig(desiredConfig){
+                setDesiredConfig(desiredConfig);
+                applyDesiredConfig();
             }
         },
     }

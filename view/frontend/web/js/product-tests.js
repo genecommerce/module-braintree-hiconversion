@@ -15,9 +15,9 @@ define([
         });        
         api.add({            
             page: 'pdp',
-            type: 'paypal',
-            selector: '.paypalCheckout.pdp',
-            buttonSelector: '.paypalCheckout.pdp .paypal-button',
+            type: 'paypalCheckout',
+            selector: '.actions .paypalCheckout.pdp',
+            buttonSelector: '.actions .paypalCheckout.pdp .paypal-button',
             needs: ['isPaypalActive','isPaypalActiveOnPdp'],
             configTest: config,
         });
@@ -25,8 +25,8 @@ define([
         api.add({
             type: 'paypalCredit',
             page: 'pdp',
-            selector: '.paypalCredit.pdp',
-            buttonSelector: '.paypalCredit.pdp .paypal-button',
+            selector: '.actions .paypalCredit.pdp',
+            buttonSelector: '.actions .paypalCredit.pdp .paypal-button',
             needs: ['isPaypalActive','isPaypalActiveOnCart','isCreditActive'],
             configTest: config,
         });

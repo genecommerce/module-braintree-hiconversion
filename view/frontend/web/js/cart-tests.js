@@ -18,7 +18,7 @@ define([
             /* Cart Wallets: paypal, paypalcredit, applepay, and googlepay */
             
             api.add({
-                type: 'paypal',
+                type: 'paypalCheckout',
                 page: 'cart',
                 selector: '.paypalCheckout.cart',
                 buttonSelector: '.paypalCheckout.cart .paypal-button',

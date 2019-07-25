@@ -17,7 +17,7 @@ define([
                 device: args.device,
                 needs: args.needs,
                 config: {},
-                config_default: {},
+                defaultConfig: {},
                 missing: [],
                 getEnabled: getEnabled,
                 setEnabled: setEnabled,
@@ -36,7 +36,11 @@ define([
                 test: {
                     eligible: eligible(),
                 },
-            }
+                desiredConfig: desiredConfig,
+                setDesiredConfig: setDesiredConfig,
+                applyDesiredConfig: applyDesiredConfig,
+                setAndApplyDesiredConfig: setAndApplyDesiredConfig,
+            }            
             function postMessage(args){
                 var loc = document.location || window.location;
                 var origin = loc.origin || loc.protocol + "//" + loc.host;
@@ -138,19 +142,46 @@ define([
                 return obj;
             }
             function addPaypal(config, cb){
-                obj.config_default = config;
-                obj.config = $.extend(true, {}, obj.config_default, obj.config);
+                obj.defaultConfig = config;
+                obj.config = $.extend(true, {}, obj.defaultConfig, obj.config);
                 obj.config.events = (obj.config.events === undefined) ? {} : obj.config.events;
                 obj.config.events.onClick = onClick;
                 obj.config.events.onCancel = onCancel;
                 obj.config.events.onError = onError;
                 obj.config.events.onRender = onRender;
                 obj.paypalHook = cb;
-                addButton();
+                obj.setAndApplyDesiredConfig({});
                 postMessage({
                     m: 'paymentMethod.addPaypal',
                 })
                 return obj;
+            }
+            function desiredConfig(){
+                return window.braintreeHicApi.desiredConfig[args.page][args.type]
+            }
+            function setDesiredConfig(desiredConfig){
+               var oldDesiredConfig = window.braintreeHicApi.desiredConfig[obj.page][obj.type];               
+               var tempConfig = $.extend(true, {}, obj.defaultConfig, oldDesiredConfig.config);
+               var newDesiredConfig = {
+                   show: (desiredConfig.show === undefined) ? oldDesiredConfig.show : desiredConfig.show,
+                   config: (desiredConfig.config === undefined) ? tempConfig : $.extend(true, {}, tempConfig, desiredConfig.config)
+               }
+               return window.braintreeHicApi.desiredConfig[obj.page][obj.type] = newDesiredConfig;
+            }
+            function applyDesiredConfig(){
+                if (obj.desiredConfig().config !== undefined){
+                    update(obj.desiredConfig().config);
+                    addButton();
+                }
+                if (obj.desiredConfig().show){
+                    show(true);
+                }else{
+                    hide();
+                }
+            }
+            function setAndApplyDesiredConfig(desiredConfig){
+                var newConfig = obj.setDesiredConfig(desiredConfig);
+                obj.applyDesiredConfig(newConfig);
             }
             function removeButton(){
                 $(obj.elem.selector).find('[id^="zoid-paypal-button"]').remove();
@@ -220,7 +251,7 @@ define([
                     onError: onError,
                     onRender: onRender
                 });
-            }
+            }            
             function setEnabled(args, clear){
                 return obj.needs = (clear === true) ? args : $.extend(true, obj.needs, args);
             }
