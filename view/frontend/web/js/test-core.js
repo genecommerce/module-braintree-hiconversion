@@ -48,6 +48,9 @@ define([
                 setDesiredConfig: setDesiredConfig,
                 applyDesiredConfig: applyDesiredConfig,
                 setAndApplyDesiredConfig: setAndApplyDesiredConfig,
+                setTestState: setTestState,
+                getTestState: getTestState,
+                isHiConversionTagEnabled: isHiConversionTagEnabled,
                 desiredConfig: {
                     pdp: {
                         paypalCheckout: {
@@ -133,13 +136,14 @@ define([
                 var time_interval = 250;
                 var total_time = 0;
                 var time_limit = 15000;
-                // var time_limit = 5000;
                 function waitFor(){
                     total_time = total_time + time_interval;
                     obj.timing.totalTime = total_time;
                     if (obj.timing.hicReady === false && total_time > time_limit){	
                         obj.timing.hicLate = true;	
                         obj.show(true);	
+                    }else if(localStorage.hicReadyTest === 'true'){
+                        hicReady();
                     }else if (obj.timing.hicReady === false){	
                         setTimeout(function(){	
                             waitFor();	
@@ -147,6 +151,9 @@ define([
                     }	
                 }	
                 waitFor();
+            }
+            function isHiConversionTagEnabled(){
+                return (localStorage._hc_disable === "") ? true : false;
             }
             function hicReady(){
                 return obj.timing.hicReady = (obj.timing.hicLate) ? false : true;
@@ -229,7 +236,47 @@ define([
                 var matches = search(args, narrow)
                 return (matches.length === 1) ? matches[0] : false;
             }
-
+            function setTestState(state){
+                /* tag on */
+                /* tag dummy on */
+                /* tag off */
+                if (state === 'tagOn'){
+                    /* all enabled buttons show if not in test */
+                    window.localStorage.hicReadyTest = '',
+                    window.localStorage._hc_disable = ''
+                }else if (state === 'tagOff'){
+                    /* all enabled buttons show after 15 seconds */
+                    window.localStorage.hicReadyTest = '',
+                    window.localStorage._hc_disable = 'true'
+                }else if (state === 'dummyTagOn'){
+                    /* all buttons are hidden */
+                    window.localStorage.hicReadyTest = 'true',
+                    window.localStorage._hc_disable = 'true'
+                }
+                window.location.reload();
+            }
+            function getTestState(){
+                var testState
+                if (isHiConversionTagEnabled() === true){
+                    testState = 'tagOn';
+                }else{
+                    if (localStorage.hicReadyTest === ''){
+                        testState = 'tagOff';
+                    }else if (localStorage.hicReadyTest === 'true'){
+                        testState = 'dummyTagOn';
+                    }else{
+                        testState = null
+                    }
+                }
+                var testStates = {
+                    testState: testState,
+                    isTestingEnabled: obj.isTestingEnabled,
+                    testConfig: obj.config,
+                    timing: obj.timing,
+                    version: obj.version
+                }
+                return testStates;
+            }
             function load(){
                 if (window.braintreeHicApi === undefined){
                     backup();
