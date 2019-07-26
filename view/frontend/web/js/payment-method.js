@@ -230,7 +230,7 @@ define([
             }    
             function findStatus(){
                 return {
-                    visible: (styleElem() !== false) ? false : true,
+                    visible: (styleElem() !== false && buttonFound() !== 0) ? false : true,
                     found: (found() === 1) ? true : false,
                     enableShow: (obj.testing === false) ? false : true,
                 };
