@@ -37,9 +37,9 @@ define([
                     eligible: eligible(),
                 },
                 desiredConfig: desiredConfig,
-                setDesiredConfig: setDesiredConfig,
+                extendDesiredConfig: extendDesiredConfig,
                 applyDesiredConfig: applyDesiredConfig,
-                setAndApplyDesiredConfig: setAndApplyDesiredConfig,
+                extendAndApplyDesiredConfig: extendAndApplyDesiredConfig,
             }            
             function postMessage(args){
                 var loc = document.location || window.location;
@@ -150,7 +150,7 @@ define([
                 obj.config.events.onError = onError;
                 obj.config.events.onRender = onRender;
                 obj.paypalHook = cb;
-                obj.setAndApplyDesiredConfig({});
+                obj.extendAndApplyDesiredConfig({});
                 postMessage({
                     m: 'paymentMethod.addPaypal',
                 })
@@ -159,7 +159,7 @@ define([
             function desiredConfig(){
                 return window.braintreeHicApi.desiredConfig[args.page][args.type]
             }
-            function setDesiredConfig(desiredConfig){
+            function extendDesiredConfig(desiredConfig){
                var oldDesiredConfig = window.braintreeHicApi.desiredConfig[obj.page][obj.type];               
                var tempConfig = $.extend(true, {}, obj.defaultConfig, oldDesiredConfig.config);
                var newDesiredConfig = {
@@ -188,8 +188,8 @@ define([
                     show(true);
                 }
             }
-            function setAndApplyDesiredConfig(desiredConfig){
-                var newConfig = obj.setDesiredConfig(desiredConfig);
+            function extendAndApplyDesiredConfig(desiredConfig){
+                var newConfig = obj.extendDesiredConfig(desiredConfig);
                 obj.applyDesiredConfig(newConfig);
             }
             function removeButton(){
@@ -283,7 +283,7 @@ define([
                 delete konfig.isTestingEnabled;
                 obj.test.config = konfig;
 
-                obj.setAndApplyDesiredConfig({});
+                obj.extendAndApplyDesiredConfig({});
   
                 return obj;
             }

@@ -45,9 +45,9 @@ define([
                 },
                 hicReady: hicReady,
                 version: "1.2.0",
-                setDesiredConfig: setDesiredConfig,
+                extendDesiredConfig: extendDesiredConfig,
                 applyDesiredConfig: applyDesiredConfig,
-                setAndApplyDesiredConfig: setAndApplyDesiredConfig,
+                extendAndApplyDesiredConfig: extendAndApplyDesiredConfig,
                 setTestState: setTestState,
                 getTestState: getTestState,
                 isHiConversionTagEnabled: isHiConversionTagEnabled,
@@ -298,13 +298,13 @@ define([
                 group = args;
                 return obj;
             }
-            function setDesiredConfig(desiredConfig){
+            function extendDesiredConfig(desiredConfig){
                 obj.desiredConfig = $.extend(true, {}, obj.desiredConfig, desiredConfig);
                 $.each(obj.desiredConfig, function(walletLocation, wallets){
                     $.each(wallets, function(walletType, walletConfig){
                         var wallet = find({page: walletLocation, type: walletType});
                         if (wallet !== false){
-                            wallet.setDesiredConfig({});
+                            wallet.extendDesiredConfig({});
                         }
                     })
                 })
@@ -320,8 +320,8 @@ define([
                     })
                 })
             }
-            function setAndApplyDesiredConfig(desiredConfig){
-                setDesiredConfig(desiredConfig);
+            function extendAndApplyDesiredConfig(desiredConfig){
+                extendDesiredConfig(desiredConfig);
                 applyDesiredConfig();
             }
             return {
