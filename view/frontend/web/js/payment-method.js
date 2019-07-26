@@ -173,10 +173,14 @@ define([
                 var desiredConfig = obj.desiredConfig();
                 if (obj.test && obj.test.isTestingEnabled && getEnabled() && window.braintreeHicApi.timing.hicLate === false){
                     if (isPaypal){
-                        update(desiredConfig);
+                        update(desiredConfig.config);
                         addButton();
                     }
-                    (desiredConfig.show) ? show(true) : hide();
+                    if (desiredConfig.show){
+                        show(true)
+                    }else{
+                        hide();
+                    }
                 }else{
                     if (isPaypal){
                         addButton();
