@@ -54,12 +54,33 @@ define([
                 var config = $.extend({}, baseConfig, args);
                 window.postMessage({config}, origin);
             }
+            function getUniqId() {
+                return Date.now() + Math.random().toString().slice(2);
+            };
+            function deregister(id){
+                var degistered = false;
+                $.each(obj.listeners, function(eventType,eventTypeListeners){
+                    $.each(eventTypeListeners, function(eventId,cb){                        
+                        if (eventId === id){
+                            degistered = true;
+                            delete obj.listeners[eventType][eventId];
+                        }
+                    })
+                });
+                return degistered
+            }
             function register(type, cb){
                 /* Events: Click, Cancel, Error, and Render */
-                return (typeof(cb) === 'function') ? obj.listeners[type].push(cb) : 'must be function';
+                var eventId = getUniqId();
+                if (typeof(cb) === 'function'){
+                    obj.listeners[type][eventId] = cb;
+                    return eventId;
+                }else{
+                    return "must be a function";
+                }
             }
             function onEvent(store, callback){
-                $.each(store, function(i, cb){
+                $.each(store, function(eventId, cb){
                     cb(callback)
                 });
                 return obj;
@@ -234,12 +255,13 @@ define([
                     paypalHook: false,
                     update: update,
                     listeners: {
-                        click: [],
-                        cancel: [],
-                        error: [],
-                        render: [],
+                        click: {},
+                        cancel: {},
+                        error: {},
+                        render: {},
                     },
                     register: register,
+                    deregister: deregister,
                     onClick: onClick,
                     onCancel: onCancel,
                     onError: onError,
