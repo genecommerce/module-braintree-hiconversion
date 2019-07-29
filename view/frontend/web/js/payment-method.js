@@ -55,19 +55,8 @@ define([
                 window.postMessage({config}, origin);
             }
             function register(type, cb){
+                /* Events: Click, Cancel, Error, and Render */
                 return (typeof(cb) === 'function') ? obj.listeners[type].push(cb) : 'must be function';
-            }
-            function registerClick(cb){
-                return register('click', cb);
-            }
-            function registerCancel(cb){
-                return register('cancel', cb);
-            }
-            function registerError(cb){
-                return register('error', cb);
-            }
-            function registerRender(cb){
-                return register('render', cb);
             }
             function onEvent(store, callback){
                 $.each(store, function(i, cb){
@@ -250,11 +239,7 @@ define([
                         error: [],
                         render: [],
                     },
-                    register: register, 
-                    registerClick: registerClick,
-                    registerCancel: registerCancel,
-                    registerError: registerError,
-                    registerRender: registerRender,
+                    register: register,
                     onClick: onClick,
                     onCancel: onCancel,
                     onError: onError,
