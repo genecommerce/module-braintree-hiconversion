@@ -179,23 +179,35 @@ define([
                return window.braintreeHicApi.desiredConfig[obj.page][obj.type] = newDesiredConfig;
             }
             function applyDesiredConfig(){
-                var isPaypal = (obj.type === 'paypalCredit' || obj.type === 'paypalCheckout') ? true : false;
+                var renderEventId;
+                function paypalButtonLoadedShow(){
+                    deregister(renderEventId);
+                    show(true);
+                }
                 var desiredConfig = obj.desiredConfig();
-                if (obj.test && obj.test.isTestingEnabled && getEnabled() && window.braintreeHicApi.timing.hicLate === false){
-                    if (isPaypal){
+                if (obj.type === 'paypalCredit' || obj.type === 'paypalCheckout'){
+                    if (obj.test && obj.test.isTestingEnabled && getEnabled() && window.braintreeHicApi.timing.hicLate === false){
+                        if (desiredConfig.show){
+                            renderEventId = obj.register('render', paypalButtonLoadedShow);
+                        }else{
+                            hide();
+                        }
                         update(desiredConfig.config);
                         addButton();
-                    }
-                    if (desiredConfig.show){
-                        show(true)
                     }else{
-                        hide();
+                        addButton();                    
+                        show(true);                        
                     }
-                }else{
-                    if (isPaypal){
-                        addButton();
+                }else if (obj.type === 'applePay' || obj.type === 'googlePay'){
+                    if (obj.test && obj.test.isTestingEnabled && getEnabled() && window.braintreeHicApi.timing.hicLate === false){
+                        if (desiredConfig.show){
+                            show(true);
+                        }else{
+                            hide();
+                        }
+                    }else{
+                        show(true);
                     }
-                    show(true);
                 }
             }
             function extendAndApplyDesiredConfig(desiredConfig){
