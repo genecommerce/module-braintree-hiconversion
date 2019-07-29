@@ -193,7 +193,7 @@ define([
                 obj.applyDesiredConfig(newConfig);
             }
             function removeButton(){
-                $(obj.elem.selector).find('[id^="zoid-paypal-button"]').remove();
+                $(obj.elem.buttonSelector).remove();
                 postMessage({
                     m: 'paymentMethod.removeButton',
                 })

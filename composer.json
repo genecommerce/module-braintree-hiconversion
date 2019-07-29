@@ -3,7 +3,6 @@
   "description": "Extends the Braintree module with an integration from HiConversion.",
   "version": "1.2.0",
   "require": {
-    "gene/module-braintree": "^3.1.2",
     "hiconversion/module-integration": "1.x"
   },
   "type": "magento2-module",
