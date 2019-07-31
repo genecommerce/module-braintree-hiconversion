@@ -18,19 +18,19 @@ try {
 $config = [
     'Gene_BraintreeHiConversion/js/paypal/button-product' => [
         'config' => [
-            'id' => $paypalId,
-            'environment' => $block->getEnvironment(),
-            'clientToken' => $block->getClientToken(),
-            'displayName' => $block->getMerchantName(),
-            'payeeEmail' => $block->getPayeeEmail(),
             'actionSuccess' => $block->getActionSuccess(),
-            'offerCredit' => false,
+            'clientToken' => $block->getClientToken(),
+            'color' => $block->getButtonColor(),            
+            'disabledFunding' => $block->getDisabledFunding(),
+            'displayName' => $block->getMerchantName(),
+            'environment' => $block->getEnvironment(),
             'fundingicons' => true,
-            'shape' => $block->getButtonShape(),
-            'size' => $block->getButtonSize(),
+            'id' => $paypalId,
             'layout' => $block->getButtonLayout(),
-            'color' => $block->getButtonColor(),
-            'disabledFunding' => $block->getDisabledFunding()
+            'offerCredit' => false,
+            'payeeEmail' => $block->getPayeeEmail(),
+            'shape' => $block->getButtonShape(),
+            'size' => $block->getButtonSize()
         ]
     ]
 ];
@@ -39,17 +39,17 @@ if ($block->isCreditActive()) {
     $paypalCreditConfig = [
         'Gene_BraintreeHiConversion/js/paypal/button-product' => [
             'config' => [
-                'id' => $paypalCreditId,
-                'environment' => $block->getEnvironment(),
-                'clientToken' => $block->getClientToken(),
-                'displayName' => $block->getMerchantName(),
-                'payeeEmail' => $block->getPayeeEmail(),
                 'actionSuccess' => $block->getActionSuccess(),
-                'offerCredit' => true,
-                'shape' => $block->getButtonShape(),
-                'size' => $block->getButtonSize(),
-                'layout' => $block->getButtonLayout(),
+                'clientToken' => $block->getClientToken(),
                 'color' => 'darkblue',
+                'displayName' => $block->getMerchantName(),
+                'environment' => $block->getEnvironment(),
+                'id' => $paypalCreditId,
+                'layout' => $block->getButtonLayout(),
+                'offerCredit' => true,
+                'payeeEmail' => $block->getPayeeEmail(),
+                'shape' => $block->getButtonShape(),
+                'size' => $block->getButtonSize()
             ]
         ]
     ];

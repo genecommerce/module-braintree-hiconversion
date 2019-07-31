@@ -15,7 +15,7 @@ define([
         });        
         api.add({            
             page: 'pdp',
-            type: 'paypalCheckout',
+            type: 'paypal',
             selector: '.actions .paypalCheckout.pdp',
             buttonSelector: '.actions .paypalCheckout.pdp .paypal-button',
             needs: ['isPaypalActive','isPaypalActiveOnPdp'],

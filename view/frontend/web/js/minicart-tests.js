@@ -18,7 +18,7 @@ define([
             });        
                 
             api.add({
-                type: 'paypalCheckout',
+                type: 'paypal',
                 page: 'minicart',
                 selector: '.paypalCheckout.minicart',
                 buttonSelector: '.paypalCheckout.minicart .paypal-button',

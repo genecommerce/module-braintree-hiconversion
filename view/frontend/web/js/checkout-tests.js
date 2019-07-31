@@ -19,7 +19,7 @@ define([
                 
             api.add({                
                 page: 'checkout',
-                type: 'paypalCheckout',
+                type: 'paypal',
                 selector: '#payment-method-braintree-paypal',
                 buttonSelector: '#payment-method-braintree-paypal .paypal-button',
                 needs: ['isPaypalActive'],

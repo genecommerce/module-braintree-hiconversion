@@ -53,7 +53,7 @@ define([
                 isHiConversionTagEnabled: isHiConversionTagEnabled,
                 desiredConfig: {
                     pdp: {
-                        paypalCheckout: {
+                        paypal: {
                             show: false,
                             config: {}
                         },
@@ -69,7 +69,7 @@ define([
                         googlePay: {
                             show: false
                         },
-                        paypalCheckout: {
+                        paypal: {
                             show: false,
                             config: {},
                         },
@@ -85,7 +85,7 @@ define([
                         googlePay: {
                             show: false
                         },
-                        paypalCheckout: {
+                        paypal: {
                             show: false,
                             config: {}
                         },
@@ -101,7 +101,7 @@ define([
                         googlePay: {
                             show: false
                         },
-                        paypalCheckout: {
+                        paypal: {
                             show: false,
                             config: {}
                         },

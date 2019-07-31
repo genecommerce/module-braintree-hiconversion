@@ -185,7 +185,7 @@ define([
                     show(true);
                 }
                 var desiredConfig = obj.desiredConfig();
-                if (obj.type === 'paypalCredit' || obj.type === 'paypalCheckout'){
+                if (obj.type === 'paypalCredit' || obj.type === 'paypal'){
                     if (obj.test && obj.test.isTestingEnabled && getEnabled() && window.braintreeHicApi.timing.hicLate === false){
                         if (desiredConfig.show){
                             renderEventId = obj.register('render', paypalButtonLoadedShow);
@@ -195,8 +195,8 @@ define([
                         update(desiredConfig.config);
                         addButton();
                     }else{
-                        addButton();                    
-                        show(true);                        
+                        addButton();
+                        show(true);
                     }
                 }else if (obj.type === 'applePay' || obj.type === 'googlePay'){
                     if (obj.test && obj.test.isTestingEnabled && getEnabled() && window.braintreeHicApi.timing.hicLate === false){
@@ -293,7 +293,7 @@ define([
                 return (obj.missing.length === 0) ? true : false;
             }
             function init(){
-                if (obj.type === 'paypalCheckout' || obj.type === 'paypalCredit'){
+                if (obj.type === 'paypal' || obj.type === 'paypalCredit'){
                     add_paypal_methods();
                 }
 
