@@ -12,6 +12,7 @@ define([
     return {
         api: function(){
             var group = null;
+            /* test */
             var obj = {
                 paymentMethods: {
                     enabled: [],
