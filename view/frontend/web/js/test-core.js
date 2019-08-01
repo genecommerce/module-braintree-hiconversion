@@ -113,16 +113,19 @@ define([
                     }
                 }
             }
-
+            function setShowState(showState){
+                $.each(obj.desiredConfig, function(walletLocation, wallets){
+                    $.each(wallets, function(walletType, walletConfig){
+                        walletConfig.show = showState;
+                    })
+                })                
+                obj.applyDesiredConfig();
+            }
             function show(force){
-                $.each(obj.paymentMethods.enabled, function(i,wallet){
-                    wallet.elem.show(force);
-                });
+                setShowState(true);
             }
             function hide(){
-                $.each(obj.paymentMethods.enabled, function(i,wallet){
-                    wallet.elem.hide();
-                });
+                setShowState(false);
             }
             function postMessage(args){
                 var loc = document.location || window.location;
