@@ -33,7 +33,6 @@ define([
                 config: null,
                 show: show,
                 hide: hide,
-                postMessage: postMessage,
                 backup: backup,
                 timing: {
                     btReady: false,
@@ -127,15 +126,6 @@ define([
             function hide(){
                 setShowState(false);
             }
-            function postMessage(args){
-                var loc = document.location || window.location;
-                var origin = loc.origin || loc.protocol + "//" + loc.host;
-                var baseConfig = {
-                    group: 'update-bt-ge-hi'
-                };
-                var config = $.extend({}, baseConfig, args);
-                window.postMessage({config}, origin);
-            }
             function backup(){
                 var time_interval = 250;
                 var total_time = 0;
@@ -167,12 +157,6 @@ define([
                 var wallet = paymentMethod.new(args).init();
                 (wallet.getEnabled() === true) ? (obj.paymentMethods.enabled.push(wallet)) : (obj.paymentMethods.disabled.push(wallet));
                 obj.paymentMethods.all.push(wallet);
-                postMessage({
-                    name: 'paymentMethodAdded',
-                    page: wallet.page,
-                    type: wallet.type,
-                    enabled: wallet.getEnabled(),
-                });
             }
             function loadPaypal(page, type, config, cb){
                 var time_interval = 250;

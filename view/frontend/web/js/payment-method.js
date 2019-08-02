@@ -43,19 +43,6 @@ define([
                 applyDesiredConfig: applyDesiredConfig,
                 extendAndApplyDesiredConfig: extendAndApplyDesiredConfig,
             }
-            function postMessage(args) {
-                var loc = document.location || window.location;
-                var origin = loc.origin || loc.protocol + "//" + loc.host;
-                var baseConfig = {
-                    group: 'update-bt-ge-hi',
-                    cat: 'paymentMethod',
-                    page: obj.page,
-                    type: obj.type,
-                    device: obj.device,
-                };
-                var config = $.extend({}, baseConfig, args);
-                window.postMessage({ config }, origin);
-            }
             function getUniqId() {
                 return Date.now() + Math.random().toString().slice(2);
             };
@@ -105,11 +92,6 @@ define([
             }
             function show(force) {
                 var cssShow = function(){
-                    postMessage({
-                        m: 'show',
-                        testing: obj.testing,
-                        force: force
-                    })
                     if (styleElem() !== false) {
                         if (obj.testing !== false || force === true) {
                             styleElem().remove();
@@ -148,9 +130,6 @@ define([
                         styleSheet.appendChild(document.createTextNode(text));
                     }
                 }
-                postMessage({
-                    m: 'paymentMethod.hide',
-                })
                 return obj;
             }
             function setShowState(showState){
@@ -162,9 +141,6 @@ define([
             }
             function update(newConfig) {
                 $.extend(true, obj.config, newConfig);
-                postMessage({
-                    m: 'paymentMethod.update',
-                })
                 return obj
             }
             function addButton(arg) {
@@ -174,9 +150,6 @@ define([
                 if (obj.paypalHook !== undefined && typeof (obj.paypalHook) === 'function') {
                     obj.paypalHook(obj.config);
                 }
-                postMessage({
-                    m: 'paymentMethod.addButton',
-                });
                 return obj;
             }
             function addPaypal(config, cb) {
@@ -189,9 +162,6 @@ define([
                 obj.config.events.onRender = onRender;
                 obj.paypalHook = cb;
                 obj.extendAndApplyDesiredConfig({});
-                postMessage({
-                    m: 'paymentMethod.addPaypal',
-                })
                 return obj;
             }
             function desiredConfig() {
@@ -271,9 +241,6 @@ define([
             }
             function removeButton() {
                 $(obj.elem.buttonSelector).remove();
-                postMessage({
-                    m: 'paymentMethod.removeButton',
-                })
                 return obj;
             }
             function found() {
