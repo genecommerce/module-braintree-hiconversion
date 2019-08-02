@@ -33,7 +33,7 @@ define([
                     this.config.color = _config.color;
                     this.config.disabledFunding = _config.disabledFunding;
                     this.config.events = _config.events;
-                    this.config.fundingIcons = _config.fundingicons;
+                    this.config.fundingicons = _config.fundingicons;
                     this.config.label = _config.label;
                     this.config.layout = _config.layout;
                     this.config.offerCredit = _config.offerCredit;
