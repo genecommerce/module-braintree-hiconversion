@@ -109,7 +109,7 @@ define([
             }
             
             var page = 'checkout';
-            var type = this.config.offerCredit == true ? 'paypalCredit' : 'paypalCheckout';
+            var type = this.config.offerCredit == true ? 'paypalCredit' : 'paypal';
             var button_config = window.checkoutConfig.payment[this.getCode()];
     
             var api = hicCore.api().load();                
@@ -122,7 +122,7 @@ define([
                 this.hicConfig.disabledFunding = _config.disabledFunding;
                 this.hicConfig.label = _config.label;
                 this.hicConfig.branding = _config.branding;
-                this.hicConfig.fundingIcons = _config.fundingicons;
+                this.hicConfig.fundingicons = _config.fundingicons;
                 this.hicConfig.tagline = _config.tagline;
                 this.events = _config.events;
 

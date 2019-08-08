@@ -106,7 +106,15 @@ define([
                 if (obj.type === 'applePay' || obj.type === 'googlePay') {
                     cssShow();
                 } else if (obj.type === 'paypalCredit' || obj.type === 'paypal') {
-                    if (sameConfig() === true && buttonFound() !== 0){
+                    if (obj.page === 'checkout'){
+                        if (buttonFound() === 0){
+                            cssShow();
+                        }else{
+                            update(desiredConfig().config);
+                            addButton();
+                            renderId = register('render', paypalButtonRendered);
+                        }
+                    }else if (sameConfig() === true && buttonFound() !== 0){
                         cssShow();
                     } else {
                         update(desiredConfig().config);
@@ -161,6 +169,9 @@ define([
                 obj.config.events.onError = onError;
                 obj.config.events.onRender = onRender;
                 obj.paypalHook = cb;
+                if (obj.page === 'checkout'){
+                    addButton()
+                }
                 obj.extendAndApplyDesiredConfig({});
                 return obj;
             }
