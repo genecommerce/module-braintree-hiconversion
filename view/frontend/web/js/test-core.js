@@ -55,7 +55,9 @@ define([
                     pdp: {
                         paypal: {
                             show: false,
-                            config: {}
+                            config: {
+                                fundingicons: false,
+                            }
                         },
                         paypalCredit: {
                             show: false,
