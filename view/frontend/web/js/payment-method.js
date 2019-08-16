@@ -34,7 +34,6 @@ define([
                     buttonFound: buttonFound,
                 },
                 status: findStatus,
-                testing: false,
                 test: {
                     eligible: eligible(),
                 },
@@ -93,9 +92,10 @@ define([
             function show(force) {
                 var cssShow = function(){
                     if (styleElem() !== false) {
-                        if (obj.testing !== false || force === true) {
-                            styleElem().remove();
+                        if ($(obj.elem.buttonSelector).length > 1){
+                            $(obj.elem.buttonSelector)[0].remove();
                         }
+                        styleElem().remove();
                     }
                 }
                 var renderId;
@@ -152,9 +152,6 @@ define([
                 return obj
             }
             function addButton(arg) {
-                if (arg !== false) {
-                    removeButton();
-                }
                 if (obj.paypalHook !== undefined && typeof (obj.paypalHook) === 'function') {
                     obj.paypalHook(obj.config);
                 }
@@ -250,9 +247,16 @@ define([
                 var newConfig = obj.extendDesiredConfig(desiredConfig);
                 obj.applyDesiredConfig(newConfig);
             }
+            function removeButtons(){
+                $(obj.elem.buttonSelector).remove();                
+            }
             function removeButton() {
-                $(obj.elem.buttonSelector).remove();
-                return obj;
+                if (buttonFound()){
+                    $(obj.elem.buttonSelector)[0].remove();
+                    return true
+                }else{
+                    return false
+                }
             }
             function found() {
                 return $(obj.elem.selector).length;
@@ -287,7 +291,6 @@ define([
                 return {
                     visible: (styleElem() !== false && buttonFound() !== 0) ? false : true,
                     found: (found() === 1) ? true : false,
-                    enableShow: (obj.testing === false) ? false : true,
                 };
             }
             function add_paypal_methods() {
@@ -296,6 +299,7 @@ define([
                     elem: {
                         add: addButton,
                         remove: removeButton,
+                        removeAll: removeButtons,
                     },
                     paypalHook: false,
                     update: update,
