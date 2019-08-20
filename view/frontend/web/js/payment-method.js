@@ -91,10 +91,10 @@ define([
             }
             function show(force) {
                 var cssShow = function(){
+                    if ($(obj.elem.buttonSelector).length > 1){
+                        $(obj.elem.buttonSelector)[0].remove();
+                    }
                     if (styleElem() !== false) {
-                        if ($(obj.elem.buttonSelector).length > 1){
-                            $(obj.elem.buttonSelector)[0].remove();
-                        }
                         styleElem().remove();
                     }
                 }
@@ -103,6 +103,12 @@ define([
                     deregister(renderId);
                     cssShow();
                 }
+                var renderButton = function(){
+                    hide();
+                    update(desiredConfig().config);
+                    addButton();
+                    renderId = register('render', paypalButtonRendered);
+                }
                 if (obj.type === 'applePay' || obj.type === 'googlePay') {
                     cssShow();
                 } else if (obj.type === 'paypalCredit' || obj.type === 'paypal') {
@@ -110,16 +116,12 @@ define([
                         if (buttonFound() === 0){
                             cssShow();
                         }else{
-                            update(desiredConfig().config);
-                            addButton();
-                            renderId = register('render', paypalButtonRendered);
+                            renderButton();
                         }
                     }else if (sameConfig() === true && buttonFound() !== 0){
                         cssShow();
                     } else {
-                        update(desiredConfig().config);
-                        addButton();
-                        renderId = register('render', paypalButtonRendered);
+                        renderButton();
                     }
                 }
 
