@@ -13,12 +13,22 @@ define([
         var api = hicCore.api().page({
             configTest: config,
         });        
-        api.add({
-            configTest: config,
+        api.add({            
             page: 'pdp',
             type: 'paypal',
-            selector: '.product-info-main .actions .paypal',
+            selector: '.actions .paypalCheckout.pdp',
+            buttonSelector: '.actions .paypalCheckout.pdp .paypal-button',
             needs: ['isPaypalActive','isPaypalActiveOnPdp'],
+            configTest: config,
+        });
+
+        api.add({
+            type: 'paypalCredit',
+            page: 'pdp',
+            selector: '.actions .paypalCredit.pdp',
+            buttonSelector: '.actions .paypalCredit.pdp .paypal-button',
+            needs: ['isPaypalActive','isPaypalActiveOnCart','isCreditActive'],
+            configTest: config,
         });
 
     };

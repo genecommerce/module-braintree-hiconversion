@@ -14,35 +14,34 @@ define([
             initialize: function () {
                 this._super();
                 var _config = {
-                    offerCredit: this.config.offerCredit,
+                    branding: this.config.branding,
                     color: this.config.color,
+                    disabledFunding: this.config.disabledFunding,
+                    fundingicons: this.config.fundingicons,
+                    label: this.config.label,
+                    layout: this.config.layout,
+                    offerCredit: this.config.offerCredit,
                     shape: this.config.shape,
                     size: this.config.size,
-                    layout: this.config.layout,
-                    label: this.config.label,
-                    branding: this.config.branding,
-                    fundingicons: this.config.fundingicons,
-                    disabledFunding: this.config.disabledFunding
                 };
                 
                 var minicartWrapper = $('#' + this.config.id).closest('#minicart-content-wrapper');
-                var page = minicartWrapper.length ? 'minicart': 'cart';
-                var type = 'paypal';
+                var page = minicartWrapper.length ? 'minicart' : 'cart';
+                var type = (this.config.offerCredit) ? 'paypalCredit' : 'paypal';
                 var api = hicCore.api().load();
                 api.loadPaypal(page, type, _config, function (_config) {
-                    this.config.offerCredit = _config.offerCredit;
+                    this.config.branding = _config.branding;
                     this.config.color = _config.color;
+                    this.config.disabledFunding = _config.disabledFunding;
+                    this.config.events = _config.events;
+                    this.config.fundingicons = _config.fundingicons;
+                    this.config.label = _config.label;
+                    this.config.layout = _config.layout;
+                    this.config.offerCredit = _config.offerCredit;
                     this.config.shape = _config.shape;
                     this.config.size = _config.size;
-                    this.config.layout = _config.layout;
-                    this.config.disabledFunding = _config.disabledFunding;
-                    this.config.label = _config.label;
-                    this.config.branding = _config.branding;
-                    this.config.fundingIcons = _config.fundingicons;
                     this.config.tagline = _config.tagline;
-                    this.config.events = _config.events;
-
-                    new Button(this.config);
+                    new Button(this.config); 
                 }.bind(this));
                 
                 return this;

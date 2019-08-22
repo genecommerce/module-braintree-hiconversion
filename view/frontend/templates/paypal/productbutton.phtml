@@ -1,34 +1,97 @@
 <?php
-/**
- * @var \Magento\Braintree\Block\OneClickButton $block
- */
-$id = $block->getContainerId() . mt_rand();
+
+use Magento\Braintree\Block\Paypal\ProductPage;
+
+/** @var ProductPage $block */
+try {
+    $paypalId = sprintf('paypal-%s-%d', $block->getContainerId(), random_int(PHP_INT_MIN, PHP_INT_MAX));
+    $paypalCreditId = sprintf('paypalcredit-%s-%d', $block->getContainerId(), random_int(PHP_INT_MIN, PHP_INT_MAX));
+} catch (Exception $e) {
+    /**
+     * Exception only thrown if an appropriate source of randomness cannot be found.
+     * https://www.php.net/manual/en/function.random-int.php
+     */
+    $paypalId = sprintf('paypal-%s', $block->getContainerId());
+    $paypalCreditId = sprintf('paypalcredit-%s', $block->getContainerId());
+}
+
 $config = [
     'Gene_BraintreeHiConversion/js/paypal/button-product' => [
+        'config' => [
+            'actionSuccess' => $block->getActionSuccess(),
+            'clientToken' => $block->getClientToken(),
+            'color' => $block->getButtonColor(),            
+            'disabledFunding' => $block->getDisabledFunding(),
+            'displayName' => $block->getMerchantName(),
+            'environment' => $block->getEnvironment(),
+            'fundingicons' => true,
+            'id' => $paypalId,
+            'layout' => $block->getButtonLayout(),
+            'offerCredit' => false,
+            'payeeEmail' => $block->getPayeeEmail(),
+            'shape' => $block->getButtonShape(),
+            'size' => $block->getButtonSize()
+        ]
+    ]
+];
+
+if ($block->isCreditActive()) {
+    $paypalCreditConfig = [
+        'Gene_BraintreeHiConversion/js/paypal/button-product' => [
             'config' => [
-                'id' => $id,
-                'environment' => $block->getEnvironment(),
-                'clientToken' => $block->getClientToken(),
-                'displayName' => $block->getMerchantName(),
-                'payeeEmail' => $block->getPayeeEmail(),
                 'actionSuccess' => $block->getActionSuccess(),
-                'offerCredit' => $block->isCreditActive(),
-                'shape' => $block->getButtonShape(),
-                'size' => $block->getButtonSize(),
+                'clientToken' => $block->getClientToken(),
+                'color' => 'darkblue',
+                'displayName' => $block->getMerchantName(),
+                'environment' => $block->getEnvironment(),
+                'id' => $paypalCreditId,
                 'layout' => $block->getButtonLayout(),
-                'color' => $block->getButtonColor(),
-                'disabledFunding' => $block->getDisabledFunding()
+                'offerCredit' => true,
+                'payeeEmail' => $block->getPayeeEmail(),
+                'shape' => $block->getButtonShape(),
+                'size' => $block->getButtonSize()
             ]
         ]
-];
+    ];
+}
 ?>
-
-<div data-mage-init='<?php /* @noEscape */ echo json_encode($config); ?>'
-     class="paypal checkout paypal-logo braintree-paypal-logo<?php
-     /* @noEscape */ echo $block->getContainerId(); ?>-container">
-    <div data-currency="<?php /* @noEscape */ echo $block->getCurrency(); ?>"
-         data-locale="<?php /* @noEscape */ echo $block->getLocale(); ?>"
-         data-amount="<?php /* @noEscape */ echo $block->getAmount(); ?>"
-         id="<?php /* @noEscape */ echo $id; ?>"
+<div data-mage-init='<?= /** @noEscape */ json_encode($config) ?>'
+     class="paypalCheckout pdp paypal checkout paypal-logo braintree-paypal-logo <?= $block->escapeHtmlAttr($block->getContainerId()) ?>-container">         
+    <style>
+        .paypalCheckout.pdp,
+        .paypalCredit.pdp{
+            display: block;
+        }
+        @media screen and (min-width: 768px){
+            .paypalCheckout.pdp,
+            .paypalCredit.pdp{
+                width: auto;
+                margin-left: 0px !important;
+            }
+            .paypalCheckout.pdp .paypal-button,
+            .paypalCredit.pdp .paypal-button{
+                text-align: left;
+            }
+            .paypalCheckout.pdp .paypal-button-size-responsive,
+            .paypalCredit.pdp .paypal-button-size-responsive{
+                width: 49% !important;
+            }
+        }
+    </style>
+    <div data-currency="<?= $block->escapeHtmlAttr($block->getCurrency()) ?>"
+         data-locale="<?= $block->escapeHtmlAttr($block->getLocale()) ?>"
+         data-amount="<?= $block->escapeHtmlAttr($block->getAmount()) ?>"
+         id="<?= $block->escapeHtmlAttr($paypalId) ?>"
          class="action-braintree-paypal-logo"></div>
-</div> 
+</div>
+
+<?php if ($block->isCreditActive()) : ?>
+<div data-mage-init='<?= /** @noEscape */ json_encode($paypalCreditConfig) ?>'
+     class="paypalCredit pdp paypal checkout paypal-logo braintree-paypal-logo <?= $block->escapeHtmlAttr($block->getContainerId()) ?>-container">
+    <div data-currency="<?= $block->escapeHtmlAttr($block->getCurrency()) ?>"
+         data-locale="<?= $block->escapeHtmlAttr($block->getLocale()) ?>"
+         data-amount="<?= $block->escapeHtmlAttr($block->getAmount()) ?>"
+         id="<?= $block->escapeHtmlAttr($paypalCreditId) ?>"
+         class="action-braintree-paypal-logo"></div>
+</div>
+<?php endif; ?>

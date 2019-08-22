@@ -17,36 +17,40 @@ define([
                 page: 'checkout'
             });        
                 
-            api.add({
-                configTest: config,
+            api.add({                
                 page: 'checkout',
-                type: 'paypalCheckout',
+                type: 'paypal',
                 selector: '#payment-method-braintree-paypal',
+                buttonSelector: '#payment-method-braintree-paypal .paypal-button',
                 needs: ['isPaypalActive'],
+                configTest: config,
             });
 
-            api.add({
-                configTest: config,
+            api.add({                
                 page: 'checkout',
                 type: 'paypalCredit',
                 selector: '#payment-method-braintree-paypal-credit',
+                buttonSelector: '#payment-method-braintree-paypal-credit .paypal-button',
                 needs: ['isPaypalActive','isCreditActive'],
+                configTest: config,
             });
 
             api.add({
-                configTest: config,
                 page: 'checkout',
                 type: 'applePay',
                 selector: '#payment-method-braintree-applepay',
+                buttonSelector: '#payment-method-braintree-applepay .braintree-apple-pay-button',
                 needs: ['isApplePayActive'],
+                configTest: config,
             });
 
             api.add({
-                configTest: config,
                 page: 'checkout',
                 type: 'googlePay',
                 selector: '#payment-method-braintree-googlepay',
+                buttonSelector: '#payment-method-braintree-googlepay .braintree-googlepay-button',
                 needs: ['isGooglePayActive'],
+                configTest: config,
             });
 
         }
