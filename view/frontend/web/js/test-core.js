@@ -44,7 +44,7 @@ define([
                     config: null
                 },
                 hicReady: hicReady,
-                version: "1.2.0",
+                version: "1.2.1",
                 extendDesiredConfig: extendDesiredConfig,
                 applyDesiredConfig: applyDesiredConfig,
                 extendAndApplyDesiredConfig: extendAndApplyDesiredConfig,

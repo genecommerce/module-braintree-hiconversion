@@ -58,7 +58,6 @@ define([
                 return degistered
             }
             function register(type, cb) {
-                /* Events: Click, Cancel, Error, and Render */
                 var eventId = getUniqId();
                 if (typeof (cb) === 'function') {
                     obj.listeners[type][eventId] = cb;
@@ -91,8 +90,14 @@ define([
             }
             function show(force) {
                 var cssShow = function(){
-                    if ($(obj.elem.buttonSelector).length > 1){
-                        $(obj.elem.buttonSelector)[0].remove();
+                    var containers = $(obj.elem.selector);
+                    if (containers.length !== 0){
+                        $.each(containers, function(i,v){
+                            var button = $(v).find('.paypal-button');
+                            if (button.length > 1){
+                                button[0].remove();
+                            }
+                        })
                     }
                     if (styleElem() !== false) {
                         styleElem().remove();
@@ -153,9 +158,11 @@ define([
                 $.extend(true, obj.config, newConfig);
                 return obj
             }
-            function addButton(arg) {
-                if (obj.paypalHook !== undefined && typeof (obj.paypalHook) === 'function') {
-                    obj.paypalHook(obj.config);
+            function addButton(arg) {        
+                if (obj.paypalHooks !== undefined && obj.paypalHooks.length !== 0){
+                    $.each(obj.paypalHooks, function(i,paypalHook){
+                        paypalHook(obj.config);
+                    })
                 }
                 return obj;
             }
@@ -167,7 +174,7 @@ define([
                 obj.config.events.onCancel = onCancel;
                 obj.config.events.onError = onError;
                 obj.config.events.onRender = onRender;
-                obj.paypalHook = cb;
+                obj.paypalHooks.push(cb);
                 if (obj.page === 'checkout'){
                     addButton()
                 }
@@ -303,7 +310,7 @@ define([
                         remove: removeButton,
                         removeAll: removeButtons,
                     },
-                    paypalHook: false,
+                    paypalHooks: [],
                     update: update,
                     listeners: {
                         click: {},
