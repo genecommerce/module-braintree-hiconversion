@@ -44,7 +44,7 @@ define([
                     config: null
                 },
                 hicReady: hicReady,
-                version: "1.2.0",
+                version: "1.2.1",
                 extendDesiredConfig: extendDesiredConfig,
                 applyDesiredConfig: applyDesiredConfig,
                 extendAndApplyDesiredConfig: extendAndApplyDesiredConfig,
@@ -89,11 +89,15 @@ define([
                         },
                         paypal: {
                             show: false,
-                            config: {}
+                            config: {
+                                tagline: true
+                            }
                         },
                         paypalCredit: {
                             show: false,
-                            config: {}
+                            config: {
+                                tagline: true
+                            }
                         }
                     },
                     checkout: {
