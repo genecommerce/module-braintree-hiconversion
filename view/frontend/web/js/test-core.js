@@ -89,11 +89,15 @@ define([
                         },
                         paypal: {
                             show: false,
-                            config: {}
+                            config: {
+                                tagline: true
+                            }
                         },
                         paypalCredit: {
                             show: false,
-                            config: {}
+                            config: {
+                                tagline: true
+                            }
                         }
                     },
                     checkout: {

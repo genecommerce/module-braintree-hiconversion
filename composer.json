@@ -1,7 +1,7 @@
 {
   "name": "gene/module-braintree-hiconversion",
   "description": "Extends the Braintree module with an integration from HiConversion.",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "require": {
     "gene/module-braintree": "^3.2.0",
     "hiconversion/module-integration": "1.x"
